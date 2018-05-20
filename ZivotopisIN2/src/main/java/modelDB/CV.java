@@ -7,7 +7,7 @@ public class CV {
 	private final String tipDokumeenta;
 	private final Timestamp datumStvaranja;
 	private final Timestamp datumAzuriranja;
-	private final Integer idOsoba;
+	private final Integer x;
 	
 	private final Iterable<OsobnaVjestina> osobnaVjestinaList;
 	private final Iterable<DodatneInfo> dodatneInfoList;
