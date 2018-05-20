@@ -1,17 +1,16 @@
-package model;
+package modelDB;
 
-import java.util.UUID;
 
 public class KontaktniInfo {
-	private final UUID kontaktID;
-	private final UUID idTipKontakta;
-	private final UUID idOsobe;
+	private final Integer kontaktID;
+	private final Integer idTipKontakta;
+	private final Integer idOsobe;
 	private final String kontakt;
 	
 	private final TipKontakta TipKontakta;
 
-	public KontaktniInfo(UUID kontaktID, UUID idTipKontakta, UUID idOsobe, String kontakt,
-			model.TipKontakta tipKontakta) {
+	public KontaktniInfo(Integer kontaktID, Integer idTipKontakta, Integer idOsobe, String kontakt,
+			modelDB.TipKontakta tipKontakta) {
 		this.kontaktID = kontaktID;
 		this.idTipKontakta = idTipKontakta;
 		this.idOsobe = idOsobe;
@@ -19,15 +18,15 @@ public class KontaktniInfo {
 		TipKontakta = tipKontakta;
 	}
 
-	public UUID getKontaktID() {
+	public Integer getKontaktID() {
 		return kontaktID;
 	}
 
-	public UUID getIdTipKontakta() {
+	public Integer getIdTipKontakta() {
 		return idTipKontakta;
 	}
 
-	public UUID getIdOsobe() {
+	public Integer getIdOsobe() {
 		return idOsobe;
 	}
 

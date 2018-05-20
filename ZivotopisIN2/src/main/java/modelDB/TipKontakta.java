@@ -1,17 +1,16 @@
-package model;
+package modelDB;
 
-import java.util.UUID;
 
 public class TipKontakta {
-	private final UUID kontaktID;
+	private final Integer kontaktID;
 	private final String naziv;
 	
-	public TipKontakta(UUID kontaktID, String naziv) {
+	public TipKontakta(Integer kontaktID, String naziv) {
 		this.kontaktID = kontaktID;
 		this.naziv = naziv;
 	}
 
-	public UUID getKontaktID() {
+	public Integer getKontaktID() {
 		return kontaktID;
 	}
 
