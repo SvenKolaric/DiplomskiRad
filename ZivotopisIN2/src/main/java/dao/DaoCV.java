@@ -1,8 +1,11 @@
 package dao;
 
+import org.springframework.stereotype.Repository;
+
 import interfaces.DaoCVInterface;
 import modelDB.CV;
 
+@Repository("CV")
 public class DaoCV implements DaoCVInterface {
 
 	@Override

@@ -1,14 +1,17 @@
 package modelDB;
 
 public class Institucija {
-	private final Integer institucijaID;
-	private final String adresa;
-	private final Integer idMjesto;
-	private final String webStranica;
-	private final String naziv;
+	private Integer institucijaID;
+	private String adresa;
+	private Integer idMjesto;
+	private String webStranica;
+	private String naziv;
 	
-	private final Mjesto mjesto;
+	private Mjesto mjesto;
 	
+	public Institucija() {
+	}
+
 	public Institucija(Integer institucijaID, String adresa, Integer idMjesto, String webStranica, String naziv, Mjesto mjesto) {
 		this.institucijaID = institucijaID;
 		this.adresa = adresa;

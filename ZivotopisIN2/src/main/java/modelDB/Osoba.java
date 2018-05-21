@@ -1,25 +1,29 @@
 package modelDB;
 
 import java.util.Date;
+import java.util.ArrayList;
 
 public class Osoba {
-	private final Integer osobaID;
-	private final String ime;
-	private final String prezime;
-	private final Date godRodenja;
-	private final Character spol;
-	private final String adresa;
-	private final Integer idMjesto;
+	private Integer osobaID;
+	private String ime;
+	private String prezime;
+	private Date godRodenja;
+	private Character spol;
+	private String adresa;
+	private Integer idMjesto;
 	
-	private final Iterable<CV> zivotopisiList;
-	private final Iterable<KontaktniInfo> kontaktInfoList;
-	private final Iterable<Drzavljanstvo> drzavljanstvoList;
+	private ArrayList<CV> zivotopisiList;
+	private ArrayList<KontaktniInfo> kontaktInfoList;
+	private ArrayList<Drzavljanstvo> drzavljanstvoList;
 	
-	private final Mjesto mjesto;
+	private Mjesto mjesto;
 	
+	public Osoba() {
+	}
+
 	public Osoba(Integer osobaID, String ime, String prezime, Date godRodenja, Character spol, String adresa,
-			Integer idMjesto, Iterable<CV> zivotopisiList, Iterable<KontaktniInfo> kontaktInfoList, 
-			Iterable<Drzavljanstvo> drzavljanstvoList, Mjesto mjesto) {
+			Integer idMjesto, ArrayList<CV> zivotopisiList, ArrayList<KontaktniInfo> kontaktInfoList, 
+			ArrayList<Drzavljanstvo> drzavljanstvoList, Mjesto mjesto) {
 		this.osobaID = osobaID;
 		this.ime = ime;
 		this.prezime = prezime;
@@ -37,7 +41,7 @@ public class Osoba {
 		return mjesto;
 	}
 
-	public Iterable<Drzavljanstvo> getDrzavljanstvoList() {
+	public ArrayList<Drzavljanstvo> getDrzavljanstvoList() {
 		return drzavljanstvoList;
 	}
 
@@ -69,11 +73,11 @@ public class Osoba {
 		return idMjesto;
 	}
 
-	public Iterable<CV> getZivotopisiList() {
+	public ArrayList<CV> getZivotopisiList() {
 		return zivotopisiList;
 	}
 	
-	public Iterable<KontaktniInfo> getKontaktInfoList() {
+	public ArrayList<KontaktniInfo> getKontaktInfoList() {
 		return kontaktInfoList;
 	}
 }

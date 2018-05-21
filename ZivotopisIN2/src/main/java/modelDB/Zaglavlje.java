@@ -1,13 +1,16 @@
 package modelDB;
 
 public class Zaglavlje {
-	private final Integer zaglavljeID;
-	private final Integer idCV;
-	private final String opis;
-	private final Integer idPrijave;
+	private Integer zaglavljeID;
+	private Integer idCV;
+	private String opis;
+	private Integer idPrijave;
 	
-	private final VrstaPrijave vrstaPrijave;
+	private VrstaPrijave vrstaPrijave;
 	
+	public Zaglavlje() {
+	}
+
 	public Zaglavlje(Integer zaglavljeID, Integer idCV, String opis, Integer idPrijave, VrstaPrijave vrstaPrijave) {
 		this.zaglavljeID = zaglavljeID;
 		this.idCV = idCV;

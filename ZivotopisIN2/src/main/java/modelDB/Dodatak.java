@@ -1,11 +1,14 @@
 package modelDB;
 
 public class Dodatak {
-	private final Integer ID;
-	private final String metadata;
-	private final String text;
-	private final Integer idCV;
+	private Integer ID;
+	private String metadata;
+	private String text;
+	private Integer idCV;
 	
+	public Dodatak() {
+	}
+
 	public Dodatak(Integer iD, String metadata, String text, Integer idCV) {
 		ID = iD;
 		this.metadata = metadata;

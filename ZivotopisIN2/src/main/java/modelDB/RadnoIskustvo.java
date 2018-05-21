@@ -3,19 +3,22 @@ package modelDB;
 import java.util.Date;
 
 public class RadnoIskustvo {
-	private final Integer PosaoID;
-	private final Integer idCV;
-	private final Date datumPocetka;
-	private final Date datumKraja;
-	private final Integer idPozicija;
-	private final Integer idInstitucija;
-	private final String djelatnostSektor;
-	private final String opisPosla;
-	private final Integer brGodRada;
+	private Integer PosaoID;
+	private Integer idCV;
+	private Date datumPocetka;
+	private Date datumKraja;
+	private Integer idPozicija;
+	private Integer idInstitucija;
+	private String djelatnostSektor;
+	private String opisPosla;
+	private Integer brGodRada;
 	
-	private final Pozicija pozicija;
-	private final Institucija institucija;
+	private Pozicija pozicija;
+	private Institucija institucija;
 	
+	public RadnoIskustvo() {
+	}
+
 	public RadnoIskustvo(Integer posaoID, Integer idCV, Date datumPocetka, Date datumKraja, Integer idPozicija,
 			Integer idInstitucija, String djelatnostSektor, String opisPosla, Integer brGodRada, Pozicija pozicija, Institucija institucija) {
 		PosaoID = posaoID;

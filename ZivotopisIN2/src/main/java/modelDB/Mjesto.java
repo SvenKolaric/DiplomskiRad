@@ -1,17 +1,22 @@
 package modelDB;
 
+import java.util.ArrayList;
+
 public class Mjesto {
-	private final Integer mjestoID;
-	private final Integer idDrzava;
-	private final Integer PBR;
-	private final String naziv;
-	
-	private final Iterable<Osoba> osobaList;
-	private final Iterable<Institucija> institucijaList;
-	private final Drzava drzava;
-	
-	public Mjesto(Integer mjestoID, Integer idDrzava, Integer pBR, String naziv, Iterable<Osoba> osobaList,
-			Iterable<Institucija> institucijaList, Drzava drzava) {
+	private Integer mjestoID;
+	private Integer idDrzava;
+	private Integer PBR;
+	private String naziv;
+
+	private ArrayList<Osoba> osobaList;
+	private ArrayList<Institucija> institucijaList;
+	private Drzava drzava;
+
+	public Mjesto() {
+	}
+
+	public Mjesto(Integer mjestoID, Integer idDrzava, Integer pBR, String naziv, ArrayList<Osoba> osobaList,
+			ArrayList<Institucija> institucijaList, Drzava drzava) {
 		this.mjestoID = mjestoID;
 		this.idDrzava = idDrzava;
 		PBR = pBR;
@@ -25,7 +30,7 @@ public class Mjesto {
 		return drzava;
 	}
 
-	public Iterable<Institucija> getInstitucijaList() {
+	public ArrayList<Institucija> getInstitucijaList() {
 		return institucijaList;
 	}
 
@@ -33,7 +38,7 @@ public class Mjesto {
 		return mjestoID;
 	}
 
-	public Iterable<Osoba> getOsobaList() {
+	public ArrayList<Osoba> getOsobaList() {
 		return osobaList;
 	}
 
@@ -48,5 +53,5 @@ public class Mjesto {
 	public String getNaziv() {
 		return naziv;
 	}
-	
+
 }

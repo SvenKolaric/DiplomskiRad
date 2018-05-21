@@ -1,25 +1,30 @@
 package modelDB;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class CV {
-	private final Integer zivotopisID;
-	private final String tipDokumeenta;
-	private final Timestamp datumStvaranja;
-	private final Timestamp datumAzuriranja;
-	private final Integer idOsoba;
+	private Integer zivotopisID;
+	private String tipDokumeenta;
+	private Timestamp datumStvaranja;
+	private Timestamp datumAzuriranja;
+	private Integer idOsoba;
 	
-	private final Iterable<OsobnaVjestina> osobnaVjestinaList;
-	private final Iterable<DodatneInfo> dodatneInfoList;
-	private final Iterable<Dodatak> dodatakList;
-	private final Iterable<RadnoIskustvo> radnoIskustvoList;
-	private final Iterable<EdukacijaITrening> edukacijaITreningList;
-	private final Zaglavlje zaglavlje;
-
+	private ArrayList<OsobnaVjestina> osobnaVjestinaList;
+	private ArrayList<DodatneInfo> dodatneInfoList;
+	private ArrayList<Dodatak> dodatakList;
+	private ArrayList<RadnoIskustvo> radnoIskustvoList;
+	private ArrayList<EdukacijaITrening> edukacijaITreningList;
+	private Zaglavlje zaglavlje;
+	
+	public CV() {
+		
+	}
+	
 	public CV(Integer zivotopisID, String tipDokumeenta, Timestamp datumStvaranja, Timestamp datumAzuriranja,
-			Integer idOsoba, Iterable<OsobnaVjestina> osobnaVjestinaList, Iterable<DodatneInfo> dodatneInfoList,
-			Iterable<Dodatak> dodatakList, Iterable<RadnoIskustvo> radnoIskustvoList, 
-			Iterable<EdukacijaITrening> edukacijaITreningList, Zaglavlje zaglavlje) {
+			Integer idOsoba, ArrayList<OsobnaVjestina> osobnaVjestinaList, ArrayList<DodatneInfo> dodatneInfoList,
+			ArrayList<Dodatak> dodatakList, ArrayList<RadnoIskustvo> radnoIskustvoList, 
+			ArrayList<EdukacijaITrening> edukacijaITreningList, Zaglavlje zaglavlje) {
 		this.zivotopisID = zivotopisID;
 		this.tipDokumeenta = tipDokumeenta;
 		this.datumStvaranja = datumStvaranja;
@@ -32,6 +37,8 @@ public class CV {
 		this.edukacijaITreningList = edukacijaITreningList;
 		this.zaglavlje = zaglavlje;
 	}
+	
+
 
 	public Integer getZivotopisID() {
 		return zivotopisID;
@@ -53,30 +60,30 @@ public class CV {
 		return idOsoba;
 	}
 
-	public Iterable<OsobnaVjestina> getOsobnaVjestinaList() {
+	public ArrayList<OsobnaVjestina> getOsobnaVjestinaList() {
 		return osobnaVjestinaList;
 	}
 
-	public Iterable<DodatneInfo> getDodatneInfoList() {
+	public ArrayList<DodatneInfo> getDodatneInfoList() {
 		return dodatneInfoList;
 	}
 
-	public Iterable<Dodatak> getDodatakList() {
+	public ArrayList<Dodatak> getDodatakList() {
 		return dodatakList;
 	}
 
-	public Iterable<RadnoIskustvo> getRadnoIskustvoList() {
+	public ArrayList<RadnoIskustvo> getRadnoIskustvoList() {
 		return radnoIskustvoList;
 	}
 
-	public Iterable<EdukacijaITrening> getEdukacijaITreningList() {
+	public ArrayList<EdukacijaITrening> getEdukacijaITreningList() {
 		return edukacijaITreningList;
 	}
 
 	public Zaglavlje getZaglavlje() {
 		return zaglavlje;
 	}
-	
+
 	/*public Entities.City ToEntity()
     {
         Entities.City entity = new Entities.City

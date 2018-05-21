@@ -1,9 +1,12 @@
 package modelDB;
 
 public class Pozicija {
-	private final Integer pozicijaID;
-	private final String naziv;
+	private Integer pozicijaID;
+	private String naziv;
 	
+	public Pozicija() {
+	}
+
 	public Pozicija(Integer pozicijaID, String naziv) {
 		this.pozicijaID = pozicijaID;
 		this.naziv = naziv;

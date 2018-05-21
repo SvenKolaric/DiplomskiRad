@@ -1,10 +1,13 @@
 package modelDB;
 
 public class CertifikatDiploma {
-	private final Integer certDiplID;
-	private final Integer idVjestina;
-	private final String opisTitula;
+	private Integer certDiplID;
+	private Integer idVjestina;
+	private String opisTitula;
 	
+	public CertifikatDiploma() {
+	}
+
 	public CertifikatDiploma(Integer certDiplID, Integer idVjestina, String opisTitula) {
 		this.certDiplID = certDiplID;
 		this.idVjestina = idVjestina;

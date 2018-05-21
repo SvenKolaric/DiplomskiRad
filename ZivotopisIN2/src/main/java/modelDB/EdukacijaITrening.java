@@ -3,13 +3,16 @@ package modelDB;
 import java.util.Date;
 
 public class EdukacijaITrening {
-	private final Integer edukacijaID;
-	private final Integer idCV;
-	private final Date datumPocetka;
-	private final Date datumKraja;
+	private Integer edukacijaID;
+	private Integer idCV;
+	private Date datumPocetka;
+	private Date datumKraja;
 	
-	private final Institucija institucija;
+	private Institucija institucija;
 	
+	public EdukacijaITrening() {
+	}
+
 	public EdukacijaITrening(Integer edukacijaID, Integer idCV, Date datumPocetka, Date datumKraja, Institucija institucija) {
 		this.edukacijaID = edukacijaID;
 		this.idCV = idCV;

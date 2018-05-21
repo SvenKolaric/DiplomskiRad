@@ -2,9 +2,12 @@ package modelDB;
 
 
 public class Drzavljanstvo {
-	private final Integer drzavljanstvoID;
-	private final String naziv;
+	private Integer drzavljanstvoID;
+	private String naziv;
 	
+	public Drzavljanstvo() {
+	}
+
 	public Drzavljanstvo(Integer drzavljanstvoID, String naziv) {
 		this.drzavljanstvoID = drzavljanstvoID;
 		this.naziv = naziv;

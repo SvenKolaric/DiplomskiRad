@@ -2,12 +2,15 @@ package modelDB;
 
 
 public class Osoba_Drzavljanstvo {
-	private final Integer ID;
-	private final Integer idDrzavljanstvo;
-	private final Integer idOsoba;
+	private Integer ID;
+	private Integer idDrzavljanstvo;
+	private Integer idOsoba;
 	
-	private final Drzavljanstvo drzavljanstvo;
+	private Drzavljanstvo drzavljanstvo;
 	
+	public Osoba_Drzavljanstvo() {
+	}
+
 	public Osoba_Drzavljanstvo(Integer iD, Integer idDrzavljanstvo, Integer idOsoba, Drzavljanstvo drzavljanstvo) {
 		ID = iD;
 		this.idDrzavljanstvo = idDrzavljanstvo;

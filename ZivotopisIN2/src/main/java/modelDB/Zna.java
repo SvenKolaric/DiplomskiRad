@@ -1,15 +1,18 @@
 package modelDB;
 
 public class Zna {
-	private final Integer ID;
-	private final Integer idVjestina;
-	private final Integer idJezik;
-	private final String razumijevanje;
-	private final String govor;
-	private final String pisanje;
+	private Integer ID;
+	private Integer idVjestina;
+	private Integer idJezik;
+	private String razumijevanje;
+	private String govor;
+	private String pisanje;
 	
-	private final Jezik jezik;
+	private Jezik jezik;
 	
+	public Zna() {
+	}
+
 	public Zna(Integer iD, Integer idVjestina, Integer idJezik, String razumijevanje, String govor, String pisanje, Jezik jezik) {
 		ID = iD;
 		this.idVjestina = idVjestina;

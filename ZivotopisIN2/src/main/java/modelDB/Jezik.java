@@ -1,9 +1,12 @@
 package modelDB;
 
 public class Jezik {
-	private final Integer jezikID;
-	private final String naziv;
+	private Integer jezikID;
+	private String naziv;
 	
+	public Jezik() {
+	}
+
 	public Jezik(Integer jezikID, String naziv) {
 		this.jezikID = jezikID;
 		this.naziv = naziv;

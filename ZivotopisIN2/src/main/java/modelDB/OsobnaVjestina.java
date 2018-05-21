@@ -1,27 +1,33 @@
 package modelDB;
 
+import java.util.ArrayList;
+
 public class OsobnaVjestina {
-	private final Integer vjestinaID;
-	private final Integer idCV;
-	private final String obradaInfo;
-	private final String komunikacija;
-	private final String stvaranjeSadrzaja;
-	private final String sigurnost;
-	private final String rjesavanjeProblema;
-	private final String materinjiJezik;
-	private final String komunikacijskeVj;
-	private final String organizacijskeVj;
-	private final String poslovneVj;
-	private final String ostaleVj;
-	
-	private final Iterable<Zna> jezikList;
-	private final Iterable<VozackaDozvola> vozackaDozvolaList;
-	private final Iterable<CertifikatDiploma> certifikatDiplomaList;
-	
+	private Integer vjestinaID;
+	private Integer idCV;
+	private String obradaInfo;
+	private String komunikacija;
+	private String stvaranjeSadrzaja;
+	private String sigurnost;
+	private String rjesavanjeProblema;
+	private String materinjiJezik;
+	private String komunikacijskeVj;
+	private String organizacijskeVj;
+	private String poslovneVj;
+	private String ostaleVj;
+
+	private ArrayList<Zna> jezikList;
+	private ArrayList<VozackaDozvola> vozackaDozvolaList;
+	private ArrayList<CertifikatDiploma> certifikatDiplomaList;
+
+	public OsobnaVjestina() {
+	}
+
 	public OsobnaVjestina(Integer vjestinaID, Integer idCV, String obradaInfo, String komunikacija,
 			String stvaranjeSadrzaja, String sigurnost, String rjesavanjeProblema, String materinjiJezik,
 			String komunikacijskeVj, String organizacijskeVj, String poslovneVj, String ostaleVj,
-			Iterable<Zna> jezikList, Iterable<VozackaDozvola> vozackaDozvolaList, Iterable<CertifikatDiploma> certifikatDiplomaList) {
+			ArrayList<Zna> jezikList, ArrayList<VozackaDozvola> vozackaDozvolaList,
+			ArrayList<CertifikatDiploma> certifikatDiplomaList) {
 		this.vjestinaID = vjestinaID;
 		this.idCV = idCV;
 		this.obradaInfo = obradaInfo;
@@ -39,15 +45,15 @@ public class OsobnaVjestina {
 		this.certifikatDiplomaList = certifikatDiplomaList;
 	}
 
-	public Iterable<Zna> getJezikList() {
+	public ArrayList<Zna> getJezikList() {
 		return jezikList;
 	}
 
-	public Iterable<VozackaDozvola> getVozackaDozvolaList() {
+	public ArrayList<VozackaDozvola> getVozackaDozvolaList() {
 		return vozackaDozvolaList;
 	}
 
-	public Iterable<CertifikatDiploma> getCertifikatDiplomaList() {
+	public ArrayList<CertifikatDiploma> getCertifikatDiplomaList() {
 		return certifikatDiplomaList;
 	}
 
@@ -98,6 +104,5 @@ public class OsobnaVjestina {
 	public String getOstaleVj() {
 		return ostaleVj;
 	}
-	
-	
+
 }

@@ -1,9 +1,12 @@
 package modelDB;
 
 public class VrstaPrijave {
-	private final Integer prijavaID;
-	private final String naziv;
+	private Integer prijavaID;
+	private String naziv;
 	
+	public VrstaPrijave() {
+	}
+
 	public VrstaPrijave(Integer prijavaID, String naziv) {
 		this.prijavaID = prijavaID;
 		this.naziv = naziv;

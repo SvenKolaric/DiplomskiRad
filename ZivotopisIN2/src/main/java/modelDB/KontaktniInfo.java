@@ -2,12 +2,15 @@ package modelDB;
 
 
 public class KontaktniInfo {
-	private final Integer kontaktID;
-	private final Integer idTipKontakta;
-	private final Integer idOsobe;
-	private final String kontakt;
+	private Integer kontaktID;
+	private Integer idTipKontakta;
+	private Integer idOsobe;
+	private String kontakt;
 	
-	private final TipKontakta TipKontakta;
+	private TipKontakta TipKontakta;
+
+	public KontaktniInfo() {
+	}
 
 	public KontaktniInfo(Integer kontaktID, Integer idTipKontakta, Integer idOsobe, String kontakt,
 			modelDB.TipKontakta tipKontakta) {

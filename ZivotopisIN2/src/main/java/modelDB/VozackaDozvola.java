@@ -1,9 +1,12 @@
 package modelDB;
 
 public class VozackaDozvola {
-	private final Integer vozackaID;
-	private final String kategorija;
+	private Integer vozackaID;
+	private String kategorija;
 	
+	public VozackaDozvola() {
+	}
+
 	public VozackaDozvola(Integer vozackaID, String kategorija) {
 		this.vozackaID = vozackaID;
 		this.kategorija = kategorija;

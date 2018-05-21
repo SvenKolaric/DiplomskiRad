@@ -1,13 +1,16 @@
 package modelDB;
 
 public class DodatneInfo {
-	private final Integer infoID;
-	private final Integer idCV;
-	private final Integer idKategorije;
-	private final String opis;
+	private Integer infoID;
+	private Integer idCV;
+	private Integer idKategorije;
+	private String opis;
 	
-	private final Kategorija kategorija;
+	private Kategorija kategorija;
 	
+	public DodatneInfo() {
+	}
+
 	public DodatneInfo(Integer infoID, Integer idCV, Integer idKategorije, String opis, Kategorija kategorija) {
 		this.infoID = infoID;
 		this.idCV = idCV;

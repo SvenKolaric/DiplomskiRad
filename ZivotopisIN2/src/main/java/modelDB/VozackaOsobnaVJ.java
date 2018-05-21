@@ -1,12 +1,15 @@
 package modelDB;
 
 public class VozackaOsobnaVJ {
-	private final Integer ID;
-	private final Integer idVozacka;
-	private final Integer idOsobnaVj;
+	private Integer ID;
+	private Integer idVozacka;
+	private Integer idOsobnaVj;
 	
-	private final VozackaDozvola vozackaDozvola;
+	private VozackaDozvola vozackaDozvola;
 	
+	public VozackaOsobnaVJ() {
+	}
+
 	public VozackaOsobnaVJ(Integer iD, Integer idVozacka, Integer idOsobnaVj, VozackaDozvola vozackaDozvola) {
 		ID = iD;
 		this.idVozacka = idVozacka;
