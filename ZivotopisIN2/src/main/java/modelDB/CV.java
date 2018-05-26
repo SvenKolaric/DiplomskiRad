@@ -40,6 +40,50 @@ public class CV {
 	
 
 
+	public void setZivotopisID(Integer zivotopisID) {
+		this.zivotopisID = zivotopisID;
+	}
+
+	public void setTipDokumeenta(String tipDokumeenta) {
+		this.tipDokumeenta = tipDokumeenta;
+	}
+
+	public void setDatumStvaranja(Timestamp datumStvaranja) {
+		this.datumStvaranja = datumStvaranja;
+	}
+
+	public void setDatumAzuriranja(Timestamp datumAzuriranja) {
+		this.datumAzuriranja = datumAzuriranja;
+	}
+
+	public void setIdOsoba(Integer idOsoba) {
+		this.idOsoba = idOsoba;
+	}
+
+	public void setOsobnaVjestinaList(ArrayList<OsobnaVjestina> osobnaVjestinaList) {
+		this.osobnaVjestinaList = osobnaVjestinaList;
+	}
+
+	public void setDodatneInfoList(ArrayList<DodatneInfo> dodatneInfoList) {
+		this.dodatneInfoList = dodatneInfoList;
+	}
+
+	public void setDodatakList(ArrayList<Dodatak> dodatakList) {
+		this.dodatakList = dodatakList;
+	}
+
+	public void setRadnoIskustvoList(ArrayList<RadnoIskustvo> radnoIskustvoList) {
+		this.radnoIskustvoList = radnoIskustvoList;
+	}
+
+	public void setEdukacijaITreningList(ArrayList<EdukacijaITrening> edukacijaITreningList) {
+		this.edukacijaITreningList = edukacijaITreningList;
+	}
+
+	public void setZaglavlje(Zaglavlje zaglavlje) {
+		this.zaglavlje = zaglavlje;
+	}
+
 	public Integer getZivotopisID() {
 		return zivotopisID;
 	}

@@ -6,7 +6,7 @@ import interfaces.DaoCVInterface;
 import modelDB.CV;
 
 @Repository("CV")
-public class DaoCV implements DaoCVInterface {
+public class DaoCVImpl implements DaoCVInterface {
 
 	@Override
 	public void insertNewCV(CV cv) {

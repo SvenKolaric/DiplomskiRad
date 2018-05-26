@@ -6,11 +6,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import interfaces.DaoCVInterface;
 import modelDB.CV;
 import modelDB.EdukacijaITrening;
 
+@Service("BLCV")
 public class BLCV {
 	private final DaoCVInterface daoCV;
 	
@@ -19,7 +21,7 @@ public class BLCV {
 		this.daoCV = daoCVInterface;
 	}
 
-	void insertNewCV(CV cv) {
+	public void insertNewCV(CV cv) {
 		daoCV.insertNewCV(cv);
 		
 		/*CV cv1 = new CV();
@@ -28,17 +30,17 @@ public class BLCV {
 		EdukacijaITrening[] c = (EdukacijaITrening[]) ((Collection<CV>) a).toArray(new EdukacijaITrening[a.size()])*/
 	}
 
-	CV getAllCV() {
+	public CV getAllCV() {
 		return null;
 
 	}
 
-	CV getCVByID(Integer id) {
+	public CV getCVByID(Integer id) {
 		return null;
 
 	}
 
-	CV deleteCVByID(Integer id) {
+	public CV deleteCVByID(Integer id) {
 		return null;
 
 	}
