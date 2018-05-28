@@ -3,6 +3,8 @@ package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CV {
 	private Integer zivotopisID;
 	private String tipDokumenta;
@@ -21,6 +23,15 @@ public class CV {
 		
 	}
 	
+	public CV(Integer zivotopisID, String tipDokumenta, Timestamp datumStvaranja, Timestamp datumAzuriranja,
+			Integer idOsoba) {
+		this.zivotopisID = zivotopisID;
+		this.tipDokumenta = tipDokumenta;
+		this.datumStvaranja = datumStvaranja;
+		this.datumAzuriranja = datumAzuriranja;
+		this.idOsoba = idOsoba;
+	}
+
 	public CV(Integer zivotopisID, String tipDokumenta, Timestamp datumStvaranja, Timestamp datumAzuriranja,
 			Integer idOsoba, ArrayList<OsobnaVjestina> osobnaVjestinaList, ArrayList<DodatneInfo> dodatneInfoList,
 			ArrayList<Dodatak> dodatakList, ArrayList<RadnoIskustvo> radnoIskustvoList, 
@@ -88,7 +99,7 @@ public class CV {
 		return zivotopisID;
 	}
 
-	public String getTipDokumeta() {
+	public String getTipDokumenta() {
 		return tipDokumenta;
 	}
 

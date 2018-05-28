@@ -23,8 +23,8 @@ public class BLCV {
 		this.daoCV = daoCVInterface;
 	}
 
-	public void insertNewCV(CV cv) {
-		daoCV.insertNewCV(cv);
+	public void SaveCV(CV cv) {
+		daoCV.createNewCV(cv);
 		
 		/*CV cv1 = new CV();
 		Iterable<EdukacijaITrening> a = cv1.getEdukacijaITreningList();
@@ -32,8 +32,8 @@ public class BLCV {
 		EdukacijaITrening[] c = (EdukacijaITrening[]) ((Collection<CV>) a).toArray(new EdukacijaITrening[a.size()])*/
 	}
 
-	public CV getAllCV() {
-		return null;
+	public List<CV> getAllCV() {
+		return daoCV.selectAllCV();
 
 	}
 

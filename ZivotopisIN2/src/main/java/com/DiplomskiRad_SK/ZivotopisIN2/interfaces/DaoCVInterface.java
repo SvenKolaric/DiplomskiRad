@@ -1,12 +1,14 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.interfaces;
 
+import java.util.List;
+
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.CV;
 
 public interface DaoCVInterface {
 
-	void insertNewCV(CV cv);
+	void createNewCV(CV cv);
 
-	CV selectAllCV();
+	List<CV> selectAllCV();
 
 	CV selectCVByID(Integer id);
 
