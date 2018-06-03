@@ -1,4 +1,4 @@
-package com.DiplomskiRad_SK.ZivotopisIN2.interfaces;
+package com.DiplomskiRad_SK.ZivotopisIN2.repository;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.CV;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.KontaktniInfo;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Osoba;
 
-public interface DaoCVInterface {
+public interface DaoCVInterfaceTEST {
 
 	// CV
 	

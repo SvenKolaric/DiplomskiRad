@@ -1,11 +1,21 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "ZAGLAVLJE")
 public class Zaglavlje {
+	@Id
+	@GeneratedValue(generator = "ZSeq")
+	@SequenceGenerator(name = "ZSeq", sequenceName = "ZAGLAVLJE_SEQ", allocationSize = 1)
 	private Integer zaglavljeID;
+	@Column(name = "IDCV")
 	private Integer idCV;
+	@Column(name = "OPIS")
 	private String opis;
+	@Column(name = "IDPRIJAVE")
 	private Integer idPrijave;
-	
+	@Transient
 	private VrstaPrijave vrstaPrijave;
 	
 	public Zaglavlje() {
@@ -37,6 +47,26 @@ public class Zaglavlje {
 
 	public Integer getIdPrijave() {
 		return idPrijave;
+	}
+
+	public void setZaglavljeID(Integer zaglavljeID) {
+		this.zaglavljeID = zaglavljeID;
+	}
+
+	public void setIdCV(Integer idCV) {
+		this.idCV = idCV;
+	}
+
+	public void setOpis(String opis) {
+		this.opis = opis;
+	}
+
+	public void setIdPrijave(Integer idPrijave) {
+		this.idPrijave = idPrijave;
+	}
+
+	public void setVrstaPrijave(VrstaPrijave vrstaPrijave) {
+		this.vrstaPrijave = vrstaPrijave;
 	}
 	
 }

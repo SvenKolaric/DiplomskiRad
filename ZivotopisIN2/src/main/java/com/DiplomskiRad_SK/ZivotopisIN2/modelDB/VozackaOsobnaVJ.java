@@ -1,10 +1,19 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "VOZACKA_OSOBNAVJ")
 public class VozackaOsobnaVJ {
+	@Id
+	@GeneratedValue(generator = "VOSeq")
+	@SequenceGenerator(name = "VOSeq", sequenceName = "VOZACKA_OSOBNAVJ_SEQ", allocationSize = 1)
 	private Integer ID;
+	@Column(name = "IDVOZACKA")
 	private Integer idVozacka;
+	@Column(name = "IDOSOBNAVJ")
 	private Integer idOsobnaVj;
-	
+	@Transient
 	private VozackaDozvola vozackaDozvola;
 	
 	public VozackaOsobnaVJ() {
@@ -29,6 +38,22 @@ public class VozackaOsobnaVJ {
 	}
 	public Integer getIdOsobnaVj() {
 		return idOsobnaVj;
+	}
+
+	public void setID(Integer iD) {
+		ID = iD;
+	}
+
+	public void setIdVozacka(Integer idVozacka) {
+		this.idVozacka = idVozacka;
+	}
+
+	public void setIdOsobnaVj(Integer idOsobnaVj) {
+		this.idOsobnaVj = idOsobnaVj;
+	}
+
+	public void setVozackaDozvola(VozackaDozvola vozackaDozvola) {
+		this.vozackaDozvola = vozackaDozvola;
 	}
 	
 }

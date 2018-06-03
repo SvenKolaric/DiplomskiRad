@@ -1,19 +1,30 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "ZNA")
 public class Zna {
-	private Integer ID;
+	@Id
+	@GeneratedValue(generator = "ZNASeq")
+	@SequenceGenerator(name = "ZNASeq", sequenceName = "ZNA_SEQ", allocationSize = 1)	private Integer ID;
 	private Integer idVjestina;
+	@Column(name = "IDJEZIK")
 	private Integer idJezik;
+	@Column(name = "RAZUMIJEVANJE")
 	private String razumijevanje;
+	@Column(name = "GOVOR")
 	private String govor;
+	@Column(name = "PISANJE")
 	private String pisanje;
-	
+	@Transient
 	private Jezik jezik;
-	
+
 	public Zna() {
 	}
 
-	public Zna(Integer iD, Integer idVjestina, Integer idJezik, String razumijevanje, String govor, String pisanje, Jezik jezik) {
+	public Zna(Integer iD, Integer idVjestina, Integer idJezik, String razumijevanje, String govor, String pisanje,
+			Jezik jezik) {
 		ID = iD;
 		this.idVjestina = idVjestina;
 		this.idJezik = idJezik;
@@ -50,5 +61,5 @@ public class Zna {
 	public String getPisanje() {
 		return pisanje;
 	}
-	
+
 }

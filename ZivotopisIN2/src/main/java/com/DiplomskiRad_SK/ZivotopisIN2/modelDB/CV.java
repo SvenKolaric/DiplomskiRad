@@ -3,20 +3,36 @@ package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import javax.persistence.*;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@Entity
+@Table(name = "CV")
 public class CV {
+	@Id
+	@GeneratedValue(generator = "CVSeq")
+	@SequenceGenerator(name = "CVSeq", sequenceName = "CV_SEQ", allocationSize = 1) 
 	private Integer zivotopisID;
+	@Column(name = "TIPDOKUMENTA")
 	private String tipDokumenta;
+	@Column(name = "DATUMSTVARANJA")
 	private Timestamp datumStvaranja;
+	@Column(name = "DATUMAZURIRANJA")
 	private Timestamp datumAzuriranja;
+	@Column(name = "IDOSOBA")
 	private Integer idOsoba;
-	
+	@Transient
 	private ArrayList<OsobnaVjestina> osobnaVjestinaList;
+	@Transient
 	private ArrayList<DodatneInfo> dodatneInfoList;
+	@Transient
 	private ArrayList<Dodatak> dodatakList;
+	@Transient
 	private ArrayList<RadnoIskustvo> radnoIskustvoList;
+	@Transient
 	private ArrayList<EdukacijaITrening> edukacijaITreningList;
+	@Transient
 	private Zaglavlje zaglavlje;
 	
 	public CV() {

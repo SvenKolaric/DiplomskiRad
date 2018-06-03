@@ -2,22 +2,42 @@ package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 
 import java.util.ArrayList;
 
-public class OsobnaVjestina {
-	private Integer vjestinaID;
-	private Integer idCV;
-	private String obradaInfo;
-	private String komunikacija;
-	private String stvaranjeSadrzaja;
-	private String sigurnost;
-	private String rjesavanjeProblema;
-	private String materinjiJezik;
-	private String komunikacijskeVj;
-	private String organizacijskeVj;
-	private String poslovneVj;
-	private String ostaleVj;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "OSOBNA_VJESTINA")
+public class OsobnaVjestina {
+	@Id
+	@GeneratedValue(generator = "OVSeq")
+	@SequenceGenerator(name = "OVSeq", sequenceName = "OSOBNA_VJESTINA_SEQ", allocationSize = 1)
+	private Integer vjestinaID;
+	@Column(name = "IDCV")
+	private Integer idCV;
+	@Column(name = "OBRADAINFO")
+	private String obradaInfo;
+	@Column(name = "KOMUNIKACIJA")
+	private String komunikacija;
+	@Column(name = "STVARANJESADRZAJA")
+	private String stvaranjeSadrzaja;
+	@Column(name = "SIGURNOST")
+	private String sigurnost;
+	@Column(name = "RJESAVANJEPROBLEMA")
+	private String rjesavanjeProblema;
+	@Column(name = "MATERINJIJEZIK")
+	private String materinjiJezik;
+	@Column(name = "KOMUNIKACIJSKEVJ")
+	private String komunikacijskeVj;
+	@Column(name = "ORGANIZACIJSKEVJ")
+	private String organizacijskeVj;
+	@Column(name = "POSLOVNEVJ")
+	private String poslovneVj;
+	@Column(name = "OSTALEVJ")
+	private String ostaleVj;
+	@Transient
 	private ArrayList<Zna> jezikList;
+	@Transient
 	private ArrayList<VozackaDozvola> vozackaDozvolaList;
+	@Transient
 	private ArrayList<CertifikatDiploma> certifikatDiplomaList;
 
 	public OsobnaVjestina() {
@@ -103,6 +123,66 @@ public class OsobnaVjestina {
 
 	public String getOstaleVj() {
 		return ostaleVj;
+	}
+
+	public void setVjestinaID(Integer vjestinaID) {
+		this.vjestinaID = vjestinaID;
+	}
+
+	public void setIdCV(Integer idCV) {
+		this.idCV = idCV;
+	}
+
+	public void setObradaInfo(String obradaInfo) {
+		this.obradaInfo = obradaInfo;
+	}
+
+	public void setKomunikacija(String komunikacija) {
+		this.komunikacija = komunikacija;
+	}
+
+	public void setStvaranjeSadrzaja(String stvaranjeSadrzaja) {
+		this.stvaranjeSadrzaja = stvaranjeSadrzaja;
+	}
+
+	public void setSigurnost(String sigurnost) {
+		this.sigurnost = sigurnost;
+	}
+
+	public void setRjesavanjeProblema(String rjesavanjeProblema) {
+		this.rjesavanjeProblema = rjesavanjeProblema;
+	}
+
+	public void setMaterinjiJezik(String materinjiJezik) {
+		this.materinjiJezik = materinjiJezik;
+	}
+
+	public void setKomunikacijskeVj(String komunikacijskeVj) {
+		this.komunikacijskeVj = komunikacijskeVj;
+	}
+
+	public void setOrganizacijskeVj(String organizacijskeVj) {
+		this.organizacijskeVj = organizacijskeVj;
+	}
+
+	public void setPoslovneVj(String poslovneVj) {
+		this.poslovneVj = poslovneVj;
+	}
+
+	public void setOstaleVj(String ostaleVj) {
+		this.ostaleVj = ostaleVj;
+	}
+
+	public void setJezikList(ArrayList<Zna> jezikList) {
+		this.jezikList = jezikList;
+	}
+
+	public void setVozackaDozvolaList(ArrayList<VozackaDozvola> vozackaDozvolaList) {
+		this.vozackaDozvolaList = vozackaDozvolaList;
+	}
+
+	public void setCertifikatDiplomaList(ArrayList<CertifikatDiploma> certifikatDiplomaList) {
+		this.certifikatDiplomaList = certifikatDiplomaList;
 	}
 
 }

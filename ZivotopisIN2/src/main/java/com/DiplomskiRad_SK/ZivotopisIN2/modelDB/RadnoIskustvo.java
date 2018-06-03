@@ -2,18 +2,34 @@ package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 
 import java.util.Date;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "RADNO_ISKUSTVO")
 public class RadnoIskustvo {
+	@Id
+	@GeneratedValue(generator = "RISeq")
+	@SequenceGenerator(name = "RISeq", sequenceName = "RADNO_ISKUSTVO_SEQ", allocationSize = 1)
 	private Integer PosaoID;
+	@Column(name = "IDCV")
 	private Integer idCV;
+	@Column(name = "DATUMPOCETKA")
 	private Date datumPocetka;
+	@Column(name = "DATUMKRAJA")
 	private Date datumKraja;
+	@Column(name = "IDPOZICIJA")
 	private Integer idPozicija;
+	@Column(name = "IDINSTITUCIJA")
 	private Integer idInstitucija;
+	@Column(name = "DJELATNOSTSEKTOR")
 	private String djelatnostSektor;
+	@Column(name = "OPISPOSLA")
 	private String opisPosla;
+	@Column(name = "BR_GOD_RADA")
 	private Integer brGodRada;
-	
+	@Transient
 	private Pozicija pozicija;
+	@Transient
 	private Institucija institucija;
 	
 	public RadnoIskustvo() {
@@ -76,6 +92,50 @@ public class RadnoIskustvo {
 
 	public Integer getBrGodRada() {
 		return brGodRada;
+	}
+
+	public void setPosaoID(Integer posaoID) {
+		PosaoID = posaoID;
+	}
+
+	public void setIdCV(Integer idCV) {
+		this.idCV = idCV;
+	}
+
+	public void setDatumPocetka(Date datumPocetka) {
+		this.datumPocetka = datumPocetka;
+	}
+
+	public void setDatumKraja(Date datumKraja) {
+		this.datumKraja = datumKraja;
+	}
+
+	public void setIdPozicija(Integer idPozicija) {
+		this.idPozicija = idPozicija;
+	}
+
+	public void setIdInstitucija(Integer idInstitucija) {
+		this.idInstitucija = idInstitucija;
+	}
+
+	public void setDjelatnostSektor(String djelatnostSektor) {
+		this.djelatnostSektor = djelatnostSektor;
+	}
+
+	public void setOpisPosla(String opisPosla) {
+		this.opisPosla = opisPosla;
+	}
+
+	public void setBrGodRada(Integer brGodRada) {
+		this.brGodRada = brGodRada;
+	}
+
+	public void setPozicija(Pozicija pozicija) {
+		this.pozicija = pozicija;
+	}
+
+	public void setInstitucija(Institucija institucija) {
+		this.institucija = institucija;
 	}
 	
 }
