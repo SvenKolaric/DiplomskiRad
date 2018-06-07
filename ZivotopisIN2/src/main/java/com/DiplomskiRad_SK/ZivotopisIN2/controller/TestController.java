@@ -50,8 +50,8 @@ public class TestController {
 			method = RequestMethod.POST,
 			consumes = org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE
 	)
-	public void insertNewCV(@RequestBody CV cv) {
-		blCV.SaveCV(cv);
+	public void insertNewCV() {//@RequestBody CV cv) {
+		blCV.SaveCVtest();
 	}
 	
 	@RequestMapping(

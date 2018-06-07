@@ -39,7 +39,9 @@ public class OsobnaVjestina {
 	private ArrayList<VozackaOsobnaVJ> vozackaDozvolaList;
 	@Transient
 	private ArrayList<CertifikatDiploma> certifikatDiplomaList;
-
+	@Transient
+	private CV zivotopis;
+	
 	public OsobnaVjestina() {
 	}
 
@@ -183,6 +185,14 @@ public class OsobnaVjestina {
 
 	public void setCertifikatDiplomaList(ArrayList<CertifikatDiploma> certifikatDiplomaList) {
 		this.certifikatDiplomaList = certifikatDiplomaList;
+	}
+
+	public CV getZivotopis() {
+		return zivotopis;
+	}
+
+	public void setZivotopis(CV zivotopis) {
+		this.zivotopis = zivotopis;
 	}
 
 }

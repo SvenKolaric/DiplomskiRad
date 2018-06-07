@@ -1,6 +1,7 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -27,8 +28,9 @@ public class Osoba {
 	private Integer idMjesto;
 	@Column(name = "WEBSITE")
 	private String website;
+	//@OneToMany(mappedBy = "osoba", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Transient
-	private ArrayList<CV> zivotopisiList;
+	private List<CV> zivotopisiList = new ArrayList<>();
 	@Transient
 	private ArrayList<KontaktniInfo> kontaktInfoList;
 	@Transient
@@ -92,7 +94,7 @@ public class Osoba {
 		return idMjesto;
 	}
 
-	public ArrayList<CV> getZivotopisiList() {
+	public List<CV> getZivotopisiList() {
 		return zivotopisiList;
 	}
 	

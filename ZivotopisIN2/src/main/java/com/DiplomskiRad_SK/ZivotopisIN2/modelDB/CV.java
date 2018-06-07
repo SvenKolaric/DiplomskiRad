@@ -2,17 +2,20 @@ package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 
 @Entity
 @Table(name = "CV")
 public class CV {
 	@Id
 	@GeneratedValue(generator = "CVSeq")
-	@SequenceGenerator(name = "CVSeq", sequenceName = "CV_SEQ", allocationSize = 1) 
+	@SequenceGenerator(name = "CVSeq", sequenceName = "CV_SEQ", allocationSize = 1)
 	private Integer zivotopisID;
 	@Column(name = "TIPDOKUMENTA")
 	private String tipDokumenta;
@@ -22,23 +25,35 @@ public class CV {
 	private Timestamp datumAzuriranja;
 	@Column(name = "IDOSOBA")
 	private Integer idOsoba;
+	
+	//@OneToMany(mappedBy = "cv", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Transient
-	private ArrayList<OsobnaVjestina> osobnaVjestinaList;
+	private List<OsobnaVjestina> osobnaVjestinaList = new ArrayList<>();
+	@OneToMany(mappedBy = "zivotopis", cascade = CascadeType.ALL, orphanRemoval = true) //IME ATRIBUTA U DODATNEINFO KOJI TI REFERENCIRAM
+	private List<DodatneInfo> dodatneInfoList= new ArrayList<>();
+	//@OneToMany(mappedBy = "cv", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@ElementCollection(targetClass=Integer.class) //?
 	@Transient
-	private ArrayList<DodatneInfo> dodatneInfoList;
+	private List<Dodatak> dodatakList= new ArrayList<>();
+	//@OneToMany(mappedBy = "cv", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Transient
-	private ArrayList<Dodatak> dodatakList;
+	private List<RadnoIskustvo> radnoIskustvoList= new ArrayList<>();
+	//@OneToMany(mappedBy = "cv", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Transient
-	private ArrayList<RadnoIskustvo> radnoIskustvoList;
-	@Transient
-	private ArrayList<EdukacijaITrening> edukacijaITreningList;
+	private List<EdukacijaITrening> edukacijaITreningList= new ArrayList<>();
+	
+	/*@OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL,
+            mappedBy = "cv")*/
 	@Transient
 	private Zaglavlje zaglavlje;
 	
-	public CV() {
-		
-	}
-	
+	/*@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDOSOBA")
+	private Osoba osoba;*/
+
+	public CV() {}
+
 	public CV(Integer zivotopisID, String tipDokumenta, Timestamp datumStvaranja, Timestamp datumAzuriranja,
 			Integer idOsoba) {
 		this.zivotopisID = zivotopisID;
@@ -47,26 +62,59 @@ public class CV {
 		this.datumAzuriranja = datumAzuriranja;
 		this.idOsoba = idOsoba;
 	}
-
-	public CV(Integer zivotopisID, String tipDokumenta, Timestamp datumStvaranja, Timestamp datumAzuriranja,
-			Integer idOsoba, ArrayList<OsobnaVjestina> osobnaVjestinaList, ArrayList<DodatneInfo> dodatneInfoList,
-			ArrayList<Dodatak> dodatakList, ArrayList<RadnoIskustvo> radnoIskustvoList, 
-			ArrayList<EdukacijaITrening> edukacijaITreningList, Zaglavlje zaglavlje) {
-		this.zivotopisID = zivotopisID;
-		this.tipDokumenta = tipDokumenta;
-		this.datumStvaranja = datumStvaranja;
-		this.datumAzuriranja = datumAzuriranja;
-		this.idOsoba = idOsoba;
-		this.osobnaVjestinaList = osobnaVjestinaList;
-		this.dodatneInfoList = dodatneInfoList;
-		this.dodatakList = dodatakList;
-		this.radnoIskustvoList = radnoIskustvoList;
-		this.edukacijaITreningList = edukacijaITreningList;
-		this.zaglavlje = zaglavlje;
-	}
 	
-
-
+	/*synchronize both sides of the bidirectional association*/
+	public void addOsobnaVjestina(OsobnaVjestina obj) {
+		osobnaVjestinaList.add(obj);
+        obj.setZivotopis(this);
+    }
+ 
+    public void removeOsobnaVjestina(OsobnaVjestina obj) {
+    	osobnaVjestinaList.remove(obj);
+        obj.setZivotopis(null);
+    }
+    
+	public void addDodatneInfo(DodatneInfo obj) {
+    	dodatneInfoList.add(obj);
+        obj.setZivotopis(this);
+    }
+ 
+    public void removeDodatneInfo(DodatneInfo obj) {
+    	dodatneInfoList.remove(obj);
+        obj.setZivotopis(this);
+    }
+    
+    public void addDodatak(Dodatak obj) {
+    	dodatakList.add(obj);
+        //obj.setZivotopis(this);
+    }
+ 
+    public void removeDodatak(Dodatak obj) {
+    	dodatakList.remove(obj);
+        //obj.setZivotopis(this);
+    }
+    
+    public void addRadnoIskustvo(RadnoIskustvo obj) {
+    	radnoIskustvoList.add(obj);
+        //obj.setZivotopis(this);
+    }
+    
+    public void removeRadnoIskustvo(RadnoIskustvo obj) {
+    	radnoIskustvoList.remove(obj);
+        //obj.setZivotopis(this);
+    }
+    
+    public void addEdukacijaITrening(EdukacijaITrening obj) {
+    	edukacijaITreningList.add(obj);
+        //obj.setZivotopis(this);
+    }
+ 
+    public void removeEdukacijaITrening(EdukacijaITrening obj) {
+    	edukacijaITreningList.remove(obj);
+        //obj.setZivotopis(this);
+    }
+    
+    //Getters and Setters
 	public void setZivotopisID(Integer zivotopisID) {
 		this.zivotopisID = zivotopisID;
 	}
@@ -131,23 +179,23 @@ public class CV {
 		return idOsoba;
 	}
 
-	public ArrayList<OsobnaVjestina> getOsobnaVjestinaList() {
+	public List<OsobnaVjestina> getOsobnaVjestinaList() {
 		return osobnaVjestinaList;
 	}
 
-	public ArrayList<DodatneInfo> getDodatneInfoList() {
+	public List<DodatneInfo> getDodatneInfoList() {
 		return dodatneInfoList;
 	}
 
-	public ArrayList<Dodatak> getDodatakList() {
+	public List<Dodatak> getDodatakList() {
 		return dodatakList;
 	}
 
-	public ArrayList<RadnoIskustvo> getRadnoIskustvoList() {
+	public List<RadnoIskustvo> getRadnoIskustvoList() {
 		return radnoIskustvoList;
 	}
 
-	public ArrayList<EdukacijaITrening> getEdukacijaITreningList() {
+	public List<EdukacijaITrening> getEdukacijaITreningList() {
 		return edukacijaITreningList;
 	}
 
@@ -155,15 +203,38 @@ public class CV {
 		return zaglavlje;
 	}
 
-	/*public Entities.City ToEntity()
-    {
-        Entities.City entity = new Entities.City
-        {
-            Id = Id,
-            StateId = StateId,
-            Name = Name
-        };
-        return entity;
-    }*/
+	/*public Osoba getOsoba() {
+		return osoba;
+	}
+*/
+	public void setOsoba(Osoba osoba) {
+		//this.osoba = osoba;
+	}
 	
+	
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37)
+                .append(tipDokumenta)
+                .append(datumAzuriranja)
+                .append(datumStvaranja)
+                .toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CV other = (CV) obj;
+		return new EqualsBuilder()
+                .append(tipDokumenta, other.tipDokumenta)
+                .append(datumAzuriranja, other.datumAzuriranja)
+                .append(datumStvaranja, other.datumStvaranja)
+                .isEquals();
+		
+	}
 }

@@ -9,24 +9,26 @@ public class DodatneInfo {
 	@GeneratedValue(generator = "DISeq")
 	@SequenceGenerator(name = "DISeq", sequenceName = "DODATNE_INFO_SEQ", allocationSize = 1)
 	private Integer infoID;
-	@Column(name = "IDCV")
-	private Integer idCV;
-	@Column(name = "IDKATEGORIJE")
-	private Integer idKategorije;
+	/*@Column(name = "IDCV")
+	private Integer idCV;*/
+	/*@Column(name = "IDKATEGORIJE")
+	private Integer idKategorija;*/
 	@Column(name = "OPIS")
 	private String opis;
-	@Transient
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDKATEGORIJE")
 	private Kategorija kategorija;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDCV")
+	private CV zivotopis;
 
 	public DodatneInfo() {
 	}
 
-	public DodatneInfo(Integer infoID, Integer idCV, Integer idKategorije, String opis, Kategorija kategorija) {
+	public DodatneInfo(Integer infoID, String opis) {
 		this.infoID = infoID;
-		this.idCV = idCV;
-		this.idKategorije = idKategorije;
+		//this.idCV = idCV;
 		this.opis = opis;
-		this.kategorija = kategorija;
 	}
 
 	public Kategorija getKategorija() {
@@ -37,13 +39,10 @@ public class DodatneInfo {
 		return infoID;
 	}
 
-	public Integer getIdCV() {
-		return idCV;
-	}
-
-	public Integer getIdKategorije() {
+	
+	/*public Integer getIdKategorije() {
 		return idKategorije;
-	}
+	}*/
 
 	public String getOpis() {
 		return opis;
@@ -53,13 +52,11 @@ public class DodatneInfo {
 		this.infoID = infoID;
 	}
 
-	public void setIdCV(Integer idCV) {
-		this.idCV = idCV;
-	}
 
-	public void setIdKategorije(Integer idKategorije) {
+
+	/*public void setIdKategorije(Integer idKategorije) {
 		this.idKategorije = idKategorije;
-	}
+	}*/
 
 	public void setOpis(String opis) {
 		this.opis = opis;
@@ -67,6 +64,14 @@ public class DodatneInfo {
 
 	public void setKategorija(Kategorija kategorija) {
 		this.kategorija = kategorija;
+	}
+
+	public CV getZivotopis() {
+		return zivotopis;
+	}
+
+	public void setZivotopis(CV zivotopis) {
+		this.zivotopis = zivotopis;
 	}
 
 }

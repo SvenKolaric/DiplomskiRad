@@ -1,7 +1,9 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.bl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.CV;
+import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.DodatneInfo;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.EdukacijaITrening;
+import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Kategorija;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Osoba;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.CVRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.CertifikatiDiplomaRepository;
@@ -41,13 +45,13 @@ import com.google.common.collect.Lists;
 
 @Service("BLCV")
 public class BLCV {
-	
+
 	@Autowired
 	CVRepository cvRepo;
 	@Autowired
 	OsobaRepository osobaRepo;
 	@Autowired
-	CertifikatiDiplomaRepository  cerDipRepo;
+	CertifikatiDiplomaRepository cerDipRepo;
 	@Autowired
 	DodatakRepository dodatakRepo;
 	@Autowired
@@ -88,7 +92,6 @@ public class BLCV {
 	ZaglavljeRepository zaglavljeRepo;
 	@Autowired
 	ZnaRepository znaRepo;
-	
 
 	/*
 	 * @Autowired public BLCV(@Qualifier("CV") DaoCVInterface daoCVInterface) {
@@ -98,13 +101,63 @@ public class BLCV {
 	@Transactional
 	public void SaveCV(CV cv) {
 		cvRepo.save(cv);
-		//cv.getOsobnaVjestinaList().get(1).getVozackaDozvolaList().get(1).getIdOsobnaVj()
+		// cv.getOsobnaVjestinaList().get(1).getVozackaDozvolaList().get(1).getIdOsobnaVj()
 		/*
 		 * CV cv1 = new CV(); Iterable<EdukacijaITrening> a =
 		 * cv1.getEdukacijaITreningList(); ArrayList<CV> b = new ArrayList<CV>();
 		 * EdukacijaITrening[] c = (EdukacijaITrening[]) ((Collection<CV>)
 		 * a).toArray(new EdukacijaITrening[a.size()])
 		 */
+	}
+
+	@Transactional
+	public void SaveCVtest() {
+		Date d = new Date();
+		CV cv = new CV();
+		DodatneInfo di = new DodatneInfo();
+		Kategorija k = new Kategorija();
+
+		// cv.setZivotopisID(1);
+		cv.setDatumAzuriranja(new Timestamp(d.getTime()));
+		cv.setDatumStvaranja(new Timestamp(d.getTime()));
+		cv.setTipDokumenta("testCVKAT2");
+		cv.setIdOsoba(1);
+
+		k.setNaziv("testKategorija");
+
+		di.setOpis("testDodatniInfo1");
+
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		Kategorija postojiKat = kategorijaRepo.findByNaziv("testKategorija2");
+		if (postojiKat != null) {
+			di.setKategorija(postojiKat);
+		} else { // da li možeš
+			// samo spremiti kategoriju ili moraš ju nekako dodati u di i onda spremati
+			// kategorijaRepo.save(k);
+			di.setKategorija(k);
+			kategorijaRepo.save(k);
+		}
+
+		// TU ILI DOBAVI ID KATEGORIJE I STAVI U DI(MAKNI ONDA ONE TO MANY???) ILI
+		// PROCITAJ ONAJ TUTORIAL
+
+		di.setZivotopis(cv);
+		//di.setKategorija(k);
+		// ????? samo jedan dio
+		cv.getDodatneInfoList().add(di);
+
+		//kategorijaRepo.save(k);
+		cvRepo.save(cv); // moraš prvo cv
+
+		// test
+		System.out.println(k.getDodatneInfoList().size());
+
+		// update
+		k.getDodatneInfoList().remove(di);
+		// kategorijaRepo.save(k);
+
+		// test
+		System.out.println(k.getDodatneInfoList().size());
 	}
 
 	@Transactional
