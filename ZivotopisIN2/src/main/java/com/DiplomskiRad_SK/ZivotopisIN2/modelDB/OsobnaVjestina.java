@@ -36,7 +36,7 @@ public class OsobnaVjestina {
 	@Transient
 	private ArrayList<Zna> jezikList;
 	@Transient
-	private ArrayList<VozackaDozvola> vozackaDozvolaList;
+	private ArrayList<VozackaOsobnaVJ> vozackaDozvolaList;
 	@Transient
 	private ArrayList<CertifikatDiploma> certifikatDiplomaList;
 
@@ -46,7 +46,7 @@ public class OsobnaVjestina {
 	public OsobnaVjestina(Integer vjestinaID, Integer idCV, String obradaInfo, String komunikacija,
 			String stvaranjeSadrzaja, String sigurnost, String rjesavanjeProblema, String materinjiJezik,
 			String komunikacijskeVj, String organizacijskeVj, String poslovneVj, String ostaleVj,
-			ArrayList<Zna> jezikList, ArrayList<VozackaDozvola> vozackaDozvolaList,
+			ArrayList<Zna> jezikList, ArrayList<VozackaOsobnaVJ> vozackaDozvolaList,
 			ArrayList<CertifikatDiploma> certifikatDiplomaList) {
 		this.vjestinaID = vjestinaID;
 		this.idCV = idCV;
@@ -69,7 +69,7 @@ public class OsobnaVjestina {
 		return jezikList;
 	}
 
-	public ArrayList<VozackaDozvola> getVozackaDozvolaList() {
+	public ArrayList<VozackaOsobnaVJ> getVozackaDozvolaList() {
 		return vozackaDozvolaList;
 	}
 
@@ -177,7 +177,7 @@ public class OsobnaVjestina {
 		this.jezikList = jezikList;
 	}
 
-	public void setVozackaDozvolaList(ArrayList<VozackaDozvola> vozackaDozvolaList) {
+	public void setVozackaDozvolaList(ArrayList<VozackaOsobnaVJ> vozackaDozvolaList) {
 		this.vozackaDozvolaList = vozackaDozvolaList;
 	}
 

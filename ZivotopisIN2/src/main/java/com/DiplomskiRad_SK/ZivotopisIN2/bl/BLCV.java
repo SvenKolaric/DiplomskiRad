@@ -15,50 +15,118 @@ import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.CV;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.EdukacijaITrening;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Osoba;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.CVRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.CertifikatiDiplomaRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.DodatakRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.DodatneInfoRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.DrzavaRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.DrzavljanstvoRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.EdukacijaITreningRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.InstitucijaRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.JezikRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.KategorijaRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.KontaktniInfoRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.MjestoRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.OsobaDrzavljanstvoRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.OsobaRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.OsobnaVjestinaRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.PozicijaRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.RadnoIskustvoRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.TipKontaktaRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.VozackaDozvolaRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.VozackaOsobnaVJRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.VrstaPrijaveRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.ZaglavljeRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.ZnaRepository;
 import com.google.common.collect.Lists;
 
 @Service("BLCV")
 public class BLCV {
+	
 	@Autowired
-    CVRepository cvRepository;
-	@Autowired 
-	OsobaRepository osobaRepository;
+	CVRepository cvRepo;
+	@Autowired
+	OsobaRepository osobaRepo;
+	@Autowired
+	CertifikatiDiplomaRepository  cerDipRepo;
+	@Autowired
+	DodatakRepository dodatakRepo;
+	@Autowired
+	DodatneInfoRepository dodInfoRepo;
+	@Autowired
+	DrzavaRepository drzavaRepo;
+	@Autowired
+	DrzavljanstvoRepository drzavljanstvoRepo;
+	@Autowired
+	EdukacijaITreningRepository eduTrenRepo;
+	@Autowired
+	InstitucijaRepository institucijaRepo;
+	@Autowired
+	JezikRepository jezikRepo;
+	@Autowired
+	KategorijaRepository kategorijaRepo;
+	@Autowired
+	KontaktniInfoRepository kontInfoRepo;
+	@Autowired
+	MjestoRepository mjestoRepo;
+	@Autowired
+	OsobaDrzavljanstvoRepository osobaDrzRepo;
+	@Autowired
+	OsobnaVjestinaRepository osobnaVJRepo;
+	@Autowired
+	PozicijaRepository pozicijaRepo;
+	@Autowired
+	RadnoIskustvoRepository radnoIRepo;
+	@Autowired
+	TipKontaktaRepository tipKontRepo;
+	@Autowired
+	VozackaDozvolaRepository vozackaDozRepo;
+	@Autowired
+	VozackaOsobnaVJRepository vozOsobnaVJRepo;
+	@Autowired
+	VrstaPrijaveRepository vrstaPrijRepo;
+	@Autowired
+	ZaglavljeRepository zaglavljeRepo;
+	@Autowired
+	ZnaRepository znaRepo;
 	
-	/*@Autowired
-	public BLCV(@Qualifier("CV") DaoCVInterface daoCVInterface) {
-		this.daoCV = daoCVInterface;
-	}*/
-	
+
+	/*
+	 * @Autowired public BLCV(@Qualifier("CV") DaoCVInterface daoCVInterface) {
+	 * this.daoCV = daoCVInterface; }
+	 */
+
 	@Transactional
 	public void SaveCV(CV cv) {
-		cvRepository.save(cv);
-		/*CV cv1 = new CV();
-		Iterable<EdukacijaITrening> a = cv1.getEdukacijaITreningList();
-		ArrayList<CV> b = new ArrayList<CV>();
-		EdukacijaITrening[] c = (EdukacijaITrening[]) ((Collection<CV>) a).toArray(new EdukacijaITrening[a.size()])*/
+		cvRepo.save(cv);
+		//cv.getOsobnaVjestinaList().get(1).getVozackaDozvolaList().get(1).getIdOsobnaVj()
+		/*
+		 * CV cv1 = new CV(); Iterable<EdukacijaITrening> a =
+		 * cv1.getEdukacijaITreningList(); ArrayList<CV> b = new ArrayList<CV>();
+		 * EdukacijaITrening[] c = (EdukacijaITrening[]) ((Collection<CV>)
+		 * a).toArray(new EdukacijaITrening[a.size()])
+		 */
 	}
-	
+
 	@Transactional
 	public List<Osoba> getAllCV() {
-		return Lists.newArrayList(osobaRepository.findAll());
+		return Lists.newArrayList(osobaRepo.findAll());
 
 	}
 
 	@Transactional
 	public Optional<CV> getCVByID(Integer id) {
-		return cvRepository.findById(id);
+		return cvRepo.findById(id);
 
 	}
-	
+
 	@Transactional
-	public List<CV> getCVByOsobaID(Integer idOsoba){
-		return cvRepository.findByIdOsoba(idOsoba);
+	public List<CV> getCVByOsobaID(Integer idOsoba) {
+		return cvRepo.findByIdOsoba(idOsoba);
 	}
-	
+
 	@Transactional
 	public void deleteCVByID(Integer id) {
-		cvRepository.deleteById(id);
+		cvRepo.deleteById(id);
 	}
 
 }

@@ -7,29 +7,36 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.springframework.http.MediaType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.DiplomskiRad_SK.ZivotopisIN2.bl.BLXMLParser;
+
 @Controller
 public class UploadController {
 
+	private final BLXMLParser xmlParser;
+	
+	@Autowired
+	public UploadController(@Qualifier("BLXML") BLXMLParser xmlParser) {
+		this.xmlParser = xmlParser;
+	}
+	
 	@GetMapping("/")
 	public String index() {
 		return "upload";
 	}
 
-	@PostMapping("/upload") // new annotation since 4.3
+	@PostMapping("/upload")
 	//@RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public String singleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
 
@@ -37,25 +44,11 @@ public class UploadController {
 			redirectAttributes.addFlashAttribute("message", "Molimo odaberite datoteku za slanje");
 			return "redirect:uploadStatus";
 		}
-
-		try {
-
-			// Get the file and save it somewhere
-			//byte[] bytes = file.getBytes();
-			// Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
-			// Files.write(path, bytes);
-			InputStream is = file.getInputStream();
-	        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-	        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();                 
-	        Document doc = dBuilder.parse(is);
-	        NodeList nodes = doc.getChildNodes();
-			redirectAttributes.addFlashAttribute("message",
-					"Uspješno ste poslali datoteku '" + file.getOriginalFilename() + "'");
-
-		} catch (SAXException | IOException | ParserConfigurationException ex) {
-	        ex.printStackTrace();
-			//Logger.getLogger(JavaApplication4.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		
+		//tu dojavi grešku ako se ne spremi
+		xmlParser.parseMapXMLFile(file);
+	        
+		redirectAttributes.addFlashAttribute("message",	"Datoteka '" + file.getOriginalFilename() + "' je uspješno učitana i spremljena u bazu podataka.");
 
 		return "redirect:/uploadStatus";
 	}
