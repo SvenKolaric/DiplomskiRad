@@ -41,7 +41,6 @@ public class TestController {
 		cv.setDatumAzuriranja(new Timestamp(d.getTime()));
 		cv.setDatumStvaranja(new Timestamp(d.getTime()));
 		cv.setTipDokumenta("lllalala");
-		cv.setIdOsoba(1);
 		//return cv;
 		return blCV.getAllCV();
 	}

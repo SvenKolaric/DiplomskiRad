@@ -8,6 +8,5 @@ import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.VozackaOsobnaVJ;;
 
 public interface VozackaOsobnaVJRepository extends CrudRepository<VozackaOsobnaVJ, Integer>{
 	
-	List<VozackaOsobnaVJ> findByIdOsobnaVj(Integer idOsobnaVj);
 
 }

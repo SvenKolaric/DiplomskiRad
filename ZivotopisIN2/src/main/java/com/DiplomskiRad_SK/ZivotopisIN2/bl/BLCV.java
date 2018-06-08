@@ -121,16 +121,16 @@ public class BLCV {
 		cv.setDatumAzuriranja(new Timestamp(d.getTime()));
 		cv.setDatumStvaranja(new Timestamp(d.getTime()));
 		cv.setTipDokumenta("testCVKAT2");
-		cv.setIdOsoba(1);
 
 		k.setNaziv("testKategorija");
 
 		di.setOpis("testDodatniInfo1");
 
 		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		Kategorija postojiKat = kategorijaRepo.findByNaziv("testKategorija2");
+		Kategorija postojiKat = kategorijaRepo.findByNaziv("testKategorija");
 		if (postojiKat != null) {
 			di.setKategorija(postojiKat);
+			postojiKat.getDodatneInfoList().get(0);
 		} else { // da li možeš
 			// samo spremiti kategoriju ili moraš ju nekako dodati u di i onda spremati
 			// kategorijaRepo.save(k);
@@ -174,7 +174,7 @@ public class BLCV {
 
 	@Transactional
 	public List<CV> getCVByOsobaID(Integer idOsoba) {
-		return cvRepo.findByIdOsoba(idOsoba);
+		return null;// cvRepo.findByIdOsoba(idOsoba);
 	}
 
 	@Transactional

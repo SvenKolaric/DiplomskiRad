@@ -23,44 +23,36 @@ public class CV {
 	private Timestamp datumStvaranja;
 	@Column(name = "DATUMAZURIRANJA")
 	private Timestamp datumAzuriranja;
-	@Column(name = "IDOSOBA")
-	private Integer idOsoba;
+
 	
-	//@OneToMany(mappedBy = "cv", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Transient
+	@OneToMany(mappedBy = "zivotopis", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<OsobnaVjestina> osobnaVjestinaList = new ArrayList<>();
 	@OneToMany(mappedBy = "zivotopis", cascade = CascadeType.ALL, orphanRemoval = true) //IME ATRIBUTA U DODATNEINFO KOJI TI REFERENCIRAM
 	private List<DodatneInfo> dodatneInfoList= new ArrayList<>();
-	//@OneToMany(mappedBy = "cv", cascade = CascadeType.ALL, orphanRemoval = true)
-    //@ElementCollection(targetClass=Integer.class) //?
-	@Transient
+	@OneToMany(mappedBy = "zivotopis", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Dodatak> dodatakList= new ArrayList<>();
-	//@OneToMany(mappedBy = "cv", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Transient
+	@OneToMany(mappedBy = "zivotopis", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<RadnoIskustvo> radnoIskustvoList= new ArrayList<>();
-	//@OneToMany(mappedBy = "cv", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Transient
+	@OneToMany(mappedBy = "zivotopis", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<EdukacijaITrening> edukacijaITreningList= new ArrayList<>();
 	
-	/*@OneToOne(fetch = FetchType.LAZY,
+	@OneToOne(fetch = FetchType.LAZY,
             cascade =  CascadeType.ALL,
-            mappedBy = "cv")*/
+            mappedBy = "zivotopis")
 	@Transient
 	private Zaglavlje zaglavlje;
 	
-	/*@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDOSOBA")
-	private Osoba osoba;*/
+	private Osoba osoba;
 
 	public CV() {}
 
-	public CV(Integer zivotopisID, String tipDokumenta, Timestamp datumStvaranja, Timestamp datumAzuriranja,
-			Integer idOsoba) {
+	public CV(Integer zivotopisID, String tipDokumenta, Timestamp datumStvaranja, Timestamp datumAzuriranja) {
 		this.zivotopisID = zivotopisID;
 		this.tipDokumenta = tipDokumenta;
 		this.datumStvaranja = datumStvaranja;
 		this.datumAzuriranja = datumAzuriranja;
-		this.idOsoba = idOsoba;
 	}
 	
 	/*synchronize both sides of the bidirectional association*/
@@ -86,32 +78,32 @@ public class CV {
     
     public void addDodatak(Dodatak obj) {
     	dodatakList.add(obj);
-        //obj.setZivotopis(this);
+        obj.setZivotopis(this);
     }
  
     public void removeDodatak(Dodatak obj) {
     	dodatakList.remove(obj);
-        //obj.setZivotopis(this);
+        obj.setZivotopis(this);
     }
     
     public void addRadnoIskustvo(RadnoIskustvo obj) {
     	radnoIskustvoList.add(obj);
-        //obj.setZivotopis(this);
+        obj.setZivotopis(this);
     }
     
     public void removeRadnoIskustvo(RadnoIskustvo obj) {
     	radnoIskustvoList.remove(obj);
-        //obj.setZivotopis(this);
+        obj.setZivotopis(this);
     }
     
     public void addEdukacijaITrening(EdukacijaITrening obj) {
     	edukacijaITreningList.add(obj);
-        //obj.setZivotopis(this);
+        obj.setZivotopis(this);
     }
  
     public void removeEdukacijaITrening(EdukacijaITrening obj) {
     	edukacijaITreningList.remove(obj);
-        //obj.setZivotopis(this);
+        obj.setZivotopis(this);
     }
     
     //Getters and Setters
@@ -129,10 +121,6 @@ public class CV {
 
 	public void setDatumAzuriranja(Timestamp datumAzuriranja) {
 		this.datumAzuriranja = datumAzuriranja;
-	}
-
-	public void setIdOsoba(Integer idOsoba) {
-		this.idOsoba = idOsoba;
 	}
 
 	public void setOsobnaVjestinaList(ArrayList<OsobnaVjestina> osobnaVjestinaList) {
@@ -175,10 +163,6 @@ public class CV {
 		return datumAzuriranja;
 	}
 
-	public Integer getIdOsoba() {
-		return idOsoba;
-	}
-
 	public List<OsobnaVjestina> getOsobnaVjestinaList() {
 		return osobnaVjestinaList;
 	}
@@ -203,12 +187,12 @@ public class CV {
 		return zaglavlje;
 	}
 
-	/*public Osoba getOsoba() {
+	public Osoba getOsoba() {
 		return osoba;
 	}
-*/
+
 	public void setOsoba(Osoba osoba) {
-		//this.osoba = osoba;
+		this.osoba = osoba;
 	}
 	
 	
@@ -237,4 +221,25 @@ public class CV {
                 .isEquals();
 		
 	}
+
+	public void setOsobnaVjestinaList(List<OsobnaVjestina> osobnaVjestinaList) {
+		this.osobnaVjestinaList = osobnaVjestinaList;
+	}
+
+	public void setDodatneInfoList(List<DodatneInfo> dodatneInfoList) {
+		this.dodatneInfoList = dodatneInfoList;
+	}
+
+	public void setDodatakList(List<Dodatak> dodatakList) {
+		this.dodatakList = dodatakList;
+	}
+
+	public void setRadnoIskustvoList(List<RadnoIskustvo> radnoIskustvoList) {
+		this.radnoIskustvoList = radnoIskustvoList;
+	}
+
+	public void setEdukacijaITreningList(List<EdukacijaITrening> edukacijaITreningList) {
+		this.edukacijaITreningList = edukacijaITreningList;
+	}
+
 }

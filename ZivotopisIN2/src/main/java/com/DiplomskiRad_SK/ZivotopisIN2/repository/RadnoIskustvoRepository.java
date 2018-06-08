@@ -8,8 +8,5 @@ import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.RadnoIskustvo;;
 
 public interface RadnoIskustvoRepository extends CrudRepository<RadnoIskustvo, Integer>{
 
-	List<RadnoIskustvo> findByIdCV(Integer idCV);
 	
-	List<RadnoIskustvo> findByIdInstitucija(Integer idInstitucija);
-
 }

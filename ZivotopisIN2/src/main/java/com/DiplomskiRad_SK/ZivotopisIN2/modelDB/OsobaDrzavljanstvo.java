@@ -9,21 +9,19 @@ public class OsobaDrzavljanstvo {
 	@GeneratedValue(generator = "ODSeq")
 	@SequenceGenerator(name = "ODSeq", sequenceName = "OSOBA_DRZAVLJANSTVO_SEQ", allocationSize = 1)
 	private Integer ID;
-	@Column(name = "IDDRZAVLJANSTVO")
-	private Integer idDrzavljanstvo;
-	@Column(name = "IDOSOBA")
-	private Integer idOsoba;
-	@Transient
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDDRZAVLJANSTVO")
 	private Drzavljanstvo drzavljanstvo;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDOSOBA")
+	private Osoba osoba;
 
 	public OsobaDrzavljanstvo() {
 	}
 
-	public OsobaDrzavljanstvo(Integer iD, Integer idDrzavljanstvo, Integer idOsoba, Drzavljanstvo drzavljanstvo) {
+	public OsobaDrzavljanstvo(Integer iD) {
 		ID = iD;
-		this.idDrzavljanstvo = idDrzavljanstvo;
-		this.idOsoba = idOsoba;
-		this.drzavljanstvo = drzavljanstvo;
 	}
 
 	public Drzavljanstvo getDrzavljanstvo() {
@@ -34,28 +32,20 @@ public class OsobaDrzavljanstvo {
 		return ID;
 	}
 
-	public Integer getIdDrzavljanstvo() {
-		return idDrzavljanstvo;
-	}
-
-	public Integer getIdOsoba() {
-		return idOsoba;
-	}
-
 	public void setID(Integer iD) {
 		ID = iD;
 	}
 
-	public void setIdDrzavljanstvo(Integer idDrzavljanstvo) {
-		this.idDrzavljanstvo = idDrzavljanstvo;
-	}
-
-	public void setIdOsoba(Integer idOsoba) {
-		this.idOsoba = idOsoba;
-	}
-
 	public void setDrzavljanstvo(Drzavljanstvo drzavljanstvo) {
 		this.drzavljanstvo = drzavljanstvo;
+	}
+
+	public Osoba getOsoba() {
+		return osoba;
+	}
+
+	public void setOsoba(Osoba osoba) {
+		this.osoba = osoba;
 	}
 
 }

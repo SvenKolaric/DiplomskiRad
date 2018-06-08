@@ -8,5 +8,4 @@ import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.KontaktniInfo;;
 
 public interface KontaktniInfoRepository extends CrudRepository<KontaktniInfo, Integer>{
 
-	List<KontaktniInfo> findByIdOsoba(Integer idOsoba);
 }

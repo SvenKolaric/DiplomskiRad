@@ -4,6 +4,9 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 @Entity
 @Table(name = "EDUKACIJA_I_TRENING")
 public class EdukacijaITrening {
@@ -11,16 +14,12 @@ public class EdukacijaITrening {
 	@GeneratedValue(generator="ETSeq") 
     @SequenceGenerator(name="ETSeq",sequenceName="EDUKACIJA_I_TRENING_SEQ", allocationSize=1)
 	private Integer edukacijaID;
-	@Column(name = "IDCV")
-	private Integer idCV;
 	@Column(name = "DATUMPOCETKA")
 	private Date datumPocetka;
 	@Column(name = "DATUMKRAJA")
 	private Date datumKraja;
 	@Column(name = "KVALIFIKACIJA")
 	private String kvalifikacija;
-	@Column(name = "IDINSTITUCIJA")
-	private Integer idInstitucija;
 	@Column(name = "EKORAZINA")
 	private String ekorazina;
 	@Column(name = "PODRUCJEOBRAZOVANAJ")
@@ -29,21 +28,24 @@ public class EdukacijaITrening {
 	private String predmetiSteceneVjestine;
 	@Column(name = "BR_GOD_EDUKACIJE")
 	private Integer brGodEdukacija;
-	@Transient
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDINSTITUCIJA")
 	private Institucija institucija;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDCV")
+	private CV zivotopis;
 	
 	public EdukacijaITrening() {
 	}
 
-	public EdukacijaITrening(Integer edukacijaID, Integer idCV, Date datumPocetka, Date datumKraja,
-			String kvalifikacija, Integer idInstitucija, String ekorazina, String podrucjeObrazovanja,
+	public EdukacijaITrening(Integer edukacijaID, Date datumPocetka, Date datumKraja,
+			String kvalifikacija, String ekorazina, String podrucjeObrazovanja,
 			String predmetiSteceneVjestine, Integer brGodEdukacija) {
 		this.edukacijaID = edukacijaID;
-		this.idCV = idCV;
 		this.datumPocetka = datumPocetka;
 		this.datumKraja = datumKraja;
 		this.kvalifikacija = kvalifikacija;
-		this.idInstitucija = idInstitucija;
 		this.ekorazina = ekorazina;
 		this.podrucjeObrazovanja = podrucjeObrazovanja;
 		this.predmetiSteceneVjestine = predmetiSteceneVjestine;
@@ -57,11 +59,7 @@ public class EdukacijaITrening {
 	public Integer getEdukacijaID() {
 		return edukacijaID;
 	}
-
-	public Integer getIdCV() {
-		return idCV;
-	}
-
+	
 	public Date getDatumPocetka() {
 		return datumPocetka;
 	}
@@ -72,10 +70,6 @@ public class EdukacijaITrening {
 
 	public String getKvalifikacija() {
 		return kvalifikacija;
-	}
-
-	public Integer getIdInstitucija() {
-		return idInstitucija;
 	}
 
 	public String getEkorazina() {
@@ -98,10 +92,6 @@ public class EdukacijaITrening {
 		this.edukacijaID = edukacijaID;
 	}
 
-	public void setIdCV(Integer idCV) {
-		this.idCV = idCV;
-	}
-
 	public void setDatumPocetka(Date datumPocetka) {
 		this.datumPocetka = datumPocetka;
 	}
@@ -112,10 +102,6 @@ public class EdukacijaITrening {
 
 	public void setKvalifikacija(String kvalifikacija) {
 		this.kvalifikacija = kvalifikacija;
-	}
-
-	public void setIdInstitucija(Integer idInstitucija) {
-		this.idInstitucija = idInstitucija;
 	}
 
 	public void setEkorazina(String ekorazina) {
@@ -136,6 +122,45 @@ public class EdukacijaITrening {
 
 	public void setInstitucija(Institucija institucija) {
 		this.institucija = institucija;
+	}
+
+	public CV getZivotopis() {
+		return zivotopis;
+	}
+
+	public void setZivotopis(CV zivotopis) {
+		this.zivotopis = zivotopis;
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37)
+                .append(datumKraja)
+                .append(datumPocetka)
+                .append(ekorazina)
+                .append(kvalifikacija)
+                .append(podrucjeObrazovanja)
+                .append(predmetiSteceneVjestine)
+                .toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EdukacijaITrening other = (EdukacijaITrening) obj;
+		return new EqualsBuilder()
+                .append(datumKraja, other.datumKraja)
+                .append(datumPocetka, other.datumPocetka)
+                .append(ekorazina, other.ekorazina)
+                .append(kvalifikacija, other.kvalifikacija)
+                .append(podrucjeObrazovanja, other.podrucjeObrazovanja)
+                .append(predmetiSteceneVjestine, other.predmetiSteceneVjestine)
+                .isEquals();
 	}
 	
 }

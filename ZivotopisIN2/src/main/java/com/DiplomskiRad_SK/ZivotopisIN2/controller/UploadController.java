@@ -41,13 +41,18 @@ public class UploadController {
 	public String singleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
 
 		if (file.isEmpty()) {
-			redirectAttributes.addFlashAttribute("message", "Molimo odaberite datoteku za slanje");
+			redirectAttributes.addFlashAttribute("message", "Molimo odaberite datoteku za slanje.");
 			return "redirect:uploadStatus";
 		}
 		
 		//tu dojavi grešku ako se ne spremi
-		xmlParser.parseMapXMLFile(file);
-	        
+		Boolean isSaved = xmlParser.parseMapXMLFile(file);
+	    
+		if (!isSaved) {
+			redirectAttributes.addFlashAttribute("message", "Došlo je do greške u spremanju datoteke, pokušajte ponovo.");
+			return "redirect:uploadStatus";
+		}
+		
 		redirectAttributes.addFlashAttribute("message",	"Datoteka '" + file.getOriginalFilename() + "' je uspješno učitana i spremljena u bazu podataka.");
 
 		return "redirect:/uploadStatus";

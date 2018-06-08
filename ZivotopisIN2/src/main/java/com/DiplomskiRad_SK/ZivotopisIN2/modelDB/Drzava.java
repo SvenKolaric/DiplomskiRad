@@ -1,5 +1,8 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +15,9 @@ public class Drzava {
 	@Column(name = "NAZIV")
 	private String naziv;
 
+	@OneToMany(mappedBy = "drzava", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Mjesto> mjestoList = new ArrayList<>();
+	
 	public Drzava() {
 	}
 
@@ -19,7 +25,18 @@ public class Drzava {
 		this.drzavaID = drzavaID;
 		this.naziv = naziv;
 	}
-
+	
+	/*synchronize both sides of the bidirectional association*/
+	public void addMjesto(Mjesto obj) {
+		mjestoList.add(obj);
+        obj.setDrzava(this);
+    }
+ 
+    public void removeMjesto(Mjesto obj) {
+    	mjestoList.remove(obj);
+        obj.setDrzava(null);
+    }
+    
 	public Integer getDrzavaID() {
 		return drzavaID;
 	}
@@ -34,6 +51,14 @@ public class Drzava {
 
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
+	}
+
+	public List<Mjesto> getMjesto() {
+		return mjestoList;
+	}
+
+	public void setMjesto(List<Mjesto> mjesto) {
+		this.mjestoList = mjesto;
 	}
 
 }

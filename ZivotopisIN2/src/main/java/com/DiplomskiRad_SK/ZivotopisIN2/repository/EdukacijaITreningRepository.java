@@ -8,7 +8,4 @@ import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.EdukacijaITrening;;
 
 public interface EdukacijaITreningRepository extends CrudRepository<EdukacijaITrening, Integer>{
 
-	List<EdukacijaITrening> findByIdCV(Integer idCV);
-	
-	List<EdukacijaITrening> findByIdInstitucija(Integer idInstitucija);
 }

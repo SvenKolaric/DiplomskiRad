@@ -1,5 +1,8 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +15,9 @@ public class TipKontakta {
 	@Column(name = "NAZIV")
 	private String naziv;
 	
+	@OneToMany(mappedBy = "tipKontakta", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<KontaktniInfo> kontaktniInfoList = new ArrayList<>();
+	
 	public TipKontakta() {
 	}
 
@@ -20,6 +26,17 @@ public class TipKontakta {
 		this.naziv = naziv;
 	}
 
+	/*synchronize both sides of the bidirectional association*/
+	public void addKontaktniInfo(KontaktniInfo obj) {
+		kontaktniInfoList.add(obj);
+        obj.setTipKontakta(this);
+    }
+ 
+    public void removeKontaktniInfo(KontaktniInfo obj) {
+    	kontaktniInfoList.remove(obj);
+        obj.setTipKontakta(this);
+    }
+    
 	public Integer getKontaktID() {
 		return kontaktID;
 	}

@@ -2,6 +2,9 @@ package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 
 import javax.persistence.*;
 
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+//OVO TI MOŽDA NECE TREBATI!!!!!!!!!!!!!!!!!!!
 @Entity
 @Table(name = "CERTIFIKAT_DIPLOMA")
 public class CertifikatDiploma {
@@ -13,22 +16,19 @@ public class CertifikatDiploma {
 	private Integer idVjestina;
 	@Column(name = "OPISTITULA")
 	private String opisTitula;
-
+	@Transient
+	private OsobnaVjestina osobnaVjestina;
+	
 	public CertifikatDiploma() {
 	}
 
-	public CertifikatDiploma(Integer certDiplID, Integer idVjestina, String opisTitula) {
+	public CertifikatDiploma(Integer certDiplID, String opisTitula) {
 		this.certDiplID = certDiplID;
-		this.idVjestina = idVjestina;
 		this.opisTitula = opisTitula;
 	}
 
 	public Integer getCertDiplID() {
 		return certDiplID;
-	}
-
-	public Integer getIdVjestina() {
-		return idVjestina;
 	}
 
 	public String getOpisTitula() {
@@ -39,11 +39,39 @@ public class CertifikatDiploma {
 		this.certDiplID = certDiplID;
 	}
 
-	public void setIdVjestina(Integer idVjestina) {
-		this.idVjestina = idVjestina;
-	}
-
 	public void setOpisTitula(String opisTitula) {
 		this.opisTitula = opisTitula;
+	}
+
+	public OsobnaVjestina getOsobnaVjestina() {
+		return osobnaVjestina;
+	}
+
+	public void setOsobnaVjestina(OsobnaVjestina osobnaVjestina) {
+		this.osobnaVjestina = osobnaVjestina;
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37)
+                .append(opisTitula)
+                .toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CertifikatDiploma other = (CertifikatDiploma) obj;
+		if (opisTitula == null) {
+			if (other.opisTitula != null)
+				return false;
+		} else if (!opisTitula.equals(other.opisTitula))
+			return false;
+		return true;
 	}
 }

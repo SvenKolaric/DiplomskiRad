@@ -25,11 +25,14 @@ import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.CV;
 @Service("BLXML")
 public class BLXMLParser {
 
-	public void parseMapXMLFile(MultipartFile file) {
+	public Boolean parseMapXMLFile(MultipartFile file) {
 
 		Document doc = convertToDOM(file);
+		if (doc == null) {
+			return false;
+		}
 		doc.getDocumentElement().normalize();
-
+		
 		NodeList nList = doc.getElementsByTagName("DocumentInfo");
 		Node cvNode = nList.item(0);
 		if (cvNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -38,9 +41,11 @@ public class BLXMLParser {
 			Timestamp ts = stringToTimestamp(cvElement.getElementsByTagName("CreationDate").item(0).getTextContent());
 			CV cv = new CV(null, cvElement.getElementsByTagName("DocumentType").item(0).getTextContent(),
 					stringToTimestamp(cvElement.getElementsByTagName("CreationDate").item(0).getTextContent()),
-					stringToTimestamp(cvElement.getElementsByTagName("LastUpdateDate").item(0).getTextContent()), null);
-
+					stringToTimestamp(cvElement.getElementsByTagName("LastUpdateDate").item(0).getTextContent()));
+			
+			
 		}
+		return true;
 	}
 
 	private Document convertToDOM(MultipartFile file) {

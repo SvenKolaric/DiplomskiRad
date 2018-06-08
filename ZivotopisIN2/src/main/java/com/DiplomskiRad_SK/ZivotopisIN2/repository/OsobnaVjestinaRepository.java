@@ -8,5 +8,4 @@ import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.OsobnaVjestina;;
 
 public interface OsobnaVjestinaRepository extends CrudRepository<OsobnaVjestina, Integer>{
 	
-	List<OsobnaVjestina> findByIdCV(Integer idCV);
 }

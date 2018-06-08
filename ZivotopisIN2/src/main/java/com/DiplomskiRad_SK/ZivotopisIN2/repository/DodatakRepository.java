@@ -8,5 +8,4 @@ import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Dodatak;
 
 public interface DodatakRepository extends CrudRepository<Dodatak, Integer>{
 
-	List<Dodatak> findByIdCV(Integer idCV);
 }

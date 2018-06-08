@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.util.ArrayList;
 
 @Entity
@@ -24,46 +27,70 @@ public class Osoba {
 	private Character spol;
 	@Column(name = "ADRESA")
 	private String adresa;
-	@Column(name = "IDMJESTO")
-	private Integer idMjesto;
 	@Column(name = "WEBSITE")
 	private String website;
-	//@OneToMany(mappedBy = "osoba", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Transient
+
+	@OneToMany(mappedBy = "osoba", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CV> zivotopisiList = new ArrayList<>();
-	@Transient
-	private ArrayList<KontaktniInfo> kontaktInfoList;
-	@Transient
-	private ArrayList<Drzavljanstvo> drzavljanstvoList;
-	@Transient
+	@OneToMany(mappedBy = "osoba", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<KontaktniInfo> kontaktInfoList = new ArrayList<>();
+	@OneToMany(mappedBy = "osoba", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<OsobaDrzavljanstvo> osobaDrzavljanstvoList = new ArrayList<>();
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDMJESTO")
 	private Mjesto mjesto;
 	
 	public Osoba() {
 	}
 
-	public Osoba(Integer osobaID, String ime, String prezime, Date godRodenja, Character spol,
-			String adresa, Integer idMjesto, String website, ArrayList<CV> zivotopisiList,
-			ArrayList<KontaktniInfo> kontaktInfoList, ArrayList<Drzavljanstvo> drzavljanstvoList, Mjesto mjesto) {
+	public Osoba(Integer osobaID, String ime, String prezime, Date godRodenja, Character spol, String adresa,
+			String website) {
 		this.osobaID = osobaID;
 		this.ime = ime;
 		this.prezime = prezime;
 		this.godRodenja = godRodenja;
 		this.spol = spol;
 		this.adresa = adresa;
-		this.idMjesto = idMjesto;
 		this.website = website;
-		this.zivotopisiList = zivotopisiList;
-		this.kontaktInfoList = kontaktInfoList;
-		this.drzavljanstvoList = drzavljanstvoList;
-		this.mjesto = mjesto;
 	}
 
+	/*synchronize both sides of the bidirectional association*/
+	public void addCV(CV obj) {
+		zivotopisiList.add(obj);
+        obj.setOsoba(this);
+    }
+ 
+    public void removeCV(CV obj) {
+    	zivotopisiList.remove(obj);
+        obj.setOsoba(this);
+    }
+    
+    public void addKontaktniInfo(KontaktniInfo obj) {
+    	kontaktInfoList.add(obj);
+        obj.setOsoba(this);
+    }
+ 
+    public void removeKontaktniInfo(KontaktniInfo obj) {
+    	kontaktInfoList.remove(obj);
+        obj.setOsoba(this);
+    }
+    
+    public void addOsobaDrzavljanstvo(OsobaDrzavljanstvo obj) {
+    	osobaDrzavljanstvoList.add(obj);
+        obj.setOsoba(this);
+    }
+ 
+    public void removeOsobaDrzavljanstvo(OsobaDrzavljanstvo obj) {
+    	osobaDrzavljanstvoList.remove(obj);
+        obj.setOsoba(this);
+    }
+    
 	public Mjesto getMjesto() {
 		return mjesto;
 	}
 
-	public ArrayList<Drzavljanstvo> getDrzavljanstvoList() {
-		return drzavljanstvoList;
+	public List<OsobaDrzavljanstvo> getOsobaDrzavljanstvoList() {
+		return osobaDrzavljanstvoList;
 	}
 
 	public Integer getOsobaID() {
@@ -90,15 +117,11 @@ public class Osoba {
 		return adresa;
 	}
 
-	public Integer getIdMjesto() {
-		return idMjesto;
-	}
-
 	public List<CV> getZivotopisiList() {
 		return zivotopisiList;
 	}
 	
-	public ArrayList<KontaktniInfo> getKontaktInfoList() {
+	public List<KontaktniInfo> getKontaktInfoList() {
 		return kontaktInfoList;
 	}
 
@@ -126,27 +149,56 @@ public class Osoba {
 		this.adresa = adresa;
 	}
 
-	public void setIdMjesto(Integer idMjesto) {
-		this.idMjesto = idMjesto;
-	}
-
 	public void setWebsite(String website) {
 		this.website = website;
 	}
 
-	public void setZivotopisiList(ArrayList<CV> zivotopisiList) {
+	public void setMjesto(Mjesto mjesto) {
+		this.mjesto = mjesto;
+	}
+
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setZivotopisiList(List<CV> zivotopisiList) {
 		this.zivotopisiList = zivotopisiList;
 	}
 
-	public void setKontaktInfoList(ArrayList<KontaktniInfo> kontaktInfoList) {
+	public void setKontaktInfoList(List<KontaktniInfo> kontaktInfoList) {
 		this.kontaktInfoList = kontaktInfoList;
 	}
 
-	public void setDrzavljanstvoList(ArrayList<Drzavljanstvo> drzavljanstvoList) {
-		this.drzavljanstvoList = drzavljanstvoList;
+	public void setDrzavljanstvoList(List<OsobaDrzavljanstvo> osobaDrzavljanstvoList) {
+		this.osobaDrzavljanstvoList = osobaDrzavljanstvoList;
 	}
 
-	public void setMjesto(Mjesto mjesto) {
-		this.mjesto = mjesto;
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37)
+                .append(adresa)
+                .append(godRodenja)
+                .append(ime)
+                .append(prezime)
+                .append(spol)
+                .toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Osoba other = (Osoba) obj;
+		return new EqualsBuilder()
+                .append(adresa, other.adresa)
+                .append(godRodenja, other.godRodenja)
+                .append(ime, other.prezime)
+                .append(prezime, other.prezime)
+                .append(spol, this.spol)
+                .isEquals();
 	}
 }

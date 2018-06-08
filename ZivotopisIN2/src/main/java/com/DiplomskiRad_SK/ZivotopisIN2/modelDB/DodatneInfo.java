@@ -2,6 +2,9 @@ package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 
 import javax.persistence.*;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 @Entity
 @Table(name = "DODATNE_INFO")
 public class DodatneInfo {
@@ -72,6 +75,27 @@ public class DodatneInfo {
 
 	public void setZivotopis(CV zivotopis) {
 		this.zivotopis = zivotopis;
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37)
+                .append(opis)
+                .toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DodatneInfo other = (DodatneInfo) obj;
+		return new EqualsBuilder()
+                .append(opis, other.opis)
+                .isEquals();
 	}
 
 }

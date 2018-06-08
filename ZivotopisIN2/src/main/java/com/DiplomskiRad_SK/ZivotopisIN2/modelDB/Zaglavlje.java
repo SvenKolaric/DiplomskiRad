@@ -2,6 +2,9 @@ package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 
 import javax.persistence.*;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 @Entity
 @Table(name = "ZAGLAVLJE")
 public class Zaglavlje {
@@ -9,24 +12,22 @@ public class Zaglavlje {
 	@GeneratedValue(generator = "ZSeq")
 	@SequenceGenerator(name = "ZSeq", sequenceName = "ZAGLAVLJE_SEQ", allocationSize = 1)
 	private Integer zaglavljeID;
-	@Column(name = "IDCV")
-	private Integer idCV;
 	@Column(name = "OPIS")
 	private String opis;
-	@Column(name = "IDPRIJAVE")
-	private Integer idPrijave;
-	@Transient
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDPRIJAVE")
 	private VrstaPrijave vrstaPrijave;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDCV", nullable = false)
+	private CV zivotopis;
 	
 	public Zaglavlje() {
 	}
 
-	public Zaglavlje(Integer zaglavljeID, Integer idCV, String opis, Integer idPrijave, VrstaPrijave vrstaPrijave) {
+	public Zaglavlje(Integer zaglavljeID, String opis) {
 		this.zaglavljeID = zaglavljeID;
-		this.idCV = idCV;
 		this.opis = opis;
-		this.idPrijave = idPrijave;
-		this.vrstaPrijave = vrstaPrijave;
 	}
 
 	public VrstaPrijave getVrstaPrijave() {
@@ -37,36 +38,41 @@ public class Zaglavlje {
 		return zaglavljeID;
 	}
 
-	public Integer getIdCV() {
-		return idCV;
-	}
-
 	public String getOpis() {
 		return opis;
-	}
-
-	public Integer getIdPrijave() {
-		return idPrijave;
 	}
 
 	public void setZaglavljeID(Integer zaglavljeID) {
 		this.zaglavljeID = zaglavljeID;
 	}
 
-	public void setIdCV(Integer idCV) {
-		this.idCV = idCV;
-	}
-
 	public void setOpis(String opis) {
 		this.opis = opis;
 	}
 
-	public void setIdPrijave(Integer idPrijave) {
-		this.idPrijave = idPrijave;
-	}
-
 	public void setVrstaPrijave(VrstaPrijave vrstaPrijave) {
 		this.vrstaPrijave = vrstaPrijave;
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37)
+                .append(opis)
+                .toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Zaglavlje other = (Zaglavlje) obj;
+		return new EqualsBuilder()
+                .append(opis, other.opis)
+                .isEquals();
 	}
 	
 }

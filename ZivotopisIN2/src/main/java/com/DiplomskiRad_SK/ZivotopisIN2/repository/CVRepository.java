@@ -8,5 +8,4 @@ import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.CV;
 
 public interface CVRepository extends CrudRepository<CV, Integer> {
 
-	List<CV> findByIdOsoba(Integer idOsoba);
 }

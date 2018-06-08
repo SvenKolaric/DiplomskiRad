@@ -1,8 +1,12 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @Entity
 @Table(name = "OSOBNA_VJESTINA")
@@ -11,8 +15,6 @@ public class OsobnaVjestina {
 	@GeneratedValue(generator = "OVSeq")
 	@SequenceGenerator(name = "OVSeq", sequenceName = "OSOBNA_VJESTINA_SEQ", allocationSize = 1)
 	private Integer vjestinaID;
-	@Column(name = "IDCV")
-	private Integer idCV;
 	@Column(name = "OBRADAINFO")
 	private String obradaInfo;
 	@Column(name = "KOMUNIKACIJA")
@@ -33,25 +35,24 @@ public class OsobnaVjestina {
 	private String poslovneVj;
 	@Column(name = "OSTALEVJ")
 	private String ostaleVj;
-	@Transient
-	private ArrayList<Zna> jezikList;
-	@Transient
-	private ArrayList<VozackaOsobnaVJ> vozackaDozvolaList;
-	@Transient
-	private ArrayList<CertifikatDiploma> certifikatDiplomaList;
-	@Transient
+	
+	@OneToMany(mappedBy = "osobnaVJ", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Zna> znaList = new ArrayList<>();
+	@OneToMany(mappedBy = "osobnaVJ", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<VozackaOsobnaVJ> vozackaDozvolaOsVJList = new ArrayList<>();
+	//@OneToMany(mappedBy = "osobnaVJ", cascade = CascadeType.ALL, orphanRemoval = true)
+	//private ArrayList<CertifikatDiploma> certifikatDiplomaList;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDCV")
 	private CV zivotopis;
 	
 	public OsobnaVjestina() {
 	}
 
-	public OsobnaVjestina(Integer vjestinaID, Integer idCV, String obradaInfo, String komunikacija,
-			String stvaranjeSadrzaja, String sigurnost, String rjesavanjeProblema, String materinjiJezik,
-			String komunikacijskeVj, String organizacijskeVj, String poslovneVj, String ostaleVj,
-			ArrayList<Zna> jezikList, ArrayList<VozackaOsobnaVJ> vozackaDozvolaList,
-			ArrayList<CertifikatDiploma> certifikatDiplomaList) {
+	public OsobnaVjestina(Integer vjestinaID, String obradaInfo, String komunikacija, String stvaranjeSadrzaja,
+			String sigurnost, String rjesavanjeProblema, String materinjiJezik, String komunikacijskeVj,
+			String organizacijskeVj, String poslovneVj, String ostaleVj) {
 		this.vjestinaID = vjestinaID;
-		this.idCV = idCV;
 		this.obradaInfo = obradaInfo;
 		this.komunikacija = komunikacija;
 		this.stvaranjeSadrzaja = stvaranjeSadrzaja;
@@ -62,29 +63,39 @@ public class OsobnaVjestina {
 		this.organizacijskeVj = organizacijskeVj;
 		this.poslovneVj = poslovneVj;
 		this.ostaleVj = ostaleVj;
-		this.jezikList = jezikList;
-		this.vozackaDozvolaList = vozackaDozvolaList;
-		this.certifikatDiplomaList = certifikatDiplomaList;
 	}
 
-	public ArrayList<Zna> getJezikList() {
-		return jezikList;
+	/*synchronize both sides of the bidirectional association*/
+	public void addZna(Zna obj) {
+		znaList.add(obj);
+        obj.setOsobnaVJ(this);
+    }
+ 
+    public void removeZna(Zna obj) {
+    	znaList.remove(obj);
+        obj.setOsobnaVJ(this);
+    }
+    
+	public void addVozackaOsobnaVJ(VozackaOsobnaVJ obj) {
+		vozackaDozvolaOsVJList.add(obj);
+        obj.setOsobnaVJ(this);
+    }
+ 
+    public void removeVozackaOsobnaVJ(VozackaOsobnaVJ obj) {
+    	vozackaDozvolaOsVJList.remove(obj);
+        obj.setOsobnaVJ(this);
+    }
+    
+	public List<Zna> getZnaList() {
+		return znaList;
 	}
 
-	public ArrayList<VozackaOsobnaVJ> getVozackaDozvolaList() {
-		return vozackaDozvolaList;
-	}
-
-	public ArrayList<CertifikatDiploma> getCertifikatDiplomaList() {
-		return certifikatDiplomaList;
+	public List<VozackaOsobnaVJ> getVozackaDozvolaOsVJList() {
+		return vozackaDozvolaOsVJList;
 	}
 
 	public Integer getVjestinaID() {
 		return vjestinaID;
-	}
-
-	public Integer getIdCV() {
-		return idCV;
 	}
 
 	public String getObradaInfo() {
@@ -131,10 +142,6 @@ public class OsobnaVjestina {
 		this.vjestinaID = vjestinaID;
 	}
 
-	public void setIdCV(Integer idCV) {
-		this.idCV = idCV;
-	}
-
 	public void setObradaInfo(String obradaInfo) {
 		this.obradaInfo = obradaInfo;
 	}
@@ -175,16 +182,12 @@ public class OsobnaVjestina {
 		this.ostaleVj = ostaleVj;
 	}
 
-	public void setJezikList(ArrayList<Zna> jezikList) {
-		this.jezikList = jezikList;
+	public void setZnaList(ArrayList<Zna> jezikList) {
+		this.znaList = jezikList;
 	}
 
-	public void setVozackaDozvolaList(ArrayList<VozackaOsobnaVJ> vozackaDozvolaList) {
-		this.vozackaDozvolaList = vozackaDozvolaList;
-	}
-
-	public void setCertifikatDiplomaList(ArrayList<CertifikatDiploma> certifikatDiplomaList) {
-		this.certifikatDiplomaList = certifikatDiplomaList;
+	public void setVozackaDozvolaOsVJList(ArrayList<VozackaOsobnaVJ> vozackaDozvolaList) {
+		this.vozackaDozvolaOsVJList = vozackaDozvolaList;
 	}
 
 	public CV getZivotopis() {
@@ -193,6 +196,35 @@ public class OsobnaVjestina {
 
 	public void setZivotopis(CV zivotopis) {
 		this.zivotopis = zivotopis;
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37)
+                .append(organizacijskeVj)
+                .append(ostaleVj)
+                .append(poslovneVj)
+                .append(materinjiJezik)
+                .append(komunikacijskeVj)
+                .toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OsobnaVjestina other = (OsobnaVjestina) obj;
+		return new EqualsBuilder()
+                .append(organizacijskeVj, other.organizacijskeVj)
+                .append(ostaleVj, other.ostaleVj)
+                .append(poslovneVj, other.poslovneVj)
+                .append(materinjiJezik, other.materinjiJezik)
+                .append(komunikacijskeVj, other.komunikacijskeVj)
+                .isEquals();
 	}
 
 }

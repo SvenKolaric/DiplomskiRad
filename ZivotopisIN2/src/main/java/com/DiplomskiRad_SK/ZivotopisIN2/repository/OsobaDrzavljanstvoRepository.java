@@ -8,5 +8,4 @@ import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.OsobaDrzavljanstvo;
 
 public interface OsobaDrzavljanstvoRepository extends CrudRepository<OsobaDrzavljanstvo, Integer>{
 
-	List<OsobaDrzavljanstvo> findByIdOsoba(Integer idOsoba);
 }

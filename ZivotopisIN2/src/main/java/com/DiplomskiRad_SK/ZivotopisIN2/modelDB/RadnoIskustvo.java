@@ -4,6 +4,9 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 @Entity
 @Table(name = "RADNO_ISKUSTVO")
 public class RadnoIskustvo {
@@ -11,43 +14,38 @@ public class RadnoIskustvo {
 	@GeneratedValue(generator = "RISeq")
 	@SequenceGenerator(name = "RISeq", sequenceName = "RADNO_ISKUSTVO_SEQ", allocationSize = 1)
 	private Integer PosaoID;
-	@Column(name = "IDCV")
-	private Integer idCV;
 	@Column(name = "DATUMPOCETKA")
 	private Date datumPocetka;
 	@Column(name = "DATUMKRAJA")
 	private Date datumKraja;
-	@Column(name = "IDPOZICIJA")
-	private Integer idPozicija;
-	@Column(name = "IDINSTITUCIJA")
-	private Integer idInstitucija;
 	@Column(name = "DJELATNOSTSEKTOR")
 	private String djelatnostSektor;
 	@Column(name = "OPISPOSLA")
 	private String opisPosla;
 	@Column(name = "BR_GOD_RADA")
 	private Integer brGodRada;
-	@Transient
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDPOZICIJA")
 	private Pozicija pozicija;
-	@Transient
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDINSTITUCIJA")
 	private Institucija institucija;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDCV")
+	private CV zivotopis;
 	
 	public RadnoIskustvo() {
 	}
 
-	public RadnoIskustvo(Integer posaoID, Integer idCV, Date datumPocetka, Date datumKraja, Integer idPozicija,
-			Integer idInstitucija, String djelatnostSektor, String opisPosla, Integer brGodRada, Pozicija pozicija, Institucija institucija) {
+	public RadnoIskustvo(Integer posaoID, Date datumPocetka, Date datumKraja, String djelatnostSektor, String opisPosla,
+			Integer brGodRada) {
 		PosaoID = posaoID;
-		this.idCV = idCV;
 		this.datumPocetka = datumPocetka;
 		this.datumKraja = datumKraja;
-		this.idPozicija = idPozicija;
-		this.idInstitucija = idInstitucija;
 		this.djelatnostSektor = djelatnostSektor;
 		this.opisPosla = opisPosla;
 		this.brGodRada = brGodRada;
-		this.pozicija = pozicija;
-		this.institucija = institucija;
 	}
 
 	public Pozicija getPozicija() {
@@ -62,24 +60,12 @@ public class RadnoIskustvo {
 		return PosaoID;
 	}
 
-	public Integer getIdCV() {
-		return idCV;
-	}
-
 	public Date getDatumPocetka() {
 		return datumPocetka;
 	}
 
 	public Date getDatumKraja() {
 		return datumKraja;
-	}
-
-	public Integer getIdPozicija() {
-		return idPozicija;
-	}
-
-	public Integer getIdInstitucija() {
-		return idInstitucija;
 	}
 
 	public String getDjelatnostSektor() {
@@ -98,24 +84,12 @@ public class RadnoIskustvo {
 		PosaoID = posaoID;
 	}
 
-	public void setIdCV(Integer idCV) {
-		this.idCV = idCV;
-	}
-
 	public void setDatumPocetka(Date datumPocetka) {
 		this.datumPocetka = datumPocetka;
 	}
 
 	public void setDatumKraja(Date datumKraja) {
 		this.datumKraja = datumKraja;
-	}
-
-	public void setIdPozicija(Integer idPozicija) {
-		this.idPozicija = idPozicija;
-	}
-
-	public void setIdInstitucija(Integer idInstitucija) {
-		this.idInstitucija = idInstitucija;
 	}
 
 	public void setDjelatnostSektor(String djelatnostSektor) {
@@ -136,6 +110,41 @@ public class RadnoIskustvo {
 
 	public void setInstitucija(Institucija institucija) {
 		this.institucija = institucija;
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37)
+                .append(datumKraja)
+                .append(datumPocetka)
+                .append(djelatnostSektor)
+                .append(opisPosla)
+                .toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RadnoIskustvo other = (RadnoIskustvo) obj;
+		return new EqualsBuilder()
+				.append(datumKraja, other.datumKraja)
+                .append(datumPocetka, other.datumPocetka)
+                .append(djelatnostSektor, other.djelatnostSektor)
+                .append(opisPosla, other.opisPosla)
+                .isEquals();
+	}
+
+	public CV getZivotopis() {
+		return zivotopis;
+	}
+
+	public void setZivotopis(CV zivotopis) {
+		this.zivotopis = zivotopis;
 	}
 	
 }

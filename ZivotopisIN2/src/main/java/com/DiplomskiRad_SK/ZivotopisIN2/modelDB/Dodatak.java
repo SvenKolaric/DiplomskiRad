@@ -2,6 +2,9 @@ package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 
 import javax.persistence.*;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 @Entity
 @Table(name = "DODATAK")
 public class Dodatak {
@@ -11,19 +14,21 @@ public class Dodatak {
 	private Integer ID;
 	@Column(name = "METADATA")
 	private String metadata;
-	@Column(name = "TEXT")
-	private String text;
-	@Column(name = "IDCV")
-	private Integer idCV;
+	@Column(name = "NAZIV")
+	private String naziv;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDCV")
+	private CV zivotopis;
+	
+	//REFERENCA NA KOJI DIO
 
 	public Dodatak() {
 	}
 
-	public Dodatak(Integer iD, String metadata, String text, Integer idCV) {
+	public Dodatak(Integer iD, String metadata, String naziv) {
 		ID = iD;
 		this.metadata = metadata;
-		this.text = text;
-		this.idCV = idCV;
+		this.naziv = naziv;
 	}
 
 	public Integer getID() {
@@ -35,11 +40,7 @@ public class Dodatak {
 	}
 
 	public String getText() {
-		return text;
-	}
-
-	public Integer getIdCV() {
-		return idCV;
+		return naziv;
 	}
 
 	public void setID(Integer iD) {
@@ -50,12 +51,47 @@ public class Dodatak {
 		this.metadata = metadata;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setText(String naziv) {
+		this.naziv = naziv;
 	}
 
-	public void setIdCV(Integer idCV) {
-		this.idCV = idCV;
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37)
+                .append(naziv)
+                .append(metadata)
+                .toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Dodatak other = (Dodatak) obj;
+		return new EqualsBuilder()
+                .append(naziv, other.naziv)
+                .append(metadata, other.metadata)
+                .isEquals();
+	}
+
+	public String getNaziv() {
+		return naziv;
+	}
+
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
+
+	public CV getZivotopis() {
+		return zivotopis;
+	}
+
+	public void setZivotopis(CV zivotopis) {
+		this.zivotopis = zivotopis;
 	}
 
 }

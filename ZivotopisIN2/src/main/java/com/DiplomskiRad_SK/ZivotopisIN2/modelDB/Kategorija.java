@@ -25,7 +25,8 @@ public class Kategorija {
 		this.kategorijaID = kategorijaID;
 		this.naziv = naziv;
 	}
-
+	
+	/*synchronize both sides of the bidirectional association*/
 	public void addDodatneInfo(DodatneInfo obj) {
     	dodatneInfoList.add(obj);
         obj.setKategorija(this);

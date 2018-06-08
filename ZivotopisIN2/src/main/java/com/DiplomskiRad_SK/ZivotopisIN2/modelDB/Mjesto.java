@@ -1,8 +1,12 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @Entity
 @Table(name = "MJESTO")
@@ -11,38 +15,53 @@ public class Mjesto {
 	@GeneratedValue(generator = "MSeq")
 	@SequenceGenerator(name = "MSeq", sequenceName = "MJESTO_SEQ", allocationSize = 1)
 	private Integer mjestoID;
-	@Column(name = "IDDRZAVA")
-	private Integer idDrzava;
 	@Column(name = "PBR")
 	private Integer PBR;
 	@Column(name = "NAZIV")
 	private String naziv;
-	@Transient
-	private ArrayList<Osoba> osobaList;
-	@Transient
-	private ArrayList<Institucija> institucijaList;
-	@Transient
+	@OneToMany(mappedBy = "mjesto", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Osoba> osobaList = new ArrayList<>();
+	@OneToMany(mappedBy = "mjesto", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Institucija> institucijaList = new ArrayList<>();
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDDRZAVA")
 	private Drzava drzava;
 
 	public Mjesto() {
 	}
 
-	public Mjesto(Integer mjestoID, Integer idDrzava, Integer pBR, String naziv, ArrayList<Osoba> osobaList,
-			ArrayList<Institucija> institucijaList, Drzava drzava) {
+	public Mjesto(Integer mjestoID, Integer pBR, String naziv) {
 		this.mjestoID = mjestoID;
-		this.idDrzava = idDrzava;
 		PBR = pBR;
 		this.naziv = naziv;
-		this.osobaList = osobaList;
-		this.institucijaList = institucijaList;
-		this.drzava = drzava;
 	}
-
+	
+	/*synchronize both sides of the bidirectional association*/
+	public void addOsoba(Osoba obj) {
+    	osobaList.add(obj);
+        obj.setMjesto(this);
+    }
+ 
+    public void removeOsoba(Osoba obj) {
+    	osobaList.remove(obj);
+        obj.setMjesto(this);
+    }
+    
+	public void addInstitucija(Institucija obj) {
+    	institucijaList.add(obj);
+        obj.setMjesto(this);
+    }
+ 
+    public void removeInstitucija(Institucija obj) {
+    	institucijaList.remove(obj);
+        obj.setMjesto(this);
+    }
+    
 	public Drzava getDrzava() {
 		return drzava;
 	}
 
-	public ArrayList<Institucija> getInstitucijaList() {
+	public List<Institucija> getInstitucijaList() {
 		return institucijaList;
 	}
 
@@ -50,12 +69,8 @@ public class Mjesto {
 		return mjestoID;
 	}
 
-	public ArrayList<Osoba> getOsobaList() {
+	public List<Osoba> getOsobaList() {
 		return osobaList;
-	}
-
-	public Integer getIdDrzava() {
-		return idDrzava;
 	}
 
 	public Integer getPBR() {
@@ -70,10 +85,6 @@ public class Mjesto {
 		this.mjestoID = mjestoID;
 	}
 
-	public void setIdDrzava(Integer idDrzava) {
-		this.idDrzava = idDrzava;
-	}
-
 	public void setPBR(Integer pBR) {
 		PBR = pBR;
 	}
@@ -82,16 +93,39 @@ public class Mjesto {
 		this.naziv = naziv;
 	}
 
-	public void setOsobaList(ArrayList<Osoba> osobaList) {
+	public void setOsobaList(List<Osoba> osobaList) {
 		this.osobaList = osobaList;
 	}
 
-	public void setInstitucijaList(ArrayList<Institucija> institucijaList) {
+	public void setInstitucijaList(List<Institucija> institucijaList) {
 		this.institucijaList = institucijaList;
 	}
 
 	public void setDrzava(Drzava drzava) {
 		this.drzava = drzava;
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37)
+                .append(PBR)
+                .append(naziv)
+                .toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Mjesto other = (Mjesto) obj;
+			return new EqualsBuilder()
+	                .append(naziv, other.naziv)
+	                .append(PBR, other.PBR)
+	                .isEquals();
 	}
 
 }
