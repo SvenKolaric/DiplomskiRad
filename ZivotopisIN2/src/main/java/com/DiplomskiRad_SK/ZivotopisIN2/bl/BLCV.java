@@ -116,7 +116,11 @@ public class BLCV {
 		CV cv = new CV();
 		DodatneInfo di = new DodatneInfo();
 		Kategorija k = new Kategorija();
-
+		
+		/* OVAKO MOŽEŠ DOHVATITI SRANJA OD DODATNIH INFO SAMO POSALJES FINDBYZIVOTOPIS A NE PO IDU KAO PRIJE!!!!!!!!!
+		CV cvtest = cvRepo.findById(24).orElse(null);
+		List<DodatneInfo> di2 = dodInfoRepo.findByZivotopis(cvtest);
+		*/
 		// cv.setZivotopisID(1);
 		cv.setDatumAzuriranja(new Timestamp(d.getTime()));
 		cv.setDatumStvaranja(new Timestamp(d.getTime()));

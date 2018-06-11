@@ -24,7 +24,7 @@ public class Osoba {
 	@Column(name = "GODINARODENJA")
 	private Date godRodenja;
 	@Column(name = "SPOL")
-	private Character spol;
+	private String spol;
 	@Column(name = "ADRESA")
 	private String adresa;
 	@Column(name = "WEBSITE")
@@ -43,7 +43,7 @@ public class Osoba {
 	public Osoba() {
 	}
 
-	public Osoba(Integer osobaID, String ime, String prezime, Date godRodenja, Character spol, String adresa,
+	public Osoba(Integer osobaID, String ime, String prezime, Date godRodenja, String spol, String adresa,
 			String website) {
 		this.osobaID = osobaID;
 		this.ime = ime;
@@ -109,7 +109,7 @@ public class Osoba {
 		return godRodenja;
 	}
 
-	public Character getSpol() {
+	public String getSpol() {
 		return spol;
 	}
 
@@ -141,8 +141,8 @@ public class Osoba {
 		this.godRodenja = godRodenja;
 	}
 
-	public void setSpol(Character spol) {
-		this.spol = spol;
+	public void setSpol(String string) {
+		this.spol = string;
 	}
 
 	public void setAdresa(String adresa) {

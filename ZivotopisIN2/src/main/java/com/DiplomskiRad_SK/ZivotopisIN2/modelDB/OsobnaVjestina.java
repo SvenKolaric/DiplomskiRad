@@ -42,8 +42,8 @@ public class OsobnaVjestina {
 	private List<VozackaOsobnaVJ> vozackaDozvolaOsVJList = new ArrayList<>();
 	//@OneToMany(mappedBy = "osobnaVJ", cascade = CascadeType.ALL, orphanRemoval = true)
 	//private ArrayList<CertifikatDiploma> certifikatDiplomaList;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IDCV")
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDCV", nullable = false)
 	private CV zivotopis;
 	
 	public OsobnaVjestina() {

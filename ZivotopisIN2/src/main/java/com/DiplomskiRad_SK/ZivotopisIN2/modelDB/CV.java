@@ -24,9 +24,6 @@ public class CV {
 	@Column(name = "DATUMAZURIRANJA")
 	private Timestamp datumAzuriranja;
 
-	
-	@OneToMany(mappedBy = "zivotopis", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<OsobnaVjestina> osobnaVjestinaList = new ArrayList<>();
 	@OneToMany(mappedBy = "zivotopis", cascade = CascadeType.ALL, orphanRemoval = true) //IME ATRIBUTA U DODATNEINFO KOJI TI REFERENCIRAM
 	private List<DodatneInfo> dodatneInfoList= new ArrayList<>();
 	@OneToMany(mappedBy = "zivotopis", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -39,8 +36,12 @@ public class CV {
 	@OneToOne(fetch = FetchType.LAZY,
             cascade =  CascadeType.ALL,
             mappedBy = "zivotopis")
-	@Transient
 	private Zaglavlje zaglavlje;
+	
+	@OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL,
+            mappedBy = "zivotopis")
+	private OsobnaVjestina osobnaVJ;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDOSOBA")
@@ -55,17 +56,7 @@ public class CV {
 		this.datumAzuriranja = datumAzuriranja;
 	}
 	
-	/*synchronize both sides of the bidirectional association*/
-	public void addOsobnaVjestina(OsobnaVjestina obj) {
-		osobnaVjestinaList.add(obj);
-        obj.setZivotopis(this);
-    }
- 
-    public void removeOsobnaVjestina(OsobnaVjestina obj) {
-    	osobnaVjestinaList.remove(obj);
-        obj.setZivotopis(null);
-    }
-    
+	/*synchronize both sides of the bidirectional association*/    
 	public void addDodatneInfo(DodatneInfo obj) {
     	dodatneInfoList.add(obj);
         obj.setZivotopis(this);
@@ -123,10 +114,6 @@ public class CV {
 		this.datumAzuriranja = datumAzuriranja;
 	}
 
-	public void setOsobnaVjestinaList(ArrayList<OsobnaVjestina> osobnaVjestinaList) {
-		this.osobnaVjestinaList = osobnaVjestinaList;
-	}
-
 	public void setDodatneInfoList(ArrayList<DodatneInfo> dodatneInfoList) {
 		this.dodatneInfoList = dodatneInfoList;
 	}
@@ -161,10 +148,6 @@ public class CV {
 
 	public Timestamp getDatumAzuriranja() {
 		return datumAzuriranja;
-	}
-
-	public List<OsobnaVjestina> getOsobnaVjestinaList() {
-		return osobnaVjestinaList;
 	}
 
 	public List<DodatneInfo> getDodatneInfoList() {
@@ -222,10 +205,6 @@ public class CV {
 		
 	}
 
-	public void setOsobnaVjestinaList(List<OsobnaVjestina> osobnaVjestinaList) {
-		this.osobnaVjestinaList = osobnaVjestinaList;
-	}
-
 	public void setDodatneInfoList(List<DodatneInfo> dodatneInfoList) {
 		this.dodatneInfoList = dodatneInfoList;
 	}
@@ -240,6 +219,14 @@ public class CV {
 
 	public void setEdukacijaITreningList(List<EdukacijaITrening> edukacijaITreningList) {
 		this.edukacijaITreningList = edukacijaITreningList;
+	}
+
+	public OsobnaVjestina getOsobnaVJ() {
+		return osobnaVJ;
+	}
+
+	public void setOsobnaVJ(OsobnaVjestina osobnaVJ) {
+		this.osobnaVJ = osobnaVJ;
 	}
 
 }
