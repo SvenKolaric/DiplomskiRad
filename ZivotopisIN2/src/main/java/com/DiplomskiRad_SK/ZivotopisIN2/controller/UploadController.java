@@ -51,7 +51,9 @@ public class UploadController {
 		Boolean isSaved = xmlParser.parseMapXMLFile(file);
 	    
 		if (!isSaved) {
-			redirectAttributes.addFlashAttribute("message", "Došlo je do greške u spremanju datoteke, pokušajte ponovo.");
+			redirectAttributes.addFlashAttribute("message", "Došlo je do greške u spremanju datoteke\n" + 
+												"Provjerite da li su svi podaci u životopisu upisani u odgovarajuća polja." +
+												"Provjerite da li su sva obavezna polja popunjena i pokušajte ponovo.");
 			return "redirect:uploadStatus";
 		}
 		

@@ -39,20 +39,12 @@ public class Dodatak {
 		return metadata;
 	}
 
-	public String getText() {
-		return naziv;
-	}
-
 	public void setID(Integer iD) {
 		ID = iD;
 	}
 
 	public void setMetadata(String metadata) {
 		this.metadata = metadata;
-	}
-
-	public void setText(String naziv) {
-		this.naziv = naziv;
 	}
 
 	@Override

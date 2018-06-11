@@ -12,13 +12,19 @@ public class Zna {
 	@GeneratedValue(generator = "ZNASeq")
 	@SequenceGenerator(name = "ZNASeq", sequenceName = "ZNA_SEQ", allocationSize = 1)	
 	private Integer ID;
-	@Column(name = "RAZUMIJEVANJE")
-	private String razumijevanje;
-	@Column(name = "GOVOR")
-	private String govor;
+	@Column(name = "RAZUMIJEVANJE_SLUSANJE")
+	private String razumijevanjeSlusanje;
+	@Column(name = "RAZUMIJEVANJE_CITANJE")
+	private String razumijevanjeCitanje;
+	@Column(name = "GOVORNA_PRODUKCIJA")
+	private String govornaProdukcija;
+	@Column(name = "GOVORNA_INTERAKCIJA")
+	private String govornaInterakcija;
 	@Column(name = "PISANJE")
 	private String pisanje;
-	
+	@Column(name = "DIPLOME")
+	private String diplome;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDJEZIK")
 	private Jezik jezik;
@@ -29,67 +35,114 @@ public class Zna {
 	public Zna() {
 	}
 
-	public Zna(Integer iD, Integer idJezik, String razumijevanje, String govor, String pisanje) {
+	public Zna(Integer iD, String razumijevanjeSlusanje, String razumijevanjeCitanje, String govornaProdukcija,
+			String govornaInterakcija, String pisanje, String diplome) {
 		ID = iD;
-		this.razumijevanje = razumijevanje;
-		this.govor = govor;
+		this.razumijevanjeSlusanje = razumijevanjeSlusanje;
+		this.razumijevanjeCitanje = razumijevanjeCitanje;
+		this.govornaProdukcija = govornaProdukcija;
+		this.govornaInterakcija = govornaInterakcija;
 		this.pisanje = pisanje;
+		this.diplome = diplome;
 	}
 
-	public Jezik getJezik() {
-		return jezik;
-	}
 
 	public Integer getID() {
 		return ID;
 	}
 
-	public String getRazumijevanje() {
-		return razumijevanje;
-	}
-
-	public String getGovor() {
-		return govor;
-	}
-
-	public String getPisanje() {
-		return pisanje;
-	}
-
-	public OsobnaVjestina getOsobnaVJ() {
-		return osobnaVJ;
-	}
-
-	public void setOsobnaVJ(OsobnaVjestina osobnaVJ) {
-		this.osobnaVJ = osobnaVJ;
-	}
 
 	public void setID(Integer iD) {
 		ID = iD;
 	}
 
-	public void setRazumijevanje(String razumijevanje) {
-		this.razumijevanje = razumijevanje;
+
+	public String getRazumijevanjeSlusanje() {
+		return razumijevanjeSlusanje;
 	}
 
-	public void setGovor(String govor) {
-		this.govor = govor;
+
+	public void setRazumijevanjeSlusanje(String razumijevanjeSlusanje) {
+		this.razumijevanjeSlusanje = razumijevanjeSlusanje;
 	}
+
+	public String getDiplome() {
+		return diplome;
+	}
+
+	public void setDiplome(String diplome) {
+		this.diplome = diplome;
+	}
+	
+	public String getRazumijevanjeCitanje() {
+		return razumijevanjeCitanje;
+	}
+
+
+	public void setRazumijevanjeCitanje(String razumijevanjeCitanje) {
+		this.razumijevanjeCitanje = razumijevanjeCitanje;
+	}
+
+
+	public String getGovornaProdukcija() {
+		return govornaProdukcija;
+	}
+
+
+	public void setGovornaProdukcija(String govornaProdukcija) {
+		this.govornaProdukcija = govornaProdukcija;
+	}
+
+
+	public String getGovornaInterakcija() {
+		return govornaInterakcija;
+	}
+
+
+	public void setGovornaInterakcija(String govornaInterakcija) {
+		this.govornaInterakcija = govornaInterakcija;
+	}
+
+
+	public String getPisanje() {
+		return pisanje;
+	}
+
 
 	public void setPisanje(String pisanje) {
 		this.pisanje = pisanje;
 	}
 
+
+	public Jezik getJezik() {
+		return jezik;
+	}
+
+
 	public void setJezik(Jezik jezik) {
 		this.jezik = jezik;
 	}
 
+
+	public OsobnaVjestina getOsobnaVJ() {
+		return osobnaVJ;
+	}
+
+
+	public void setOsobnaVJ(OsobnaVjestina osobnaVJ) {
+		this.osobnaVJ = osobnaVJ;
+	}
+
+
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37)
-                .append(govor)
+                .append(govornaInterakcija)
+                .append(govornaProdukcija)
                 .append(pisanje)
-                .append(razumijevanje)
+                .append(razumijevanjeCitanje)
+                .append(razumijevanjeSlusanje)
+                .append(diplome)
                 .toHashCode();
 	}
 
@@ -103,9 +156,12 @@ public class Zna {
 			return false;
 		Zna other = (Zna) obj;
 		return new EqualsBuilder()
-                .append(govor, other.govor)
+                .append(govornaInterakcija, other.govornaInterakcija)
+                .append(govornaProdukcija, other.govornaProdukcija)
                 .append(pisanje, other.pisanje)
-                .append(razumijevanje, other.razumijevanje)
+                .append(razumijevanjeCitanje, other.razumijevanjeCitanje)
+                .append(razumijevanjeSlusanje, other.razumijevanjeSlusanje)
+                .append(diplome, other.diplome)
                 .isEquals();
 	}
 

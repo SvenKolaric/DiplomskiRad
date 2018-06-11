@@ -35,6 +35,8 @@ public class OsobnaVjestina {
 	private String poslovneVj;
 	@Column(name = "OSTALEVJ")
 	private String ostaleVj;
+	@Column(name = "RACUNALNEVJ")
+	private String racunalneVJ;
 	
 	@OneToMany(mappedBy = "osobnaVJ", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Zna> znaList = new ArrayList<>();
@@ -51,7 +53,7 @@ public class OsobnaVjestina {
 
 	public OsobnaVjestina(Integer vjestinaID, String obradaInfo, String komunikacija, String stvaranjeSadrzaja,
 			String sigurnost, String rjesavanjeProblema, String materinjiJezik, String komunikacijskeVj,
-			String organizacijskeVj, String poslovneVj, String ostaleVj) {
+			String organizacijskeVj, String poslovneVj, String ostaleVj, String racunalneVJ) {
 		this.vjestinaID = vjestinaID;
 		this.obradaInfo = obradaInfo;
 		this.komunikacija = komunikacija;
@@ -63,6 +65,7 @@ public class OsobnaVjestina {
 		this.organizacijskeVj = organizacijskeVj;
 		this.poslovneVj = poslovneVj;
 		this.ostaleVj = ostaleVj;
+		this.racunalneVJ = racunalneVJ;
 	}
 
 	/*synchronize both sides of the bidirectional association*/
@@ -225,6 +228,22 @@ public class OsobnaVjestina {
                 .append(materinjiJezik, other.materinjiJezik)
                 .append(komunikacijskeVj, other.komunikacijskeVj)
                 .isEquals();
+	}
+
+	public String getRacunalneVJ() {
+		return racunalneVJ;
+	}
+
+	public void setRacunalneVJ(String racunalneVJ) {
+		this.racunalneVJ = racunalneVJ;
+	}
+
+	public void setZnaList(List<Zna> znaList) {
+		this.znaList = znaList;
+	}
+
+	public void setVozackaDozvolaOsVJList(List<VozackaOsobnaVJ> vozackaDozvolaOsVJList) {
+		this.vozackaDozvolaOsVJList = vozackaDozvolaOsVJList;
 	}
 
 }
