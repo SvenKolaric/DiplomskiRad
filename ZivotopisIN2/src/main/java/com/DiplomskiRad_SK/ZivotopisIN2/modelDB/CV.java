@@ -64,7 +64,7 @@ public class CV {
  
     public void removeDodatneInfo(DodatneInfo obj) {
     	dodatneInfoList.remove(obj);
-        obj.setZivotopis(this);
+        obj.setZivotopis(null);
     }
     
     public void addDodatak(Dodatak obj) {
@@ -74,7 +74,7 @@ public class CV {
  
     public void removeDodatak(Dodatak obj) {
     	dodatakList.remove(obj);
-        obj.setZivotopis(this);
+        obj.setZivotopis(null);
     }
     
     public void addRadnoIskustvo(RadnoIskustvo obj) {
@@ -84,7 +84,7 @@ public class CV {
     
     public void removeRadnoIskustvo(RadnoIskustvo obj) {
     	radnoIskustvoList.remove(obj);
-        obj.setZivotopis(this);
+        obj.setZivotopis(null);
     }
     
     public void addEdukacijaITrening(EdukacijaITrening obj) {
@@ -94,7 +94,7 @@ public class CV {
  
     public void removeEdukacijaITrening(EdukacijaITrening obj) {
     	edukacijaITreningList.remove(obj);
-        obj.setZivotopis(this);
+        obj.setZivotopis(null);
     }
     
     //Getters and Setters
@@ -115,19 +115,31 @@ public class CV {
 	}
 
 	public void setDodatneInfoList(ArrayList<DodatneInfo> dodatneInfoList) {
-		this.dodatneInfoList = dodatneInfoList;
+		for (int count = 0; count < dodatneInfoList.size(); count++) {
+			dodatneInfoList.get(count).setZivotopis(this);
+			this.dodatneInfoList.add(dodatneInfoList.get(count));
+		}
 	}
 
 	public void setDodatakList(ArrayList<Dodatak> dodatakList) {
-		this.dodatakList = dodatakList;
+		for (int count = 0; count < dodatakList.size(); count++) {
+			dodatakList.get(count).setZivotopis(this);
+			this.dodatakList.add(dodatakList.get(count));
+		}
 	}
 
 	public void setRadnoIskustvoList(ArrayList<RadnoIskustvo> radnoIskustvoList) {
-		this.radnoIskustvoList = radnoIskustvoList;
+		for (int count = 0; count < radnoIskustvoList.size(); count++) {
+			radnoIskustvoList.get(count).setZivotopis(this);
+			this.radnoIskustvoList.add(radnoIskustvoList.get(count));
+		}
 	}
 
 	public void setEdukacijaITreningList(ArrayList<EdukacijaITrening> edukacijaITreningList) {
-		this.edukacijaITreningList = edukacijaITreningList;
+		for (int count = 0; count < edukacijaITreningList.size(); count++) {
+			edukacijaITreningList.get(count).setZivotopis(this);
+			this.edukacijaITreningList.add(edukacijaITreningList.get(count));
+		}
 	}
 
 	public void setZaglavlje(Zaglavlje zaglavlje) {
