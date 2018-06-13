@@ -10,10 +10,10 @@ public class VozackaOsobnaVJ {
 	@SequenceGenerator(name = "VOSeq", sequenceName = "VOZACKA_OSOBNAVJ_SEQ", allocationSize = 1)
 	private Integer ID;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDVOZACKA")
 	private VozackaDozvola vozackaDozvola;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDOSOBNAVJ")
 	private OsobnaVjestina osobnaVJ;
 	

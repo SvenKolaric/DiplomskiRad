@@ -19,11 +19,12 @@ public class Mjesto {
 	private Integer PBR;
 	@Column(name = "NAZIV")
 	private String naziv;
+	
 	@OneToMany(mappedBy = "mjesto", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Osoba> osobaList = new ArrayList<>();
 	@OneToMany(mappedBy = "mjesto", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Institucija> institucijaList = new ArrayList<>();
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDDRZAVA")
 	private Drzava drzava;
 
@@ -44,7 +45,7 @@ public class Mjesto {
  
     public void removeOsoba(Osoba obj) {
     	osobaList.remove(obj);
-        obj.setMjesto(this);
+        obj.setMjesto(null);
     }
     
 	public void addInstitucija(Institucija obj) {
@@ -54,7 +55,7 @@ public class Mjesto {
  
     public void removeInstitucija(Institucija obj) {
     	institucijaList.remove(obj);
-        obj.setMjesto(this);
+        obj.setMjesto(null);
     }
     
 	public Drzava getDrzava() {

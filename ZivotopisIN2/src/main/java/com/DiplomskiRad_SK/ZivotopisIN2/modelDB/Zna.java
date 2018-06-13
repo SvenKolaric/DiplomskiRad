@@ -25,10 +25,10 @@ public class Zna {
 	@Column(name = "DIPLOME")
 	private String diplome;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDJEZIK")
 	private Jezik jezik;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDVJESTINA")
 	private OsobnaVjestina osobnaVJ;
 

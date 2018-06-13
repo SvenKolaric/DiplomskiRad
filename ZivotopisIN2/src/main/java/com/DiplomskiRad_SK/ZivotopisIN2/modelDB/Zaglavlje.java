@@ -15,10 +15,10 @@ public class Zaglavlje {
 	@Column(name = "OPIS")
 	private String opis;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDPRIJAVE")
 	private VrstaPrijave vrstaPrijave;
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDCV", nullable = false)
 	private CV zivotopis;
 	
@@ -32,6 +32,14 @@ public class Zaglavlje {
 
 	public VrstaPrijave getVrstaPrijave() {
 		return vrstaPrijave;
+	}
+
+	public CV getZivotopis() {
+		return zivotopis;
+	}
+
+	public void setZivotopis(CV zivotopis) {
+		this.zivotopis = zivotopis;
 	}
 
 	public Integer getZaglavljeID() {

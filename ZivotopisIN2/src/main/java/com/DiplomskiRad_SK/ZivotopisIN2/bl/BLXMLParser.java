@@ -14,6 +14,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.aspectj.weaver.patterns.ParserException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.DOMException;
@@ -50,7 +52,14 @@ import com.DiplomskiRad_SK.ZivotopisIN2.repository.VozackaDozvolaRepository;
 
 @Service("BLXML")
 public class BLXMLParser {
-
+	
+	private final BLCV blCV;
+	
+	@Autowired
+	public BLXMLParser(@Qualifier("BLCV") BLCV blCV) {
+		this.blCV = blCV;
+	}
+	
 	public Boolean parseMapXMLFile(MultipartFile file) {
 
 		Document doc = convertToDOM(file);
@@ -133,8 +142,7 @@ public class BLXMLParser {
 					Element element = (Element) node;
 					tk.setNaziv(element.getElementsByTagName("Code").item(0).getTextContent());
 				}
-				
-				ki.setTipKontakta(tk);
+				tk.addKontaktniInfo(ki);
 				konInfoList.add(ki);
 				tipKonList.add(tk);
 			}
@@ -148,7 +156,7 @@ public class BLXMLParser {
 				KontaktniInfo ki = new KontaktniInfo(null,
 						element.getElementsByTagName("Contact").item(0).getTextContent());
 				
-				ki.setTipKontakta(tk);
+				tk.addKontaktniInfo(ki);
 				tipKonList.add(tk);
 				konInfoList.add(ki);
 			}
@@ -171,7 +179,7 @@ public class BLXMLParser {
 						tk.setNaziv(element.getElementsByTagName("Label").item(0).getTextContent());
 					}
 					
-					ki.setTipKontakta(tk);
+					tk.addKontaktniInfo(ki);
 					konInfoList.add(ki);
 					tipKonList.add(tk);
 				}
@@ -217,7 +225,7 @@ public class BLXMLParser {
 
 				Drzava drzava = new Drzava(null, element.getElementsByTagName("Code").item(0).getTextContent());
 				
-				mjesto.setDrzava(drzava);
+				drzava.addMjesto(mjesto);
 				mjestoList.add(mjesto);
 				drzavaList.add(drzava);
 
@@ -239,7 +247,8 @@ public class BLXMLParser {
 				zaglavlje.setOpis(element.getElementsByTagName("Label").item(0).getTextContent());
 			}
 			
-			zaglavlje.setVrstaPrijave(vPrijave);
+			vPrijave.addZaglavlje(zaglavlje);
+			//zaglavlje.setVrstaPrijave(vPrijave);
 
 			/* Posao - Institucija */
 			ArrayList<RadnoIskustvo> radnoIskList = new ArrayList<>();
@@ -269,13 +278,12 @@ public class BLXMLParser {
 							.append(element.getAttribute("year")).toString();
 					date = date.replace("-", "");
 					
-					if(date.length() < 8) {
-						throw new IllegalArgumentException("Vrijednost datuma je nepotpuna!"); 
-					}
-					
 					if (date.isEmpty()) {
 						radnoIsk.setDatumKraja(null);
 					} else {
+						if(date.length() < 8) {
+							throw new IllegalArgumentException("Vrijednost datuma je nepotpuna!"); 
+						}
 						radnoIsk.setDatumKraja((new SimpleDateFormat("ddMMyyyy").parse(date)));
 					}
 				}
@@ -294,7 +302,8 @@ public class BLXMLParser {
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
 					Element element = (Element) node;
 					pozicija.setNaziv(element.getElementsByTagName("Label").item(0).getTextContent());
-					radnoIsk.setPozicija(pozicija);
+					pozicija.addRadnoIskustvo(radnoIsk);
+					//radnoIsk.setPozicija(pozicija);
 				}
 				// Opis radnog mjesta
 				node = nodeList.item(count);
@@ -329,9 +338,12 @@ public class BLXMLParser {
 					Drzava drzava = new Drzava(null,
 							element.getElementsByTagName("Country").item(0).getChildNodes().item(0).getTextContent());
 
-					mjesto.setDrzava(drzava);
-					inst.setMjesto(mjesto);
-					
+					drzava.addMjesto(mjesto);
+					//mjesto.setDrzava(drzava);
+					//inst.setMjesto(mjesto);
+					mjesto.addInstitucija(inst);
+					drzavaList.add(drzava);
+
 					mjestoList.add(mjesto);
 					institucijaList.add(inst);
 				}
@@ -344,7 +356,8 @@ public class BLXMLParser {
 					inst.setWebStranica(element.getElementsByTagName("Contact").item(0).getTextContent());
 				}
 
-				radnoIsk.setInstitucija(inst);
+				//radnoIsk.setInstitucija(inst);
+				inst.addRadnoIskustvo(radnoIsk);
 				radnoIskList.add(radnoIsk);
 				// name = ((city.getName() == null) ? "N/A" : city.getName());
 			}
@@ -374,14 +387,15 @@ public class BLXMLParser {
 					date = new StringBuilder().append(element.getAttribute("day")).append(element.getAttribute("month"))
 							.append(element.getAttribute("year")).toString();
 					date = date.replace("-", "");
-					
-					if(date.length() < 8) {
-						throw new IllegalArgumentException("Vrijednost datuma je nepotpuna!"); 
-					}
+				
 					
 					if (date.isEmpty()) {
 						eduTren.setDatumKraja(null);
 					} else {
+						
+						if(date.length() < 8) {
+							throw new IllegalArgumentException("Vrijednost datuma je nepotpuna!"); 
+						}
 						eduTren.setDatumKraja((new SimpleDateFormat("ddMMyyyy").parse(date)));
 					}
 				}
@@ -431,9 +445,12 @@ public class BLXMLParser {
 					Drzava drzava = new Drzava(null,
 							element.getElementsByTagName("Country").item(0).getChildNodes().item(0).getTextContent());
 
-					mjesto.setDrzava(drzava);
-					inst.setMjesto(mjesto);
-					
+					drzava.addMjesto(mjesto);
+					//mjesto.setDrzava(drzava);
+					//inst.setMjesto(mjesto);
+					mjesto.addInstitucija(inst);
+					drzavaList.add(drzava);
+
 					mjestoList.add(mjesto);
 					institucijaList.add(inst);
 				}
@@ -460,7 +477,8 @@ public class BLXMLParser {
 					eduTren.setPodrucjeObrazovanja(element.getElementsByTagName("Label").item(0).getTextContent());
 				}
 				
-				eduTren.setInstitucija(inst);
+				//eduTren.setInstitucija(inst);
+				inst.addEdukacijaITrening(eduTren);
 				eduTrenList.add(eduTren);
 				// name = ((city.getName() == null) ? "N/A" : city.getName());
 			}
@@ -511,7 +529,8 @@ public class BLXMLParser {
 					zna.setDiplome(element.getElementsByTagName("Title").item(0).getTextContent());
 				}
 
-				zna.setJezik(jezik);
+				//zna.setJezik(jezik);
+				jezik.addZna(zna);
 				znaList.add(zna);
 			}
 
@@ -579,7 +598,8 @@ public class BLXMLParser {
 						vd.setKategorija(element.getElementsByTagName("Licence").item(0).getTextContent());
 					}
 
-					vOsobnaVJ.setVozackaDozvola(vd);
+					vd.addVozackaOsobnaVJ(vOsobnaVJ);
+					//vOsobnaVJ.setVozackaDozvola(vd);
 					vozOsobnaVJList.add(vOsobnaVJ);
 				}
 			}
@@ -606,8 +626,9 @@ public class BLXMLParser {
 						Element element = (Element) node;
 						dodInfo.setOpis(element.getElementsByTagName("Description").item(0).getTextContent());
 					}
-
-					dodInfo.setKategorija(kat);
+					
+					//dodInfo.setKategorija(kat);
+					kat.addDodatneInfo(dodInfo);
 					dodatneInfoList.add(dodInfo);
 				}
 			}
@@ -632,35 +653,54 @@ public class BLXMLParser {
 			}
 			
 			//Kreiraj CV i spremi ga
+			//Održavanje bidirectional veze
 			
-			
-			/*Integer nbrWork = 0;
+			Integer nbrWork = 0;
 			Integer nbrEduc = 0;
 			for(int count = 0; count < mjestoList.size(); count++) {
 				
 				if(count == 0) {
-					osoba.setMjesto(mjestoList.get(count));
+					mjestoList.get(count).addOsoba(osoba);
 				}
 				
-				if(count > 0 && count <= radnoIskList.size()) {
+				/*if(count > 0 && count <= radnoIskList.size()) {
 					radnoIskList.get(nbrWork).setInstitucija(institucijaList.get(nbrWork));
+					institucijaList.get(nbrWork).addRadnoIskustvo(radnoIskList.get(nbrWork));
+					cv.addRadnoIskustvo(radnoIskList.get(nbrWork));
 					nbrWork++;
 				}
 				
 				if(count > radnoIskList.size() && count <= mjestoList.size()) {
-					eduTrenList.get(nbrEduc).setInstitucija(institucijaList.get(nbrEduc));
+					eduTrenList.get(nbrEduc).setInstitucija(institucijaList.get(nbrWork + nbrEduc));
+					institucijaList.get(nbrWork + nbrEduc).addEdukacijaITrening(eduTrenList.get(nbrEduc));
+					cv.addEdukacijaITrening(eduTrenList.get(nbrEduc));
 					nbrEduc++;
-				}
+				}*/
 			}
 			
 			osobnaVJ.setVozackaDozvolaOsVJList(vozOsobnaVJList);
 			osobnaVJ.setZnaList(znaList);
-			
+			cv.addOsobnaVjestina(osobnaVJ);
+
 			osoba.setKontaktInfoList(konInfoList);
-			for (int count = 0; count < drzavaList.size(); count++) {
+			
+			ArrayList<OsobaDrzavljanstvo> osobaDrzList = new ArrayList<>();
+			for (int count = 0; count < drzavljanstvoList.size(); count++) {
 				OsobaDrzavljanstvo od = new OsobaDrzavljanstvo();
+				drzavljanstvoList.get(count).addOsobaDrzavljanstvo(od);
+				osobaDrzList.add(od);
 			}
-			osoba.setDrzavljanstvoList(drzavljanstvoList);*/
+			
+			osoba.setDrzavljanstvoList(osobaDrzList);
+			osoba.addCV(cv);
+			
+			cv.setDodatakList(dodatakList);
+			cv.addZaglavlje(zaglavlje);
+			cv.setDodatneInfoList(dodatneInfoList);
+			cv.setEdukacijaITreningList(eduTrenList);
+			cv.setRadnoIskustvoList(radnoIskList);
+			
+			blCV.SaveCV(cv);
 
 		} catch (ParseException e) {
 			e.printStackTrace();

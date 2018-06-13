@@ -34,7 +34,7 @@ public class VrstaPrijave {
  
     public void removeZaglavlje(Zaglavlje obj) {
     	zaglavljeList.remove(obj);
-        obj.setVrstaPrijave(this);
+        obj.setVrstaPrijave(null);
     }
     
 	public Integer getPrijavaID() {

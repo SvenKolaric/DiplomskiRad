@@ -34,7 +34,7 @@ public class TipKontakta {
  
     public void removeKontaktniInfo(KontaktniInfo obj) {
     	kontaktniInfoList.remove(obj);
-        obj.setTipKontakta(this);
+        obj.setTipKontakta(null);
     }
     
 	public Integer getKontaktID() {

@@ -18,20 +18,20 @@ public class RadnoIskustvo {
 	private Date datumPocetka;
 	@Column(name = "DATUMKRAJA")
 	private Date datumKraja;
-	@Column(name = "DJELATNOSTSEKTOR")
+	@Column(name = "DJELATNOST_SEKTOR")
 	private String djelatnostSektor;
 	@Column(name = "OPISPOSLA")
 	private String opisPosla;
 	@Column(name = "BR_GOD_RADA")
 	private Integer brGodRada;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDPOZICIJA")
 	private Pozicija pozicija;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDINSTITUCIJA")
 	private Institucija institucija;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDCV")
 	private CV zivotopis;
 	

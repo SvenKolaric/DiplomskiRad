@@ -16,7 +16,7 @@ public class Dodatak {
 	private String metadata;
 	@Column(name = "NAZIV")
 	private String naziv;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDCV")
 	private CV zivotopis;
 	

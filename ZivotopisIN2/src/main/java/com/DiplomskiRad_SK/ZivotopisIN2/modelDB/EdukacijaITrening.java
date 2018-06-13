@@ -22,17 +22,17 @@ public class EdukacijaITrening {
 	private String kvalifikacija;
 	@Column(name = "EKORAZINA")
 	private String ekorazina;
-	@Column(name = "PODRUCJEOBRAZOVANAJ")
+	@Column(name = "PODRUCJEOBRAZOVANJA")
 	private String podrucjeObrazovanja;
 	@Column(name = "PREDMETI_STECENEVJESTINE")
 	private String predmetiSteceneVjestine;
 	@Column(name = "BR_GOD_EDUKACIJE")
 	private Integer brGodEdukacija;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDINSTITUCIJA")
 	private Institucija institucija;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDCV")
 	private CV zivotopis;
 	

@@ -43,7 +43,7 @@ public class CV {
             mappedBy = "zivotopis")
 	private OsobnaVjestina osobnaVJ;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDOSOBA")
 	private Osoba osoba;
 
@@ -97,6 +97,25 @@ public class CV {
         obj.setZivotopis(null);
     }
     
+    public void addZaglavlje(Zaglavlje obj) {
+    	this.zaglavlje = obj;
+        obj.setZivotopis(this);
+    }
+ 
+    public void removeZaglavlje(Zaglavlje obj) {
+    	this.zaglavlje = null;
+        obj.setZivotopis(null);
+    }
+    
+    public void addOsobnaVjestina(OsobnaVjestina obj) {
+    	this.osobnaVJ = obj;
+    	obj.setZivotopis(this);
+    }
+ 
+    public void removeOsobnaVjestina(OsobnaVjestina obj) {
+    	this.osobnaVJ = null;
+        obj.setZivotopis(null);
+    }
     //Getters and Setters
 	public void setZivotopisID(Integer zivotopisID) {
 		this.zivotopisID = zivotopisID;
@@ -114,28 +133,28 @@ public class CV {
 		this.datumAzuriranja = datumAzuriranja;
 	}
 
-	public void setDodatneInfoList(ArrayList<DodatneInfo> dodatneInfoList) {
+	public void setDodatneInfoList(List<DodatneInfo> dodatneInfoList) {
 		for (int count = 0; count < dodatneInfoList.size(); count++) {
 			dodatneInfoList.get(count).setZivotopis(this);
 			this.dodatneInfoList.add(dodatneInfoList.get(count));
 		}
 	}
 
-	public void setDodatakList(ArrayList<Dodatak> dodatakList) {
+	public void setDodatakList(List<Dodatak> dodatakList) {
 		for (int count = 0; count < dodatakList.size(); count++) {
 			dodatakList.get(count).setZivotopis(this);
 			this.dodatakList.add(dodatakList.get(count));
 		}
 	}
 
-	public void setRadnoIskustvoList(ArrayList<RadnoIskustvo> radnoIskustvoList) {
+	public void setRadnoIskustvoList(List<RadnoIskustvo> radnoIskustvoList) {
 		for (int count = 0; count < radnoIskustvoList.size(); count++) {
 			radnoIskustvoList.get(count).setZivotopis(this);
 			this.radnoIskustvoList.add(radnoIskustvoList.get(count));
 		}
 	}
 
-	public void setEdukacijaITreningList(ArrayList<EdukacijaITrening> edukacijaITreningList) {
+	public void setEdukacijaITreningList(List<EdukacijaITrening> edukacijaITreningList) {
 		for (int count = 0; count < edukacijaITreningList.size(); count++) {
 			edukacijaITreningList.get(count).setZivotopis(this);
 			this.edukacijaITreningList.add(edukacijaITreningList.get(count));
@@ -217,21 +236,6 @@ public class CV {
 		
 	}
 
-	public void setDodatneInfoList(List<DodatneInfo> dodatneInfoList) {
-		this.dodatneInfoList = dodatneInfoList;
-	}
-
-	public void setDodatakList(List<Dodatak> dodatakList) {
-		this.dodatakList = dodatakList;
-	}
-
-	public void setRadnoIskustvoList(List<RadnoIskustvo> radnoIskustvoList) {
-		this.radnoIskustvoList = radnoIskustvoList;
-	}
-
-	public void setEdukacijaITreningList(List<EdukacijaITrening> edukacijaITreningList) {
-		this.edukacijaITreningList = edukacijaITreningList;
-	}
 
 	public OsobnaVjestina getOsobnaVJ() {
 		return osobnaVJ;

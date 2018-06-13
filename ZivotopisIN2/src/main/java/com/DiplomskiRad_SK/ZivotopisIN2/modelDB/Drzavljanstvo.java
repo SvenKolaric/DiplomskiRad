@@ -26,14 +26,14 @@ public class Drzavljanstvo {
 	}
 
 	/*synchronize both sides of the bidirectional association*/
-	public void addDodatneInfo(OsobaDrzavljanstvo obj) {
+	public void addOsobaDrzavljanstvo(OsobaDrzavljanstvo obj) {
 		osobaDrzavljanstvoList.add(obj);
         obj.setDrzavljanstvo(this);
     }
  
     public void removeOsobaDrzavljanstvo(OsobaDrzavljanstvo obj) {
     	osobaDrzavljanstvoList.remove(obj);
-        obj.setDrzavljanstvo(this);
+        obj.setDrzavljanstvo(null);
     }
     
 	public Integer getDrzavljanstvoID() {

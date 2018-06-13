@@ -57,8 +57,8 @@ public class Drzava {
 		return mjestoList;
 	}
 
-	public void setMjesto(List<Mjesto> mjesto) {
-		this.mjestoList = mjesto;
+	public void setMjesto(List<Mjesto> mjestoList) {
+		this.mjestoList = mjestoList;
 	}
 
 }

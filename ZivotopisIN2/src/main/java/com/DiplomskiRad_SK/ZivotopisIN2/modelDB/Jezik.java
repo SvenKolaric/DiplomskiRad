@@ -34,7 +34,7 @@ public class Jezik {
  
     public void removeZna(Zna obj) {
     	znaList.remove(obj);
-        obj.setJezik(this);
+        obj.setJezik(null);
     }
     
 	public Integer getJezikID() {

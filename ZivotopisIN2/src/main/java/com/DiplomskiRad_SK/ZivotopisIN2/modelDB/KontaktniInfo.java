@@ -15,10 +15,10 @@ public class KontaktniInfo {
 	@Column(name = "KONTAKT")
 	private String kontakt;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDTIPKONTAKTA")
 	private TipKontakta tipKontakta;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDOSOBA")
 	private Osoba osoba;
 

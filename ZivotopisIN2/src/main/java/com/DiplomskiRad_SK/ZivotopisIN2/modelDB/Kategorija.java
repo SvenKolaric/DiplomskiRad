@@ -34,7 +34,7 @@ public class Kategorija {
  
     public void removeDodatneInfo(DodatneInfo obj) {
     	dodatneInfoList.remove(obj);
-        obj.setKategorija(this);
+        obj.setKategorija(null);
     }
     
 	public Integer getKategorijaID() {

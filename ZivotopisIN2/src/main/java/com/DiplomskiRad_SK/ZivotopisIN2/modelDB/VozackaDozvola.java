@@ -11,7 +11,7 @@ public class VozackaDozvola {
 	@Id
 	@GeneratedValue(generator = "VDSeq")
 	@SequenceGenerator(name = "VDSeq", sequenceName = "VOZACKA_DOZVOLA_SEQ", allocationSize = 1)
-	private Integer vozackaID;
+	private Integer vozackadozID;
 	@Column(name = "KATEGORIJA")
 	private String kategorija;
 	
@@ -22,7 +22,7 @@ public class VozackaDozvola {
 	}
 
 	public VozackaDozvola(Integer vozackaID, String kategorija) {
-		this.vozackaID = vozackaID;
+		this.vozackadozID = vozackaID;
 		this.kategorija = kategorija;
 	}
 
@@ -34,11 +34,11 @@ public class VozackaDozvola {
 	
 	public void removeVozackaOsobnaVJ(VozackaOsobnaVJ obj) {
 		vozackaOsobnaVJList.remove(obj);
-        obj.setVozackaDozvola(this);
+        obj.setVozackaDozvola(null);
     }
 	
 	public Integer getVozackaID() {
-		return vozackaID;
+		return vozackadozID;
 	}
 
 	public String getKategorija() {
@@ -46,7 +46,7 @@ public class VozackaDozvola {
 	}
 
 	public void setVozackaID(Integer vozackaID) {
-		this.vozackaID = vozackaID;
+		this.vozackadozID = vozackaID;
 	}
 
 	public void setKategorija(String kategorija) {

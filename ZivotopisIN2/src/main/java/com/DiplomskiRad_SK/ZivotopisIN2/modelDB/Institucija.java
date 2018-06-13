@@ -21,7 +21,8 @@ public class Institucija {
 	private String webStranica;
 	@Column(name = "NAZIV")
 	private String naziv;
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDMJESTO")
 	private Mjesto mjesto;
 	@OneToMany(mappedBy = "institucija", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -47,7 +48,7 @@ public class Institucija {
  
     public void removeRadnoIskustvo(RadnoIskustvo obj) {
     	radnoIskustvoList.remove(obj);
-        obj.setInstitucija(this);
+        obj.setInstitucija(null);
     }
     
     public void addEdukacijaITrening(EdukacijaITrening obj) {
@@ -57,7 +58,7 @@ public class Institucija {
  
     public void removeEdukacijaITrening(EdukacijaITrening obj) {
     	edukacijaTreningList.remove(obj);
-        obj.setInstitucija(this);
+        obj.setInstitucija(null);
     }
     
 	public Mjesto getMjesto() {
@@ -130,7 +131,10 @@ public class Institucija {
 	}
 
 	public void setRadnoIskustvoList(List<RadnoIskustvo> radnoIskustvoList) {
-		this.radnoIskustvoList = radnoIskustvoList;
+		for (int count = 0; count < radnoIskustvoList.size(); count++) {
+			radnoIskustvoList.get(count).setInstitucija(this);
+			this.radnoIskustvoList.add(radnoIskustvoList.get(count));
+		}
 	}
 
 	public List<EdukacijaITrening> getEdukacijaTreningList() {
@@ -138,7 +142,10 @@ public class Institucija {
 	}
 
 	public void setEdukacijaTreningList(List<EdukacijaITrening> edukacijaTreningList) {
-		this.edukacijaTreningList = edukacijaTreningList;
+		for (int count = 0; count < radnoIskustvoList.size(); count++) {
+			radnoIskustvoList.get(count).setInstitucija(this);
+			this.radnoIskustvoList.add(radnoIskustvoList.get(count));
+		}
 	}
 
 }

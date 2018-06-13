@@ -34,7 +34,7 @@ public class Pozicija {
  
     public void removeRadnoIskustvo(RadnoIskustvo obj) {
     	radnoIskustvoList.remove(obj);
-        obj.setPozicija(this);
+        obj.setPozicija(null);
     }
     
 	public Integer getPozicijaID() {

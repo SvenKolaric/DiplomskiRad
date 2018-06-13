@@ -15,7 +15,7 @@ public class OsobnaVjestina {
 	@GeneratedValue(generator = "OVSeq")
 	@SequenceGenerator(name = "OVSeq", sequenceName = "OSOBNA_VJESTINA_SEQ", allocationSize = 1)
 	private Integer vjestinaID;
-	@Column(name = "OBRADAINFO")
+	@Column(name = "OBRADAINFORMACIJA")
 	private String obradaInfo;
 	@Column(name = "KOMUNIKACIJA")
 	private String komunikacija;
@@ -44,7 +44,7 @@ public class OsobnaVjestina {
 	private List<VozackaOsobnaVJ> vozackaDozvolaOsVJList = new ArrayList<>();
 	//@OneToMany(mappedBy = "osobnaVJ", cascade = CascadeType.ALL, orphanRemoval = true)
 	//private ArrayList<CertifikatDiploma> certifikatDiplomaList;
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDCV", nullable = false)
 	private CV zivotopis;
 	
@@ -76,7 +76,7 @@ public class OsobnaVjestina {
  
     public void removeZna(Zna obj) {
     	znaList.remove(obj);
-        obj.setOsobnaVJ(this);
+        obj.setOsobnaVJ(null);
     }
     
 	public void addVozackaOsobnaVJ(VozackaOsobnaVJ obj) {
@@ -86,7 +86,7 @@ public class OsobnaVjestina {
  
     public void removeVozackaOsobnaVJ(VozackaOsobnaVJ obj) {
     	vozackaDozvolaOsVJList.remove(obj);
-        obj.setOsobnaVJ(this);
+        obj.setOsobnaVJ(null);
     }
     
 	public List<Zna> getZnaList() {
@@ -185,14 +185,6 @@ public class OsobnaVjestina {
 		this.ostaleVj = ostaleVj;
 	}
 
-	public void setZnaList(ArrayList<Zna> jezikList) {
-		this.znaList = jezikList;
-	}
-
-	public void setVozackaDozvolaOsVJList(ArrayList<VozackaOsobnaVJ> vozackaDozvolaList) {
-		this.vozackaDozvolaOsVJList = vozackaDozvolaList;
-	}
-
 	public CV getZivotopis() {
 		return zivotopis;
 	}
@@ -239,11 +231,17 @@ public class OsobnaVjestina {
 	}
 
 	public void setZnaList(List<Zna> znaList) {
-		this.znaList = znaList;
+		for (int count = 0; count < znaList.size(); count++) {
+			znaList.get(count).setOsobnaVJ(this);
+			this.znaList.add(znaList.get(count));
+		}
 	}
 
 	public void setVozackaDozvolaOsVJList(List<VozackaOsobnaVJ> vozackaDozvolaOsVJList) {
-		this.vozackaDozvolaOsVJList = vozackaDozvolaOsVJList;
+		for (int count = 0; count < vozackaDozvolaOsVJList.size(); count++) {
+			vozackaDozvolaOsVJList.get(count).setOsobnaVJ(this);
+			this.vozackaDozvolaOsVJList.add(vozackaDozvolaOsVJList.get(count));
+		}
 	}
 
 }

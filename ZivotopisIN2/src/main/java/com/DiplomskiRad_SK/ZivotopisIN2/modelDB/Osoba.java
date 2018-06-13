@@ -36,7 +36,7 @@ public class Osoba {
 	private List<KontaktniInfo> kontaktInfoList = new ArrayList<>();
 	@OneToMany(mappedBy = "osoba", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<OsobaDrzavljanstvo> osobaDrzavljanstvoList = new ArrayList<>();
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDMJESTO")
 	private Mjesto mjesto;
 	
@@ -62,7 +62,7 @@ public class Osoba {
  
     public void removeCV(CV obj) {
     	zivotopisiList.remove(obj);
-        obj.setOsoba(this);
+        obj.setOsoba(null);
     }
     
     public void addKontaktniInfo(KontaktniInfo obj) {
@@ -72,7 +72,7 @@ public class Osoba {
  
     public void removeKontaktniInfo(KontaktniInfo obj) {
     	kontaktInfoList.remove(obj);
-        obj.setOsoba(this);
+        obj.setOsoba(null);
     }
     
     public void addOsobaDrzavljanstvo(OsobaDrzavljanstvo obj) {
@@ -82,7 +82,7 @@ public class Osoba {
  
     public void removeOsobaDrzavljanstvo(OsobaDrzavljanstvo obj) {
     	osobaDrzavljanstvoList.remove(obj);
-        obj.setOsoba(this);
+        obj.setOsoba(null);
     }
     
 	public Mjesto getMjesto() {
@@ -162,15 +162,24 @@ public class Osoba {
 	}
 
 	public void setZivotopisiList(List<CV> zivotopisiList) {
-		this.zivotopisiList = zivotopisiList;
+		for (int count = 0; count < zivotopisiList.size(); count++) {
+			zivotopisiList.get(count).setOsoba(this);
+			this.zivotopisiList.add(zivotopisiList.get(count));
+		}
 	}
 
 	public void setKontaktInfoList(List<KontaktniInfo> kontaktInfoList) {
-		this.kontaktInfoList = kontaktInfoList;
+		for (int count = 0; count < kontaktInfoList.size(); count++) {
+			kontaktInfoList.get(count).setOsoba(this);
+			this.kontaktInfoList.add(kontaktInfoList.get(count));
+		}
 	}
 
 	public void setDrzavljanstvoList(List<OsobaDrzavljanstvo> osobaDrzavljanstvoList) {
-		this.osobaDrzavljanstvoList = osobaDrzavljanstvoList;
+		for (int count = 0; count < osobaDrzavljanstvoList.size(); count++) {
+			osobaDrzavljanstvoList.get(count).setOsoba(this);
+			this.osobaDrzavljanstvoList.add(osobaDrzavljanstvoList.get(count));
+		}
 	}
 
 	@Override
