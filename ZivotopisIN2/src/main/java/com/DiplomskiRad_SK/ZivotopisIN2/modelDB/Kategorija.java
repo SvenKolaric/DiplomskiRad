@@ -61,4 +61,7 @@ public class Kategorija {
 		this.dodatneInfoList = dodatneInfoList;
 	}
 
+	public void setDependenciesNull() {
+		this.setDodatneInfoList(null);	
+	}
 }

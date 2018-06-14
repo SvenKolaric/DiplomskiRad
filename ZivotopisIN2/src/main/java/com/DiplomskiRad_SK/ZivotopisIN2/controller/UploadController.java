@@ -8,6 +8,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -27,7 +29,8 @@ import com.DiplomskiRad_SK.ZivotopisIN2.bl.BLXMLParser;
 public class UploadController {
 
 	private final BLXMLParser xmlParser;
-	
+	private static final Logger log = LogManager.getLogger(UploadController.class);
+
 	@Autowired
 	public UploadController(@Qualifier("BLXML") BLXMLParser xmlParser) {
 		this.xmlParser = xmlParser;
@@ -40,20 +43,22 @@ public class UploadController {
 
 	@PostMapping("/upload")
 	//@RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String singleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) throws DOMException, ParseException {
-
+	public String singleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+		log.info("Controller post method started.");
 		if (file.isEmpty()) {
 			redirectAttributes.addFlashAttribute("message", "Molimo odaberite datoteku za slanje.");
+			log.warn("User sent an empty post request.");
 			return "redirect:uploadStatus";
 		}
 		
-		//tu dojavi grešku ako se ne spremi
+		log.debug("File sent to BLXMLparser.");
 		Boolean isSaved = xmlParser.parseMapXMLFile(file);
+	    log.debug("File parsed and saved status:", isSaved);
 	    
 		if (!isSaved) {
-			redirectAttributes.addFlashAttribute("message", "Došlo je do greške u spremanju datoteke\n" + 
-												"Provjerite da li su svi podaci u životopisu upisani u odgovarajuća polja." +
-												"Provjerite da li su sva obavezna polja popunjena i pokušajte ponovo.");
+			redirectAttributes.addFlashAttribute("message", "Došlo je do greške u spremanju datoteke" +
+												"Provjerite da li su svi podaci u životopisu upisani u odgovarajuća polja i " +
+												"obavezna polja popunjena.");
 			return "redirect:uploadStatus";
 		}
 		

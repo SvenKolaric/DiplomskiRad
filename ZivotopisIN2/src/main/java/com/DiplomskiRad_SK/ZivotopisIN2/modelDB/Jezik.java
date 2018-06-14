@@ -61,4 +61,7 @@ public class Jezik {
 		this.znaList = znaList;
 	}
 	
+	public void setDependenciesNull() {
+		this.setZnaList(null);	
+	}
 }

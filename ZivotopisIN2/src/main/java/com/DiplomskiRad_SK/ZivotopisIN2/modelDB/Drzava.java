@@ -60,5 +60,9 @@ public class Drzava {
 	public void setMjesto(List<Mjesto> mjestoList) {
 		this.mjestoList = mjestoList;
 	}
+	
+	public void setDependenciesNull() {
+		this.setMjesto(null);
+	}
 
 }

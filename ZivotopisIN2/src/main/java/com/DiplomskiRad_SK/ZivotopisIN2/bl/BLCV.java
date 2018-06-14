@@ -107,173 +107,12 @@ public class BLCV {
 	@Autowired
 	ZnaRepository znaRepo;
 
-	/*
-	 * @Autowired public BLCV(@Qualifier("CV") DaoCVInterface daoCVInterface) {
-	 * this.daoCV = daoCVInterface; }
-	 */
+
 
 	@Transactional
 	public void SaveCV(CV cv) {
 
-		// Dodatne info check
-		for (int i = 0; i < cv.getDodatneInfoList().size(); i++) {
-			Kategorija katDB = kategorijaRepo.findByNaziv(cv.getDodatneInfoList().get(i).getKategorija().getNaziv());
-			if (katDB != null) {
-				cv.getDodatneInfoList().get(i).setKategorija(katDB);
-			} else {
-				//kategorijaRepo.save(cv.getDodatneInfoList().get(i).getKategorija());
-			}
-		}
-
-		// Vozacka dozvola
-		for (int i = 0; i < cv.getOsobnaVJ().getVozackaDozvolaOsVJList().size(); i++) {
-			VozackaDozvola vozDozDB = vozackaDozRepo.findByKategorija(
-					cv.getOsobnaVJ().getVozackaDozvolaOsVJList().get(i).getVozackaDozvola().getKategorija());
-			if (vozDozDB != null) {
-				cv.getOsobnaVJ().getVozackaDozvolaOsVJList().get(i).setVozackaDozvola(vozDozDB);
-			} else {
-				//vozackaDozRepo.save(cv.getOsobnaVJ().getVozackaDozvolaOsVJList().get(i).getVozackaDozvola());
-			}
-		}
-
-		// Jezik
-		for (int i = 0; i < cv.getOsobnaVJ().getZnaList().size(); i++) {
-			Jezik jezikDB = jezikRepo.findByNaziv(cv.getOsobnaVJ().getZnaList().get(i).getJezik().getNaziv());
-			if (jezikDB != null) {
-				cv.getOsobnaVJ().getZnaList().get(i).setJezik(jezikDB);
-			} else {
-				//jezikRepo.save(cv.getOsobnaVJ().getZnaList().get(i).getJezik());
-			}
-		}
-
-		// Osoba
-		ArrayList<Osoba> osobaDBList = (ArrayList<Osoba>) osobaRepo.findAll();
-		for (Osoba osobaDB : osobaDBList) {
-			if (cv.getOsoba().equals(osobaDB)) {
-				cv.setOsoba(osobaDB);
-
-				for (int i = 0; i < cv.getOsoba().getKontaktInfoList().size(); i++)
-					cv.getOsoba().getKontaktInfoList().get(i).setOsoba(osobaDB);
-
-				for (int i = 0; i < cv.getOsoba().getOsobaDrzavljanstvoList().size(); i++)
-					cv.getOsoba().getOsobaDrzavljanstvoList().get(i).setOsoba(osobaDB);
-			}
-		}
-
-		// Tip Konatakta
-		for (int i = 0; i < cv.getOsoba().getKontaktInfoList().size(); i++) {
-			TipKontakta tipKontDB = tipKontRepo
-					.findByNaziv(cv.getOsoba().getKontaktInfoList().get(i).getTipKontakta().getNaziv());
-			if (tipKontDB != null) {
-				cv.getOsoba().getKontaktInfoList().get(i).setTipKontakta(tipKontDB);
-			} else {
-				//tipKontRepo.save(cv.getOsoba().getKontaktInfoList().get(i).getTipKontakta());
-			}
-		}
-
-		// Drzavljanstvo
-		for (int i = 0; i < cv.getOsoba().getOsobaDrzavljanstvoList().size(); i++) {
-			Drzavljanstvo drzavljanstvoDB = drzavljanstvoRepo
-					.findByNaziv(cv.getOsoba().getOsobaDrzavljanstvoList().get(i).getDrzavljanstvo().getNaziv());
-			if (drzavljanstvoDB != null) {
-				cv.getOsoba().getOsobaDrzavljanstvoList().get(i).setDrzavljanstvo(drzavljanstvoDB);
-			} else {
-				//drzavljanstvoRepo.save(cv.getOsoba().getOsobaDrzavljanstvoList().get(i).getDrzavljanstvo()); 
-			}
-		}
-
-		// VrstaPrijave
-		VrstaPrijave vrstaPDB = vrstaPrijRepo.findByNaziv(cv.getZaglavlje().getVrstaPrijave().getNaziv());
-		if (vrstaPDB != null) {
-			cv.getZaglavlje().setVrstaPrijave(vrstaPDB);
-		} else {
-			//vrstaPrijRepo.save(cv.getZaglavlje().getVrstaPrijave());
-		}
-
-		// Pozicija
-		for (int i = 0; i < cv.getRadnoIskustvoList().size(); i++) {
-			Pozicija pozicijaDB = pozicijaRepo.findByNaziv(cv.getRadnoIskustvoList().get(i).getPozicija().getNaziv());
-			if (pozicijaDB != null) {
-				cv.getRadnoIskustvoList().get(i).setPozicija(pozicijaDB);
-			} else {
-				//pozicijaRepo.save(cv.getRadnoIskustvoList().get(i).getPozicija());
-			}
-		}
-
-		//Drzava - osoba
-		Drzava drzavaDB = drzavaRepo.findByNaziv(cv.getOsoba().getMjesto().getDrzava().getNaziv());
-		if (drzavaDB != null) {
-			cv.getOsoba().getMjesto().setDrzava(drzavaDB);
-		} else {
-			drzavaDB = cv.getOsoba().getMjesto().getDrzava();
-			drzavaDB.setMjesto(null);
-			drzavaRepo.save(drzavaDB);
-		}
-		
-		//Mjesto probat cu ne spremati odmah
-		Mjesto mjestoDB_Osoba = mjestoRepo.findByNaziv(cv.getOsoba().getMjesto().getNaziv());
-		if (mjestoDB_Osoba != null) {
-			cv.getOsoba().setMjesto(mjestoDB_Osoba);
-		} else {
-			//mjestoRepo.save(cv.getOsoba().getMjesto());
-		}
-		
-		//Mjesto-Drzava RI
-		for (int i = 0; i < cv.getRadnoIskustvoList().size(); i++) {
-			Mjesto mjestoDB_RI = mjestoRepo.findByNaziv(cv.getRadnoIskustvoList().get(i).getInstitucija().getMjesto().getNaziv());
-			Drzava drzavaDB_RI = drzavaRepo.findByNaziv(cv.getRadnoIskustvoList().get(i).getInstitucija().getMjesto().getDrzava().getNaziv());
-			
-			if (drzavaDB_RI != null) {
-				cv.getRadnoIskustvoList().get(i).getInstitucija().getMjesto().setDrzava(drzavaDB_RI);
-			} else {
-				drzavaDB = cv.getRadnoIskustvoList().get(i).getInstitucija().getMjesto().getDrzava();
-				drzavaDB.setMjesto(null);
-				drzavaRepo.save(drzavaDB);
-			}
-			
-			if (mjestoDB_RI != null) {
-				cv.getRadnoIskustvoList().get(i).getInstitucija().setMjesto(mjestoDB_RI);
-			} else {
-				//mjestoRepo.save(cv.getRadnoIskustvoList().get(i).getInstitucija().getMjesto());
-			}
-		}
-		
-		//Mjesto-Drzava Edu
-		for (int i = 0; i < cv.getEdukacijaITreningList().size(); i++) {
-			Mjesto mjestoDB_ET = mjestoRepo.findByNaziv(cv.getEdukacijaITreningList().get(i).getInstitucija().getMjesto().getNaziv());
-			Drzava drzavaDB_ET = drzavaRepo.findByNaziv(cv.getEdukacijaITreningList().get(i).getInstitucija().getMjesto().getDrzava().getNaziv());
-			
-			if (drzavaDB_ET != null) {
-				cv.getEdukacijaITreningList().get(i).getInstitucija().getMjesto().setDrzava(drzavaDB_ET);
-			} else {
-				drzavaDB = cv.getEdukacijaITreningList().get(i).getInstitucija().getMjesto().getDrzava();
-				drzavaDB.setMjesto(null);
-				drzavaRepo.save(drzavaDB);
-			}
-			if (mjestoDB_ET != null) {
-				cv.getRadnoIskustvoList().get(i).getInstitucija().setMjesto(mjestoDB_ET);
-			} else {
-				//mjestoRepo.save(cv.getRadnoIskustvoList().get(i).getInstitucija().getMjesto());
-			}
-		}
-		
-		//Institucija //firme s istima nazivom?
-		for (int i = 0; i < cv.getRadnoIskustvoList().size(); i++) {
-			Institucija institucijaDB = institucijaRepo.findByNaziv(cv.getRadnoIskustvoList().get(i).getInstitucija().getNaziv());
-			if (institucijaDB != null) {
-				cv.getRadnoIskustvoList().get(i).setInstitucija(institucijaDB);
-			} else {
-				//institucijaRepo.save(cv.getRadnoIskustvoList().get(i).getInstitucija());
-			}
-		}
-		for (int i = 0; i < cv.getEdukacijaITreningList().size(); i++) {
-			Institucija institucijaDB = institucijaRepo.findByNaziv(cv.getEdukacijaITreningList().get(i).getInstitucija().getNaziv());
-			if (institucijaDB != null) {
-				cv.getEdukacijaITreningList().get(i).setInstitucija(institucijaDB);
-			} else {
-				//institucijaRepo.save(cv.getEdukacijaITreningList().get(i).getInstitucija());
-			}
-		}
+		cv = CheckForDuplicatesInDB(cv);
 		
 		cvRepo.save(cv);
 		// cv.getOsobnaVjestinaList().get(1).getVozackaDozvolaList().get(1).getIdOsobnaVj()
@@ -285,6 +124,198 @@ public class BLCV {
 		 */
 	}
 
+	private CV CheckForDuplicatesInDB(CV cv) {
+		// Dodatne info
+				for (int i = 0; i < cv.getDodatneInfoList().size(); i++) {
+					Kategorija katDB = kategorijaRepo.findByNaziv(cv.getDodatneInfoList().get(i).getKategorija().getNaziv());
+					if (katDB == null) {
+						katDB = cv.getDodatneInfoList().get(i).getKategorija();
+						katDB.setDependenciesNull();
+						kategorijaRepo.save(katDB);
+					}
+					cv.getDodatneInfoList().get(i).setKategorija(katDB);
+
+				}
+
+				// Vozacka dozvola
+				for (int i = 0; i < cv.getOsobnaVJ().getVozackaDozvolaOsVJList().size(); i++) {
+					VozackaDozvola vozDozDB = vozackaDozRepo.findByKategorija(
+							cv.getOsobnaVJ().getVozackaDozvolaOsVJList().get(i).getVozackaDozvola().getKategorija());
+					if (vozDozDB == null) {
+						vozDozDB = cv.getOsobnaVJ().getVozackaDozvolaOsVJList().get(i).getVozackaDozvola();
+						vozDozDB.setDependenciesNull();
+						vozackaDozRepo.save(vozDozDB);
+					}
+					cv.getOsobnaVJ().getVozackaDozvolaOsVJList().get(i).setVozackaDozvola(vozDozDB);
+
+				}
+
+				// Jezik
+				for (int i = 0; i < cv.getOsobnaVJ().getZnaList().size(); i++) {
+					Jezik jezikDB = jezikRepo.findByNaziv(cv.getOsobnaVJ().getZnaList().get(i).getJezik().getNaziv());
+					if (jezikDB == null) {
+						jezikDB = cv.getOsobnaVJ().getZnaList().get(i).getJezik();
+						jezikDB.setDependenciesNull();
+						jezikRepo.save(jezikDB);
+					}
+					cv.getOsobnaVJ().getZnaList().get(i).setJezik(jezikDB);
+
+				}
+
+				// Osoba
+				ArrayList<Osoba> osobaDBList = (ArrayList<Osoba>) osobaRepo.findAll();
+				for (Osoba osobaDB : osobaDBList) {
+					if (cv.getOsoba().equals(osobaDB)) {
+						cv.setOsoba(osobaDB);
+
+						for (int i = 0; i < cv.getOsoba().getKontaktInfoList().size(); i++)
+							cv.getOsoba().getKontaktInfoList().get(i).setOsoba(osobaDB);
+
+						for (int i = 0; i < cv.getOsoba().getOsobaDrzavljanstvoList().size(); i++)
+							cv.getOsoba().getOsobaDrzavljanstvoList().get(i).setOsoba(osobaDB);
+					}
+				}
+
+				// Tip Konatakta
+				for (int i = 0; i < cv.getOsoba().getKontaktInfoList().size(); i++) {
+					TipKontakta tipKontDB = tipKontRepo
+							.findByNaziv(cv.getOsoba().getKontaktInfoList().get(i).getTipKontakta().getNaziv());
+					if (tipKontDB == null) {
+						tipKontDB = cv.getOsoba().getKontaktInfoList().get(i).getTipKontakta();
+						tipKontDB.setDependenciesNull();
+						tipKontRepo.save(tipKontDB);
+					}
+					cv.getOsoba().getKontaktInfoList().get(i).setTipKontakta(tipKontDB);
+
+				}
+
+				// Drzavljanstvo
+				for (int i = 0; i < cv.getOsoba().getOsobaDrzavljanstvoList().size(); i++) {
+					Drzavljanstvo drzavljanstvoDB = drzavljanstvoRepo
+							.findByNaziv(cv.getOsoba().getOsobaDrzavljanstvoList().get(i).getDrzavljanstvo().getNaziv());
+					if (drzavljanstvoDB == null)  {
+						drzavljanstvoDB = cv.getOsoba().getOsobaDrzavljanstvoList().get(i).getDrzavljanstvo();
+						drzavljanstvoDB.setDependenciesNull();
+						drzavljanstvoRepo.save(drzavljanstvoDB); 
+					}
+					cv.getOsoba().getOsobaDrzavljanstvoList().get(i).setDrzavljanstvo(drzavljanstvoDB);
+
+				}
+
+				// VrstaPrijave
+				VrstaPrijave vrstaPDB = vrstaPrijRepo.findByNaziv(cv.getZaglavlje().getVrstaPrijave().getNaziv());
+				if (vrstaPDB == null) {
+					vrstaPDB = cv.getZaglavlje().getVrstaPrijave();
+					vrstaPDB.setDependenciesNull();
+					vrstaPrijRepo.save(vrstaPDB);
+				}
+				cv.getZaglavlje().setVrstaPrijave(vrstaPDB);
+
+
+				// Pozicija
+				for (int i = 0; i < cv.getRadnoIskustvoList().size(); i++) {
+					Pozicija pozicijaDB = pozicijaRepo.findByNaziv(cv.getRadnoIskustvoList().get(i).getPozicija().getNaziv());
+					if (pozicijaDB == null) {
+						pozicijaDB = cv.getRadnoIskustvoList().get(i).getPozicija();
+						pozicijaDB.setDependenciesNull();
+						pozicijaRepo.save(pozicijaDB);
+					}
+					cv.getRadnoIskustvoList().get(i).setPozicija(pozicijaDB);
+
+				}
+
+				//Drzava - osoba
+				Drzava drzavaDB = drzavaRepo.findByNaziv(cv.getOsoba().getMjesto().getDrzava().getNaziv());
+				if (drzavaDB == null) {
+					drzavaDB = cv.getOsoba().getMjesto().getDrzava();
+					drzavaDB.setDependenciesNull();
+					drzavaRepo.save(drzavaDB);
+				}
+				cv.getOsoba().getMjesto().setDrzava(drzavaDB);
+
+				//Mjesto - osoba
+				Mjesto mjestoDB = mjestoRepo.findByPBR(cv.getOsoba().getMjesto().getPBR());
+				if (mjestoDB == null) {
+					mjestoDB = cv.getOsoba().getMjesto();
+					mjestoDB.setDependenciesNull();
+					mjestoDB.setDrzava(drzavaDB);
+					mjestoRepo.save(mjestoDB);
+				}
+				cv.getOsoba().setMjesto(mjestoDB);
+
+				
+				//Mjesto - Drzava RI
+				for (int i = 0; i < cv.getRadnoIskustvoList().size(); i++) {
+					Mjesto mjestoDB_RI = mjestoRepo.findByPBR(cv.getRadnoIskustvoList().get(i).getInstitucija().getMjesto().getPBR());
+					Drzava drzavaDB_RI = drzavaRepo.findByNaziv(cv.getRadnoIskustvoList().get(i).getInstitucija().getMjesto().getDrzava().getNaziv());
+					
+					if (drzavaDB_RI == null) {
+						drzavaDB_RI = cv.getRadnoIskustvoList().get(i).getInstitucija().getMjesto().getDrzava();
+						drzavaDB_RI.setDependenciesNull();
+						drzavaRepo.save(drzavaDB_RI);
+					}
+					cv.getRadnoIskustvoList().get(i).getInstitucija().getMjesto().setDrzava(drzavaDB_RI);
+
+					if (mjestoDB_RI == null) {
+						mjestoDB_RI = cv.getRadnoIskustvoList().get(i).getInstitucija().getMjesto();
+						mjestoDB_RI.setDependenciesNull();
+						mjestoDB_RI.setDrzava(drzavaDB_RI);
+						mjestoRepo.save(mjestoDB_RI);
+					}
+					cv.getRadnoIskustvoList().get(i).getInstitucija().setMjesto(mjestoDB_RI);
+
+				}
+				
+				//Mjesto - Drzava Edu
+				for (int i = 0; i < cv.getEdukacijaITreningList().size(); i++) {
+					Mjesto mjestoDB_ET = mjestoRepo.findByPBR(cv.getEdukacijaITreningList().get(i).getInstitucija().getMjesto().getPBR());
+					Drzava drzavaDB_ET = drzavaRepo.findByNaziv(cv.getEdukacijaITreningList().get(i).getInstitucija().getMjesto().getDrzava().getNaziv());
+					
+					if (drzavaDB_ET == null) {
+						drzavaDB_ET = cv.getEdukacijaITreningList().get(i).getInstitucija().getMjesto().getDrzava();
+						drzavaDB_ET.setDependenciesNull();
+						drzavaRepo.save(drzavaDB_ET);
+					}
+					cv.getEdukacijaITreningList().get(i).getInstitucija().getMjesto().setDrzava(drzavaDB_ET);
+
+					if (mjestoDB_ET == null) {
+						mjestoDB_ET = cv.getEdukacijaITreningList().get(i).getInstitucija().getMjesto();
+						mjestoDB_ET.setDependenciesNull();
+						mjestoDB_ET.setDrzava(drzavaDB_ET);
+						mjestoRepo.save(mjestoDB_ET);
+					}
+					cv.getEdukacijaITreningList().get(i).getInstitucija().setMjesto(mjestoDB_ET);
+
+				}
+				
+				//Institucija //firme s istima nazivom?
+				for (int i = 0; i < cv.getRadnoIskustvoList().size(); i++) {
+					Institucija institucijaDB = institucijaRepo.findByNaziv(cv.getRadnoIskustvoList().get(i).getInstitucija().getNaziv());
+					if (institucijaDB == null) {
+						institucijaDB = cv.getRadnoIskustvoList().get(i).getInstitucija();
+						institucijaDB.setDependenciesNull();
+						institucijaDB.setMjesto(cv.getRadnoIskustvoList().get(i).getInstitucija().getMjesto());
+						institucijaRepo.save(institucijaDB);
+					}
+					cv.getRadnoIskustvoList().get(i).setInstitucija(institucijaDB);
+
+				}
+				for (int i = 0; i < cv.getEdukacijaITreningList().size(); i++) {
+					Institucija institucijaDB = institucijaRepo.findByNaziv(cv.getEdukacijaITreningList().get(i).getInstitucija().getNaziv());
+					if (institucijaDB == null) {
+						institucijaDB = cv.getEdukacijaITreningList().get(i).getInstitucija();
+						institucijaDB.setDependenciesNull();
+						institucijaDB.setMjesto(cv.getEdukacijaITreningList().get(i).getInstitucija().getMjesto());
+						institucijaRepo.save(institucijaDB);
+						cv.getEdukacijaITreningList().get(i).setInstitucija(institucijaDB);
+					}
+					cv.getEdukacijaITreningList().get(i).setInstitucija(institucijaDB);
+
+				}
+				
+				return cv;
+	}
+	
 	@Transactional
 	public void SaveCVtest() {
 		Date d = new Date();

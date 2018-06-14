@@ -53,4 +53,15 @@ public class Pozicija {
 		this.naziv = naziv;
 	}
 
+	public List<RadnoIskustvo> getRadnoIskustvoList() {
+		return radnoIskustvoList;
+	}
+
+	public void setRadnoIskustvoList(List<RadnoIskustvo> radnoIskustvoList) {
+		this.radnoIskustvoList = radnoIskustvoList;
+	}
+
+	public void setDependenciesNull() {
+		this.setRadnoIskustvoList(null);
+	}
 }

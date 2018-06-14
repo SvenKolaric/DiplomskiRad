@@ -147,5 +147,12 @@ public class Institucija {
 			this.radnoIskustvoList.add(radnoIskustvoList.get(count));
 		}
 	}
-
+	
+	
+	
+	public void setDependenciesNull() {
+		this.edukacijaTreningList = null;
+		//this.setMjesto(null);
+		this.radnoIskustvoList = null;		
+	}
 }

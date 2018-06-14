@@ -45,6 +45,14 @@ public class VrstaPrijave {
 		return naziv;
 	}
 
+	public List<Zaglavlje> getZaglavljeList() {
+		return zaglavljeList;
+	}
+
+	public void setZaglavljeList(List<Zaglavlje> zaglavljeList) {
+		this.zaglavljeList = zaglavljeList;
+	}
+
 	public void setPrijavaID(Integer prijavaID) {
 		this.prijavaID = prijavaID;
 	}
@@ -53,4 +61,7 @@ public class VrstaPrijave {
 		this.naziv = naziv;
 	}
 	
+	public void setDependenciesNull() {
+		this.setZaglavljeList(null);
+	}
 }

@@ -16,7 +16,7 @@ public class Mjesto {
 	@SequenceGenerator(name = "MSeq", sequenceName = "MJESTO_SEQ", allocationSize = 1)
 	private Integer mjestoID;
 	@Column(name = "PBR")
-	private Integer PBR;
+	private Integer pBR;
 	@Column(name = "NAZIV")
 	private String naziv;
 	
@@ -31,9 +31,9 @@ public class Mjesto {
 	public Mjesto() {
 	}
 
-	public Mjesto(Integer mjestoID, Integer pBR, String naziv) {
+	public Mjesto(Integer mjestoID, Integer PBR, String naziv) {
 		this.mjestoID = mjestoID;
-		PBR = pBR;
+		this.pBR = PBR;
 		this.naziv = naziv;
 	}
 	
@@ -75,7 +75,7 @@ public class Mjesto {
 	}
 
 	public Integer getPBR() {
-		return PBR;
+		return pBR;
 	}
 
 	public String getNaziv() {
@@ -86,8 +86,8 @@ public class Mjesto {
 		this.mjestoID = mjestoID;
 	}
 
-	public void setPBR(Integer pBR) {
-		PBR = pBR;
+	public void setPBR(Integer PBR) {
+		this.pBR = PBR;
 	}
 
 	public void setNaziv(String naziv) {
@@ -109,7 +109,7 @@ public class Mjesto {
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37)
-                .append(PBR)
+                .append(pBR)
                 .append(naziv)
                 .toHashCode();
 	}
@@ -125,8 +125,13 @@ public class Mjesto {
 		Mjesto other = (Mjesto) obj;
 			return new EqualsBuilder()
 	                .append(naziv, other.naziv)
-	                .append(PBR, other.PBR)
+	                .append(pBR, other.pBR)
 	                .isEquals();
 	}
 
+	public void setDependenciesNull() {
+		this.setDrzava(null);
+		this.setInstitucijaList(null);
+		this.setOsobaList(null);
+	}
 }

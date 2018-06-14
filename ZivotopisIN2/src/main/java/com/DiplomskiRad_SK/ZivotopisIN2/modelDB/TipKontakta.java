@@ -53,4 +53,15 @@ public class TipKontakta {
 		this.naziv = naziv;
 	}
 	
+	public List<KontaktniInfo> getKontaktniInfoList() {
+		return kontaktniInfoList;
+	}
+
+	public void setKontaktniInfoList(List<KontaktniInfo> kontaktniInfoList) {
+		this.kontaktniInfoList = kontaktniInfoList;
+	}
+
+	public void setDependenciesNull() {
+		this.setKontaktniInfoList(null);
+	}
 }

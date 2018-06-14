@@ -59,4 +59,8 @@ public class Drzavljanstvo {
 	public void setOsobaDrzavljanstvoList(List<OsobaDrzavljanstvo> osobaDrzavljanstvoList) {
 		this.osobaDrzavljanstvoList = osobaDrzavljanstvoList;
 	}
+	
+	public void setDependenciesNull() {
+		this.setOsobaDrzavljanstvoList(null);
+	}
 }

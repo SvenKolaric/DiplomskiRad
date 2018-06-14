@@ -37,20 +37,31 @@ public class VozackaDozvola {
         obj.setVozackaDozvola(null);
     }
 	
-	public Integer getVozackaID() {
-		return vozackadozID;
-	}
-
 	public String getKategorija() {
 		return kategorija;
 	}
 
-	public void setVozackaID(Integer vozackaID) {
-		this.vozackadozID = vozackaID;
+	public Integer getVozackadozID() {
+		return vozackadozID;
+	}
+
+	public void setVozackadozID(Integer vozackadozID) {
+		this.vozackadozID = vozackadozID;
+	}
+
+	public List<VozackaOsobnaVJ> getVozackaOsobnaVJList() {
+		return vozackaOsobnaVJList;
+	}
+
+	public void setVozackaOsobnaVJList(List<VozackaOsobnaVJ> vozackaOsobnaVJList) {
+		this.vozackaOsobnaVJList = vozackaOsobnaVJList;
 	}
 
 	public void setKategorija(String kategorija) {
 		this.kategorija = kategorija;
 	}
 	
+	public void setDependenciesNull() {
+		this.setVozackaOsobnaVJList(null);
+	}
 }

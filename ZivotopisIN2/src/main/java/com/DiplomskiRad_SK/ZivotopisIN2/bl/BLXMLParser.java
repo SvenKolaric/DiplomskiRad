@@ -13,6 +13,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.logging.log4j.*;
+
 import org.aspectj.weaver.patterns.ParserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -54,6 +56,8 @@ import com.DiplomskiRad_SK.ZivotopisIN2.repository.VozackaDozvolaRepository;
 public class BLXMLParser {
 	
 	private final BLCV blCV;
+	private static final Logger log = LogManager.getLogger(BLXMLParser.class);
+
 	
 	@Autowired
 	public BLXMLParser(@Qualifier("BLCV") BLCV blCV) {
@@ -61,16 +65,14 @@ public class BLXMLParser {
 	}
 	
 	public Boolean parseMapXMLFile(MultipartFile file) {
-
+		log.info("parseMapXMLFile started.");
+		
 		Document doc = convertToDOM(file);
 		if (doc == null) {
+			log.warn("The document did not convert to DOM, aborting.");
 			return false;
 		}
-
-		Element root = doc.getDocumentElement();
-		NamedNodeMap nm = root.getAttributes();
-		System.out.println(nm);
-
+		
 		doc.getDocumentElement().normalize();
 
 		try {
@@ -655,28 +657,7 @@ public class BLXMLParser {
 			//Kreiraj CV i spremi ga
 			//Održavanje bidirectional veze
 			
-			Integer nbrWork = 0;
-			Integer nbrEduc = 0;
-			for(int count = 0; count < mjestoList.size(); count++) {
-				
-				if(count == 0) {
-					mjestoList.get(count).addOsoba(osoba);
-				}
-				
-				/*if(count > 0 && count <= radnoIskList.size()) {
-					radnoIskList.get(nbrWork).setInstitucija(institucijaList.get(nbrWork));
-					institucijaList.get(nbrWork).addRadnoIskustvo(radnoIskList.get(nbrWork));
-					cv.addRadnoIskustvo(radnoIskList.get(nbrWork));
-					nbrWork++;
-				}
-				
-				if(count > radnoIskList.size() && count <= mjestoList.size()) {
-					eduTrenList.get(nbrEduc).setInstitucija(institucijaList.get(nbrWork + nbrEduc));
-					institucijaList.get(nbrWork + nbrEduc).addEdukacijaITrening(eduTrenList.get(nbrEduc));
-					cv.addEdukacijaITrening(eduTrenList.get(nbrEduc));
-					nbrEduc++;
-				}*/
-			}
+			mjestoList.get(0).addOsoba(osoba);
 			
 			osobnaVJ.setVozackaDozvolaOsVJList(vozOsobnaVJList);
 			osobnaVJ.setZnaList(znaList);
@@ -700,16 +681,18 @@ public class BLXMLParser {
 			cv.setEdukacijaITreningList(eduTrenList);
 			cv.setRadnoIskustvoList(radnoIskList);
 			
-			blCV.SaveCV(cv);
+ 			blCV.SaveCV(cv);
 
 		} catch (ParseException e) {
-			e.printStackTrace();
-			System.out.println("Exception :" + e);
+			log.error("Error while parsing document: ", e);
+			//e.printStackTrace();
+			//System.out.println("Exception :" + e);
 			return false;
 			
 		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			log.error("Error while mapping value: ", e);
+			//e.printStackTrace();
+			//System.out.println(e.getMessage());
 			return false;
 		}
 
@@ -719,20 +702,19 @@ public class BLXMLParser {
 	private Document convertToDOM(MultipartFile file) {
 
 		try {
+			log.debug("convertToDom started.");
 			InputStream is = file.getInputStream();
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(is);
+			log.debug("convertToDom succesfull.");
 			return doc;
 
 		} catch (SAXException | IOException | ParserConfigurationException e) {
-			e.printStackTrace();
-			System.out.println("Exception :" + e);
-			// Logger.getLogger(JavaApplication4.class.getName()).log(Level.SEVERE, null,
-			// ex);
+			log.error("Error while converting Multipart file to DOM: ", e);
+			return null;
 		} 
 
-		return null;
 	}
 
 	private static Timestamp stringToTimestamp(String str_date) {
@@ -748,7 +730,7 @@ public class BLXMLParser {
 
 			return timestamp;
 		} catch (ParseException e) {
-			System.out.println("Exception :" + e);
+			log.error("Error while converting string to date, check if date is valid format", e);
 			return null;
 		}
 	}
