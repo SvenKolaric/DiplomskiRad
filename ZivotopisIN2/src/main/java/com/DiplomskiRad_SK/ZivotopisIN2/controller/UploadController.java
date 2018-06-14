@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,16 +24,16 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.DiplomskiRad_SK.ZivotopisIN2.bl.BLXMLParser;
+import com.DiplomskiRad_SK.ZivotopisIN2.services.XMLMapParserService;
 
 @Controller
 public class UploadController {
 
-	private final BLXMLParser xmlParser;
+	private final XMLMapParserService xmlParser;
 	private static final Logger log = LogManager.getLogger(UploadController.class);
 
 	@Autowired
-	public UploadController(@Qualifier("BLXML") BLXMLParser xmlParser) {
+	public UploadController(@Qualifier("BLXML") XMLMapParserService xmlParser) {
 		this.xmlParser = xmlParser;
 	}
 	
@@ -45,6 +46,11 @@ public class UploadController {
 	//@RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public String singleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
 		log.info("Controller post method started.");
+		
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		String pass = bCryptPasswordEncoder.encode("fmc58tok");
+		System.out.println(pass);
+		
 		if (file.isEmpty()) {
 			redirectAttributes.addFlashAttribute("message", "Molimo odaberite datoteku za slanje.");
 			log.warn("User sent an empty post request.");

@@ -1,4 +1,4 @@
-package com.DiplomskiRad_SK.ZivotopisIN2.bl;
+package com.DiplomskiRad_SK.ZivotopisIN2.services;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ import com.google.common.collect.Lists;
 import oracle.net.aso.o;
 
 @Service("BLCV")
-public class BLCV {
+public class ZivotopisDBService {
 
 	@Autowired
 	CVRepository cvRepo;

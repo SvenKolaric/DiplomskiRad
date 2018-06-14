@@ -1,4 +1,4 @@
-package com.DiplomskiRad_SK.ZivotopisIN2.bl;
+package com.DiplomskiRad_SK.ZivotopisIN2.services;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,14 +53,14 @@ import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Zna;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.VozackaDozvolaRepository;
 
 @Service("BLXML")
-public class BLXMLParser {
+public class XMLMapParserService {
 	
-	private final BLCV blCV;
-	private static final Logger log = LogManager.getLogger(BLXMLParser.class);
+	private final ZivotopisDBService blCV;
+	private static final Logger log = LogManager.getLogger(XMLMapParserService.class);
 
 	
 	@Autowired
-	public BLXMLParser(@Qualifier("BLCV") BLCV blCV) {
+	public XMLMapParserService(@Qualifier("BLCV") ZivotopisDBService blCV) {
 		this.blCV = blCV;
 	}
 	

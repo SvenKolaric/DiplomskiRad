@@ -1,9 +1,13 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.modelDB;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -18,6 +22,7 @@ public class Korisnik {
 	@Id
 	@GeneratedValue(generator = "KORISNIKSeq")
 	@SequenceGenerator(name = "KORISNIKSeq", sequenceName = "KORISNIK_SEQ", allocationSize = 1)
+	@Column(name = "ID")
 	private Integer id;
 	@Column(name = "LOZINKA")
 	@Length(min = 8, message = "*Lozinka mora imati barem 8 znakova")
@@ -27,20 +32,19 @@ public class Korisnik {
 	@Email(message = "*Molimo unesite valjanu email adresu")
 	@NotEmpty(message = "*Polje email je prazno")
 	private String email;
-	@Column(name = "ISADMIN")
-	private Integer isAdmin; //0 - false, 1 - true
-	@Transient
-	private String role;
+	
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "IDULOGA")
+	private KorisnickaUloga uloga;
 	
 	public Korisnik() {
 		
 	}
 	
-	public Korisnik(Integer id, String password, String email, Integer isAdmin) {
+	public Korisnik(Integer id, String password, String email) {
 		this.id = id;
 		this.password = password;
 		this.email = email;
-		this.isAdmin = isAdmin;
 	}
 
 	public Integer getId() {
@@ -67,20 +71,14 @@ public class Korisnik {
 		this.email = email;
 	}
 
-	public Integer getIsAdmin() {
-		return isAdmin;
+	public KorisnickaUloga getUloga() {
+		return uloga;
 	}
 
-	public void setIsAdmin(Integer isAdmin) {
-		this.isAdmin = isAdmin;
+	public void setUloga(KorisnickaUloga uloga) {
+		this.uloga = uloga;
 	}
 
-	public String getRole() {
-		return role;
-	}
 
-	public void setRole(String role) {
-		this.role = role;
-	}
 	
 }

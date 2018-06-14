@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.DiplomskiRad_SK.ZivotopisIN2.bl.BLCV;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.CV;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Osoba;
+import com.DiplomskiRad_SK.ZivotopisIN2.services.ZivotopisDBService;
 
 @RestController
 @RequestMapping("api/test")
 public class TestController {
 
-	private final BLCV blCV;
+	private final ZivotopisDBService blCV;
 	
 	@Autowired
-	public TestController(@Qualifier("BLCV") BLCV blCV) {
+	public TestController(@Qualifier("BLCV") ZivotopisDBService blCV) {
 		this.blCV = blCV;
 	}
 
