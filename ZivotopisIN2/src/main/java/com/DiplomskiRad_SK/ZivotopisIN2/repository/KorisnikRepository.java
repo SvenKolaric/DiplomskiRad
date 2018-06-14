@@ -6,5 +6,6 @@ import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Korisnik;
 
 
 public interface KorisnikRepository extends CrudRepository<Korisnik, Integer> {
-
+	
+	Korisnik findByEmail(String email);
 }
