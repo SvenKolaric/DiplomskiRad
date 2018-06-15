@@ -24,6 +24,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.UpitRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.services.XMLMapParserService;
 
 @Controller
@@ -31,6 +32,7 @@ public class UploadController {
 
 	private final XMLMapParserService xmlParser;
 	private static final Logger log = LogManager.getLogger(UploadController.class);
+
 
 	@Autowired
 	public UploadController(@Qualifier("BLXML") XMLMapParserService xmlParser) {
@@ -46,10 +48,6 @@ public class UploadController {
 	//@RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public String singleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
 		log.info("Controller post method started.");
-		
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		String pass = bCryptPasswordEncoder.encode("fmc58tok");
-		System.out.println(pass);
 		
 		if (file.isEmpty()) {
 			redirectAttributes.addFlashAttribute("message", "Molimo odaberite datoteku za slanje.");

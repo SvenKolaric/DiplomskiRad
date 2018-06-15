@@ -34,7 +34,7 @@ public class TestController {
 			method = RequestMethod.GET,
 			produces = org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE
 	)
-	public List<Osoba> getAllCVs() {
+	public List<CV> getAllCVs() {
 		Date d = new Date();
 		CV cv = new CV();
 		cv.setZivotopisID(1);

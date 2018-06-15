@@ -23,6 +23,9 @@ public class CV {
 	private Timestamp datumStvaranja;
 	@Column(name = "DATUMAZURIRANJA")
 	private Timestamp datumAzuriranja;
+	
+	@Transient
+	private Integer score;
 
 	@OneToMany(mappedBy = "zivotopis", cascade = CascadeType.ALL, orphanRemoval = true) //IME ATRIBUTA U DODATNEINFO KOJI TI REFERENCIRAM
 	private List<DodatneInfo> dodatneInfoList= new ArrayList<>();
@@ -243,6 +246,14 @@ public class CV {
 
 	public void setOsobnaVJ(OsobnaVjestina osobnaVJ) {
 		this.osobnaVJ = osobnaVJ;
+	}
+
+	public Integer getScore() {
+		return score;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 
 }
