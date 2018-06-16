@@ -3,6 +3,7 @@ package com.DiplomskiRad_SK.ZivotopisIN2.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -15,9 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.w3c.dom.DOMException;
@@ -44,9 +47,9 @@ public class UploadController {
 		this.xmlParser = xmlParser;
 	}
 	
-	@GetMapping("/")
+	/*@GetMapping("/")
 	public String index() {
-		ArrayList<Search> sList = new ArrayList<>();
+		/*ArrayList<Search> sList = new ArrayList<>();
 		sList.add(new Search("BRGOD_RADA", "2", 3, 10));
 		sList.add(new Search("BRGOD_EDU", "2", 3, 10));
 		sList.add(new Search("MJESTO", "Zagreb", 1, 2));
@@ -56,8 +59,20 @@ public class UploadController {
 		sList.add(new Search("UPIT", "MS Office OR Office", 2, 5));
 		searchService.QueryCVs(sList);
 
-		return "upload";
-	}
+		return "test";
+	}*/
+
+	@GetMapping("/")
+    String index(Model model) {
+        model.addAttribute("now", LocalDateTime.now());
+        return "test";
+    }
+
+    @GetMapping("properties")
+    @ResponseBody
+    java.util.Properties properties() {
+        return System.getProperties();
+    }
 
 	@PostMapping("/upload")
 	//@RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

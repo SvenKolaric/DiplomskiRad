@@ -1,5 +1,8 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.controller;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,7 @@ public class LoginController {
 	public ModelAndView login(){
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("login");
+		//modelAndView.addObject("serverTime", new Date());
 		return modelAndView;
 	}
 	

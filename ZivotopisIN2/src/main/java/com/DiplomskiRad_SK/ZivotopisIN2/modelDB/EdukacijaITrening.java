@@ -27,7 +27,7 @@ public class EdukacijaITrening {
 	@Column(name = "PREDMETI_STECENEVJESTINE")
 	private String predmetiSteceneVjestine;
 	@Column(name = "BR_GOD_EDUKACIJE")
-	private Integer brGodEdukacija;
+	private Double brGodEdukacija;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDINSTITUCIJA")
@@ -41,7 +41,7 @@ public class EdukacijaITrening {
 
 	public EdukacijaITrening(Integer edukacijaID, Date datumPocetka, Date datumKraja,
 			String kvalifikacija, String ekorazina, String podrucjeObrazovanja,
-			String predmetiSteceneVjestine, Integer brGodEdukacija) {
+			String predmetiSteceneVjestine, Double brGodEdukacija) {
 		this.edukacijaID = edukacijaID;
 		this.datumPocetka = datumPocetka;
 		this.datumKraja = datumKraja;
@@ -84,7 +84,7 @@ public class EdukacijaITrening {
 		return predmetiSteceneVjestine;
 	}
 
-	public Integer getBrGodEdukacija() {
+	public Double getBrGodEdukacija() {
 		return brGodEdukacija;
 	}
 
@@ -116,7 +116,7 @@ public class EdukacijaITrening {
 		this.predmetiSteceneVjestine = predmetiSteceneVjestine;
 	}
 
-	public void setBrGodEdukacija(Integer brGodEdukacija) {
+	public void setBrGodEdukacija(Double brGodEdukacija) {
 		this.brGodEdukacija = brGodEdukacija;
 	}
 

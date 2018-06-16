@@ -12,7 +12,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @Entity
 @Table(name = "CV")
-public class CV {
+public class CV implements Comparable<CV>{
 	@Id
 	@GeneratedValue(generator = "CVSeq")
 	@SequenceGenerator(name = "CVSeq", sequenceName = "CV_SEQ", allocationSize = 1)
@@ -255,5 +255,9 @@ public class CV {
 	public void setScore(Integer score) {
 		this.score = score;
 	}
-
+	
+	//Compare
+	public int compareTo(CV cv) {
+        return score.compareTo(cv.score);
+    }
 }

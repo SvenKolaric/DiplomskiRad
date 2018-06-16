@@ -23,7 +23,7 @@ public class RadnoIskustvo {
 	@Column(name = "OPISPOSLA")
 	private String opisPosla;
 	@Column(name = "BR_GOD_RADA")
-	private Integer brGodRada;
+	private Double brGodRada;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDPOZICIJA")
@@ -39,7 +39,7 @@ public class RadnoIskustvo {
 	}
 
 	public RadnoIskustvo(Integer posaoID, Date datumPocetka, Date datumKraja, String djelatnostSektor, String opisPosla,
-			Integer brGodRada) {
+			Double brGodRada) {
 		PosaoID = posaoID;
 		this.datumPocetka = datumPocetka;
 		this.datumKraja = datumKraja;
@@ -76,7 +76,7 @@ public class RadnoIskustvo {
 		return opisPosla;
 	}
 
-	public Integer getBrGodRada() {
+	public Double getBrGodRada() {
 		return brGodRada;
 	}
 
@@ -100,7 +100,7 @@ public class RadnoIskustvo {
 		this.opisPosla = opisPosla;
 	}
 
-	public void setBrGodRada(Integer brGodRada) {
+	public void setBrGodRada(Double brGodRada) {
 		this.brGodRada = brGodRada;
 	}
 

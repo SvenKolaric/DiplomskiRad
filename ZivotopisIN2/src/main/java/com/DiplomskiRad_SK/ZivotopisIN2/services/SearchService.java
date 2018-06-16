@@ -2,7 +2,9 @@ package com.DiplomskiRad_SK.ZivotopisIN2.services;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -48,7 +50,7 @@ public class SearchService {
 	@Autowired
 	OsobaRepository osobaRepo;
 
-	public Set<CV> QueryCVs(List<Search> queries) {
+	public List<CV> QueryCVs(List<Search> queries) {
 		Set<CV> cvSet = new HashSet<>();
 		List<Upit> upitList = new ArrayList<Upit>();
 		Integer counterUpiti = 1;
@@ -121,9 +123,22 @@ public class SearchService {
 
 		for (CV cv : cvSet)
 			System.out.println(cv.getScore());
-		return cvSet;
+		
+		List<CV> cvSortedResult = SortSetToList(cvSet);
+		
+		return cvSortedResult;
 	}
 
+	private List<CV> SortSetToList(Set<CV> cvSet){
+		List<CV> cvList = new LinkedList<CV>();
+		cvList.addAll(cvSet);
+        Collections.<CV>sort(cvList);
+        Collections.reverse(cvList);
+        
+        return cvList;
+
+	}
+	
 	private CV calculateScore(CV cv, Integer weight, Integer value) {
 		Integer score = cv.getScore();
 		if (score == null)
