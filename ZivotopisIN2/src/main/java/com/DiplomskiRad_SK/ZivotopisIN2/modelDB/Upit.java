@@ -6,17 +6,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @Entity
 @Table(name = "UPIT")
 public class Upit {
 	@Id
-	@GeneratedValue(generator = "UPITSeq")
-	@SequenceGenerator(name = "UPITSeq", sequenceName = "UPIT_SEQ", allocationSize = 1)
+	@Column(name = "ID", nullable = false)
 	private Integer id;
-	@Column(name = "TEZINA")
+	@Transient
 	private Integer tezina;
-	@Column(name = "VRIJEDNOST")
+	@Transient
 	private Integer vrijednost;
 	@Column(name = "UPIT")
 	private String upit;
@@ -25,6 +28,13 @@ public class Upit {
 		
 	}
 	
+	public Upit(Integer id, Integer tezina, Integer vrijednost, String upit) {
+		this.id = id;
+		this.tezina = tezina;
+		this.vrijednost = vrijednost;
+		this.upit = upit;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -50,4 +60,27 @@ public class Upit {
 		this.upit = upit;
 	}
 
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(upit)
+                .toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Upit other = (Upit) obj;
+		return new EqualsBuilder()
+                .append(id, other.id)
+                .append(upit, other.upit)
+                .isEquals();
+		
+	}
 }

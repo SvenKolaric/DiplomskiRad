@@ -9,9 +9,17 @@ public class Search {
 	public Search() {
 	}
 	
+	public Search(String identifier, String query, Integer queryWeight, Integer queryVaule) {
+		this.identifier = identifier;
+		this.query = query;
+		this.queryWeight = queryWeight;
+		this.queryVaule = queryVaule;
+	}
+	
 	public String getIdentifier() {
 		return identifier;
 	}
+
 	public void setIdentifier(String identifier) {
 		this.identifier = identifier;
 	}

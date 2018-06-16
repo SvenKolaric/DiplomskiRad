@@ -3,6 +3,7 @@ package com.DiplomskiRad_SK.ZivotopisIN2.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,7 +25,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.DiplomskiRad_SK.ZivotopisIN2.models.Search;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.UpitRepository;
+import com.DiplomskiRad_SK.ZivotopisIN2.services.SearchService;
 import com.DiplomskiRad_SK.ZivotopisIN2.services.XMLMapParserService;
 
 @Controller
@@ -32,7 +35,9 @@ public class UploadController {
 
 	private final XMLMapParserService xmlParser;
 	private static final Logger log = LogManager.getLogger(UploadController.class);
-
+	
+	@Autowired
+	SearchService searchService;
 
 	@Autowired
 	public UploadController(@Qualifier("BLXML") XMLMapParserService xmlParser) {
@@ -41,6 +46,16 @@ public class UploadController {
 	
 	@GetMapping("/")
 	public String index() {
+		ArrayList<Search> sList = new ArrayList<>();
+		sList.add(new Search("BRGOD_RADA", "2", 3, 10));
+		sList.add(new Search("BRGOD_EDU", "2", 3, 10));
+		sList.add(new Search("MJESTO", "Zagreb", 1, 2));
+		sList.add(new Search("UPIT", "Java", 3, 10));
+		sList.add(new Search("UPIT", "Vrtlar", 1, 3));
+		sList.add(new Search("UPIT", "Pravo AND Ustavno", 2, 5));
+		sList.add(new Search("UPIT", "MS Office OR Office", 2, 5));
+		searchService.QueryCVs(sList);
+
 		return "upload";
 	}
 
