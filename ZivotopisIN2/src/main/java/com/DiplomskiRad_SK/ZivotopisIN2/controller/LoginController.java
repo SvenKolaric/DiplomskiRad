@@ -1,8 +1,12 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.controller;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +31,22 @@ public class LoginController {
 	public ModelAndView login(){
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("login");
-		//modelAndView.addObject("serverTime", new Date());
 		return modelAndView;
 	}
 	
+	 @RequestMapping("/loginSuccess")
+	    public void loginPageRedirect(HttpServletRequest request, HttpServletResponse response, Authentication authResult) throws IOException, ServletException {
+
+	        String role =  authResult.getAuthorities().toString();
+
+	        if(role.contains("ADMIN")){
+	         response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/admin/home"));                            
+	         }
+	         else if(role.contains("KORISNIK")) {
+	             response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/search/neznam"));
+	         }
+	    }
+	 
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
 	public ModelAndView registration(){
 		ModelAndView modelAndView = new ModelAndView();

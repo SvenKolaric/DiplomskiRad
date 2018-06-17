@@ -1,35 +1,43 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
 
 <head>
-	<title>Spring Security Tutorial</title>
-	<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title>Spring Security Tutorial</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<meta charset="UTF-8">
+	
 </head>
 
 <body>
-	<form th:action="@{/registration}" method="get">
-		<button class="btn btn-md btn-warning btn-block" type="Submit">Go To Registration Page</button>
+	<!--  <form th:action="@{/registration}" method="get">
+		<button class="btn btn-md btn-warning btn-block" type="Submit">Go To Registration Page</button>   OVO CE ICI U ADMINA
 	</form>	
-	<!--  Current time is <span th:text="${serverTime}" />-->
-	<div class="container">
-		<form th:action="@{/login}" method="POST" class="form-signin">
-			<h3 class="form-signin-heading" th:text="Welcome"></h3>
-			<br/>
-			 
-			<input type="text" id="email" name="email"  th:placeholder="Email"
-				class="form-control" /> <br/> 
-			<input type="password"  th:placeholder="Password"
-				id="password" name="password" class="form-control" /> <br /> 
-				
-			<div align="center" th:if="${param.error}">
-				<p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
-			</div>
-			<button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
-		</form>
-	</div>
+-->
+	<th:block layout:fragment="content">
+		<div class="container">
+			<form th:action="@{/login}" method="POST" class="form-signin">
+				<h3 class="form-signin-heading">Dobrodošli,</h3>
+				<h4 class="form-signin-heading" >Upisite vašu email adresu i lozinku</h4>
+				<br /> <input type="text" id="email" name="email"
+					th:placeholder="Email" class="form-control" /> <br /> <input
+					type="password" th:placeholder="Lozinka" id="password"
+					name="password" class="form-control" /> <br />
+
+				<div align="center" th:if="${param.error}">
+					<p style="font-size: 20; color: #FF1C19;">Email ili lozinka su krivi, pokušajte ponovo</p>
+				</div>
+				<button class="btn btn-lg btn-primary btn-block" name="Submit"
+					value="Login" type="Submit" th:text="Prijava"></button>
+			</form>
+		</div>
+	</th:block>
 </body>
 </html>
