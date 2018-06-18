@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
+import org.attoparser.config.ParseConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.OsobnaVjestina;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.RadnoIskustvo;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Upit;
 import com.DiplomskiRad_SK.ZivotopisIN2.models.Search;
+import com.DiplomskiRad_SK.ZivotopisIN2.models.SearchWrapper;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.CVRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.EdukacijaITreningRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.InstitucijaRepository;
@@ -31,6 +33,8 @@ import com.DiplomskiRad_SK.ZivotopisIN2.repository.MjestoRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.OsobaRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.RadnoIskustvoRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.UpitRepository;
+
+import oracle.jdbc.proxy.WeakIdentityHashMap;
 
 @Service("SearchService")
 public class SearchService {
@@ -50,6 +54,71 @@ public class SearchService {
 	@Autowired
 	OsobaRepository osobaRepo;
 
+	public List<Search> prepareQueries(SearchWrapper searchW) {
+
+		List<Search> searchList = new ArrayList<>();
+		try {
+			for (Search s : searchW.getSearchList()) {
+				switch (s.getIdentifier()) {
+				case "BRGOD_RADA":
+					String[] partsRad = s.getQuery().split(","); // ignore other numbers
+					s.setQuery(partsRad[0]);
+					searchList.add(s);
+					break;
+				case "BRGOD_EDU":
+					String[] partsEdu = s.getQuery().split(","); // ignore other numbers
+					s.setQuery(partsEdu[0]);
+					searchList.add(s);
+					break;
+				case "MJESTO":
+					String[] partsMjesto = s.getQuery().split(",");
+					for (String query : partsMjesto) {
+						s.setQuery(query);
+						searchList.add(s);
+					}
+					break;
+				case "INSTITUCIJA":
+					String[] partsInst = s.getQuery().split(",");
+					for (String query : partsInst) {
+						s.setQuery(query);
+						searchList.add(s);
+					}
+					break;
+				case "UPIT": // java + net (2,10),\n java (1,10), -> java+net(2,10\njava(1,10 -> java AND net ,weight=2 value=10 | java, weight=1 value=10
+					s.setQuery(s.getQuery().replaceAll(" ", ""));
+
+					String[] partsUpit = s.getQuery().split(",(?![^\\(\\[]*[\\]\\)])");
+					for (String query : partsUpit) {
+						query = query.trim();
+						String[] queryAndValues = query.split("\\(");
+						Search upit = new Search();
+
+						if (queryAndValues[0].contains("+")) {
+							queryAndValues[0] = queryAndValues[0].replace("+", " AND ");
+						}
+						String[] weightAndValue = queryAndValues[1].replaceAll("\\)", "").split(",");
+
+						upit.setIdentifier("UPIT");
+						upit.setQuery(queryAndValues[0]);
+						upit.setQueryWeight(Integer.parseInt(weightAndValue[0]));
+						upit.setQueryValue(Integer.parseInt(weightAndValue[1]));
+
+						searchList.add(upit);
+					}
+					break;
+
+				}
+
+			}
+			return searchList;
+
+		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
+
+	}
+
 	public List<CV> QueryCVs(List<Search> queries) {
 		Set<CV> cvSet = new HashSet<>();
 		List<Upit> upitList = new ArrayList<Upit>();
@@ -61,7 +130,7 @@ public class SearchService {
 				List<Object[]> cvGodRad = radRepo.findByGodRada(Integer.parseInt(query.getQuery()));
 				for (Object[] row : cvGodRad)
 					cvSet.add(calculateScore(cvRepo.findById(Integer.parseInt(row[0].toString())).get(),
-							query.getQueryWeight(), query.getQueryVaule()));
+							query.getQueryWeight(), query.getQueryValue()));
 
 				break;
 
@@ -69,7 +138,7 @@ public class SearchService {
 				List<Object[]> cvGodEdu = eduRepo.findByGodEdu(Integer.parseInt(query.getQuery()));
 				for (Object[] row : cvGodEdu)
 					cvSet.add(calculateScore(cvRepo.findById(Integer.parseInt(row[0].toString())).get(),
-							query.getQueryWeight(), query.getQueryVaule()));
+							query.getQueryWeight(), query.getQueryValue()));
 
 				break;
 
@@ -79,7 +148,7 @@ public class SearchService {
 				for (Osoba osoba : osobaList) {
 					List<CV> cvList = osoba.getZivotopisiList();
 					for (CV cv : cvList) {
-						cvSet.add(calculateScore(cv, query.getQueryWeight(), query.getQueryVaule()));
+						cvSet.add(calculateScore(cv, query.getQueryWeight(), query.getQueryValue()));
 					}
 				}
 
@@ -91,23 +160,24 @@ public class SearchService {
 					List<EdukacijaITrening> eduList = inst.getEdukacijaTreningList();
 
 					for (RadnoIskustvo ri : radIskList) {
-						cvSet.add(calculateScore(ri.getZivotopis(), query.getQueryWeight(), query.getQueryVaule()));
+						cvSet.add(calculateScore(ri.getZivotopis(), query.getQueryWeight(), query.getQueryValue()));
 					}
 
 					for (EdukacijaITrening edu : eduList) {
-						cvSet.add(calculateScore(edu.getZivotopis(), query.getQueryWeight(), query.getQueryVaule()));
+						cvSet.add(calculateScore(edu.getZivotopis(), query.getQueryWeight(), query.getQueryValue()));
 					}
 				}
 				break;
 
 			case "UPIT":
-				upitList.add(new Upit(counterUpiti, query.getQueryWeight(), query.getQueryVaule(), query.getQuery()));
+				upitList.add(new Upit(counterUpiti, query.getQueryWeight(), query.getQueryValue(), query.getQuery()));
 				counterUpiti++;
 				break;
 			}
 		}
 
-		if (!SaveQueries(upitList)) return null;
+		if (!SaveQueries(upitList))
+			return null;
 
 		for (CV cv : cvSet) {
 			List<Upit> results = upitRepo.findUpitsInText(prepareTextForMatchesSearch(cv));
@@ -119,26 +189,27 @@ public class SearchService {
 
 		}
 
-		if (!DeleteAllQueries()) return null;
+		if (!DeleteAllQueries())
+			return null;
 
 		for (CV cv : cvSet)
 			System.out.println(cv.getScore());
-		
+
 		List<CV> cvSortedResult = SortSetToList(cvSet);
-		
+
 		return cvSortedResult;
 	}
 
-	private List<CV> SortSetToList(Set<CV> cvSet){
+	private List<CV> SortSetToList(Set<CV> cvSet) {
 		List<CV> cvList = new LinkedList<CV>();
 		cvList.addAll(cvSet);
-        Collections.<CV>sort(cvList);
-        Collections.reverse(cvList);
-        
-        return cvList;
+		Collections.<CV>sort(cvList);
+		Collections.reverse(cvList);
+
+		return cvList;
 
 	}
-	
+
 	private CV calculateScore(CV cv, Integer weight, Integer value) {
 		Integer score = cv.getScore();
 		if (score == null)
@@ -180,8 +251,8 @@ public class SearchService {
 			return false;
 		}
 	}
-	
-	@Transactional 
+
+	@Transactional
 	public Boolean DeleteAllQueries() {
 		try {
 			upitRepo.deleteAll();

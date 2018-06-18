@@ -14,11 +14,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Korisnik;
+import com.DiplomskiRad_SK.ZivotopisIN2.models.Search;
+import com.DiplomskiRad_SK.ZivotopisIN2.models.SearchWrapper;
 import com.DiplomskiRad_SK.ZivotopisIN2.services.KorisnikService;
 
 @Controller
@@ -35,18 +39,21 @@ public class LoginController {
 	}
 	
 	 @RequestMapping("/loginSuccess")
-	    public void loginPageRedirect(HttpServletRequest request, HttpServletResponse response, Authentication authResult) throws IOException, ServletException {
+	    public ModelAndView loginPageRedirect(HttpServletRequest request, HttpServletResponse response, Authentication authResult) throws IOException, ServletException {
 
 	        String role =  authResult.getAuthorities().toString();
 
 	        if(role.contains("ADMIN")){
-	         response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/admin/home"));                            
+	        	 return new ModelAndView("redirect:/admin/home"); //redirect je za ovaj controller za drugi moraš kao za korisnika
+	         //response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/admin/home"));                            
 	         }
 	         else if(role.contains("KORISNIK")) {
-	             response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/search/neznam"));
+	        	 return new ModelAndView("redirect:/cv/search");
 	         }
+	        return new ModelAndView("redirect:/");
 	    }
-	 
+
+
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
 	public ModelAndView registration(){
 		ModelAndView modelAndView = new ModelAndView();

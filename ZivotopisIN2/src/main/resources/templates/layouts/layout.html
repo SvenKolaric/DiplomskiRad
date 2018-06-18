@@ -1,31 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-    <title>ApkZivotopisi</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
-          rel="stylesheet" media="screen" />
-    <link href="../../static/css/core.css"
-          th:href="@{/css/core.css}"
-          rel="stylesheet" media="screen" />
-    <script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
-            th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+<title>ApkZivotopisi</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
+	rel="stylesheet" media="screen" />
+<link href="../static/css/core.css" th:href="@{/css/core.css}" rel="stylesheet" />
+<!--  <link href="../static/css/core.css" th:href="@{/css/core.css}"
+	rel="stylesheet" media="screen" />-->
+<script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+<style type="text/css">
+html {
+   margin: 0px;
+   height: 100%;
+   width: 100%;
+   background-color: #f5f5f5
+}
+
+body {
+   margin: 0px;
+   min-height: 100%;
+   width: 100%;
+      background-color: #f5f5f5
+   
+}</style>
 </head>
 <body>
-<header>
-        <div th:replace="fragments/header :: header"></div>
-</header>
+	<header>
+		<div th:replace="fragments/header :: header"></div>
+	</header>
 
-<div class="container">
-    <div layout:fragment="content">
-        <p>Content goes here...</p>
-    </div>
-    <footer>
-        <div th:replace="fragments/footer :: footer"></div>
-    </footer>
-</div>
+	<div class="container">
+		<div layout:fragment="content">
+			<p>Content goes here!!!</p>
+		</div>
+		<footer>
+			<div th:replace="fragments/footer :: footer"></div>
+		</footer>
+	</div>
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </body>
 </html>

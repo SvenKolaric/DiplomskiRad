@@ -4,18 +4,22 @@ public class Search {
 	private String identifier;
 	private String query;
 	private Integer queryWeight;
-	private Integer queryVaule;
+	private Integer queryValue;
 	
 	public Search() {
 	}
 	
-	public Search(String identifier, String query, Integer queryWeight, Integer queryVaule) {
+	public Search(String identifier, String query, Integer queryWeight, Integer queryValue) {
 		this.identifier = identifier;
 		this.query = query;
 		this.queryWeight = queryWeight;
-		this.queryVaule = queryVaule;
+		this.queryValue = queryValue;
 	}
 	
+	public Search(String identifier) {
+		this.identifier = identifier;
+	}
+
 	public String getIdentifier() {
 		return identifier;
 	}
@@ -35,11 +39,11 @@ public class Search {
 	public void setQueryWeight(Integer queryWeight) {
 		this.queryWeight = queryWeight;
 	}
-	public Integer getQueryVaule() {
-		return queryVaule;
+	public Integer getQueryValue() {
+		return queryValue;
 	}
-	public void setQueryVaule(Integer queryVaule) {
-		this.queryVaule = queryVaule;
+	public void setQueryValue(Integer queryVaule) {
+		this.queryValue = queryVaule;
 	}
 	
 }

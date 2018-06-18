@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<head>
+<title>Pretraga životopisa</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
+	rel="stylesheet" media="screen" />
+<script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+<meta charset="UTF-8">
+
+</head>
+<body>
+
+	<!-- Insert content into the layouts/layout.html -->
+	<th:block layout:fragment="content">
+		<div class="hero-unit">
+			<form action="#" th:action="@{searchQueries}" th:object="${form}"
+				method="post">
+				<fieldset>
+					<input type="submit" id="submitButton" th:value="Pretraži"> <input
+						type="reset" id="resetButton" name="reset" th:value="Resetiraj" />
+					<table>
+						<thead>
+							<tr>
+								<th>Opis</th>
+								<th>Upit</th>
+								<th>Težinski faktor</th>
+								<th>Vrijednost upita</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="search, itemStat : *{searchList}"> <!-- OVO JE NAZIV U SearchWrapperu za listu dobro da su napisali... -->
+								<td><input th:field="*{searchList[__${itemStat.index}__].identifier}" /></td>
+								<td th:switch="*{searchList[__${itemStat.index}__].identifier}">
+								<textarea th:case="UPIT" th:field="*{searchList[__${itemStat.index}__].query}"></textarea>			
+								<input th:case="*" th:field="*{searchList[__${itemStat.index}__].query}" />
+								</td>
+								<td th:switch="*{searchList[__${itemStat.index}__].identifier}">
+									<span th:case="UPIT" th:text="lala"></span>								
+									<input th:case="*" th:field="*{searchList[__${itemStat.index}__].queryWeight}" />
+									</td>
+								<td th:switch="*{searchList[__${itemStat.index}__].identifier}">
+									<span th:case="UPIT" th:text="lala"></span>								
+									<input th:case="*" th:field="*{searchList[__${itemStat.index}__].queryValue}" />
+									</td>
+							</tr>
+						</tbody>
+					</table>
+				</fieldset>
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			</form>
+		</div>
+	</th:block>
+</body>
+</html>

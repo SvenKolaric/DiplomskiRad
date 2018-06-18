@@ -4,53 +4,31 @@
 	layout:decorate="~{layouts/layout}">
 
 <head>
-<title>Hello Spring Boot!</title>
+<title>Upload životopisa</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link
-	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css"
-	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
-	rel="stylesheet" media="screen" />
-<link href="../static/css/core.css" th:href="@{/css/core.css}"
-	rel="stylesheet" media="screen" />
-<script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
-	th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
 <meta charset="UTF-8">
 
 </head>
 <body>
-<div>
-    <!-- ============================================================================ -->
-    <!-- This content is only used for static prototyping purposes (natural templates)-->
-    <!-- and is therefore entirely optional.                                           -->
-    <!-- ============================================================================ -->
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Diplomski rad</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Insert content into the layouts/layout.html -->
-<th:block layout:fragment="content">
-    <div class="hero-unit">
-	<h1>Pošalji datoteku s životopisom u XML formatu</h1>
 
-	<form method="POST" action="/upload" enctype="multipart/form-data">
-		<input type="file" name="file" /><br />
-		<br />
-		<!-- ovdje name = "file" mora biti jednak (@RequestParam("file") -->
-		<input type="submit" value="Pošalji" />
-	</form>
-    </div>
-</th:block>
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<!-- Insert content into the layouts/layout.html -->
+	<th:block layout:fragment="content">
+		<div class="hero-unit">
+			<!--  <div class="row">-->
+				<div class="col-md-2"></div>
+				<div class="col-md-10">
+					<h2>Pošaljite Vašu XML datoteku životopisa</h2>
+
+					<form method="POST" action="/upload" enctype="multipart/form-data">
+						<input type="file" name="file" /><br />
+						<!-- ovdje name = "file" mora biti jednak (@RequestParam("file") -->
+						<input type="submit" value="Spremi u bazu" />
+					</form>
+				</div>
+				<!--  <div class="col-md-3"></div>
+			</div>-->
+
+		</div>
+	</th:block>
 </body>
 </html>

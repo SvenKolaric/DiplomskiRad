@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
-          rel="stylesheet" media="screen" />
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
+	rel="stylesheet" media="screen" />
 </head>
 <body>
-    <div th:fragment="footer">
-    <br>
-    <br>
-    <hr>
-        <ul>
-            <li>
-                Sven Kolarić, <a href="https://github.com/SvenKolaric/DiplomskiRad" >Diplomski rad 2018</a>
-            </li>
+	<div th:fragment="footer">
+		
+			<div class="container" style="position:absolute; bottom:10px; text-align:center;">
+				<br> <br>
+				<hr>
 
-        </ul>
-    </div>
+				Sven Kolarić, Aplikacija za spremanje i pretraživanje životopisa - <a
+					href="https://github.com/SvenKolaric/DiplomskiRad">Diplomski rad 2018</a>
+			</div>
+	</div>
 </body>
 </html>
