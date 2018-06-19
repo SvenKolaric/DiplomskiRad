@@ -79,12 +79,12 @@
 		</dependency>
 		
 		
-        
+        <!-- 
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
             <version>3.3.7</version>
-        </dependency>
+        </dependency> -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

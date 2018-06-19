@@ -1,5 +1,6 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.CV;
 import com.DiplomskiRad_SK.ZivotopisIN2.models.Search;
 import com.DiplomskiRad_SK.ZivotopisIN2.models.SearchWrapper;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.CVRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.services.SearchService;
 import com.DiplomskiRad_SK.ZivotopisIN2.services.ZivotopisDBService;
 
@@ -22,9 +24,14 @@ import com.DiplomskiRad_SK.ZivotopisIN2.services.ZivotopisDBService;
 @RequestMapping("/cv")
 public class SearchController {
 
+	private static final String OUTPUT_FILE = "test.pdf";
+    private static final String UTF_8 = "UTF-8";
+    
 	private SearchService searchService;
 	private ZivotopisDBService cvService;
-
+	private List<CV> results;
+	private String natjecaj;
+	
 	@Autowired
 	public SearchController(@Qualifier("BLCV") ZivotopisDBService zivotopisDBService,
 			@Qualifier("SearchService") SearchService searchService) {
@@ -45,13 +52,24 @@ public class SearchController {
 	public ModelAndView Search() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("cv/search");
+		List<Integer> weight = new ArrayList<>();
+		List<Integer> value = new ArrayList<>();
 		SearchWrapper sWrapper = new SearchWrapper();
 		String[] hiddenIdentifiers = { "BRGOD_RADA", "BRGOD_EDU", "MJESTO", "INSTITUCIJA", "UPIT" };
 
+		weight.add(1);
+		weight.add(2);
+		weight.add(3);
+		
+		for (int i = 1; i < 11; i++) {
+			value.add(i);
+		}
 		for (int i = 0; i < hiddenIdentifiers.length; i++) {
 			sWrapper.addSearch(new Search(hiddenIdentifiers[i]));
 		}
 		modelAndView.addObject("form", sWrapper);
+		modelAndView.addObject("weight", weight);
+		modelAndView.addObject("value", value);
 		return modelAndView;
 	}
 	
@@ -75,17 +93,39 @@ public class SearchController {
 	public ModelAndView SearchGivenQueries(@ModelAttribute SearchWrapper form) {
 
 		ModelAndView modelAndView = new ModelAndView();
+		form.getSearchList().get(0).setQueryValue(5);
 		List<Search> queries = searchService.prepareQueries(form);
 		if (queries == null) {
 			//javi grešku i vrati natrag na search
 		}
-		List<CV> results = searchService.QueryCVs(queries);
+		results = searchService.QueryCVs(queries);
+		natjecaj = form.getNazivNatjecaja();
 		//modelAndView.setViewName("cv/results");
 		//modelAndView.addObject(results);
-		modelAndView.setViewName("result");
+		modelAndView.setViewName("cv/result");
 		modelAndView.addObject("results", results);
 		modelAndView.addObject("natjecaj", form.getNazivNatjecaja());
 		return modelAndView; //"redirect:/cv/results";
 	}
+	
+	@RequestMapping(value = "searchQueries", method = RequestMethod.GET)
+	public ModelAndView DisplayResults() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("cv/result");
+		modelAndView.addObject("results", results);
+		modelAndView.addObject("natjecaj", natjecaj);
+		return modelAndView;
+	}
+	
+	
+	@RequestMapping(value="details", method = RequestMethod.POST)
+    public ModelAndView showCVDetails(@RequestParam Integer zivotopisID) {
+        CV cv = cvService.getCVByID(zivotopisID);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("cv/details");
+		modelAndView.addObject("zivotopis", cv);
+        return modelAndView;
+    }
+
 
 }

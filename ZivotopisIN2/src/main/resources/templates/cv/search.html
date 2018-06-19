@@ -9,11 +9,12 @@
 
 <link
 	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css"
-	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" type="text/css"
 	rel="stylesheet" media="screen" />
 <script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
 	th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
 <meta charset="UTF-8">
+
 
 </head>
 <body>
@@ -21,14 +22,61 @@
 	<!-- Insert content into the layouts/layout.html -->
 	<th:block layout:fragment="content">
 		<div class="hero-unit">
-			<form action="#" th:action="@{searchQueries}" th:object="${form}"
+			<form class="form-horizontal" action="#" th:action="@{searchQueries}" th:object="${form}"
 				method="post">
 				<fieldset>
-					<input type="submit" id="submitButton" th:value="Pretraži"> <input
-						type="reset" id="resetButton" name="reset" th:value="Resetiraj" />
-					<table>
+					<input type="submit" id="submitButton" th:value="Pretraži">
+					<input type="reset" id="resetButton" name="reset"
+						th:value="Resetiraj" />
+					<hr>
+					<!--  <input th:field=""> -->
+					<div class="control-group">
+						<label for="Natjecaj" class="col-sm-2 control-label"
+							>Unesite ime natječaja: </label>
+						<div class="control-group col-sm-2">
+							<input type="text" id="Natjecaj" th:field="*{nazivNatjecaja}" />
+						</div>
+					</div>
+					<br>
+					<hr>
+					<div th:each="search, itemStat : ${form.searchList}"
+						th:switch="*{searchList[__${itemStat.index}__].identifier}">
+						<!-- row, rowStat : ${zivotopis.dodatneInfoList}" -->
+						<div class="form-group row" th:case="BRGOD_RADA">
+							<input type="hidden"
+								th:field="*{searchList[__${itemStat.index}__].identifier}"
+								th:value="*{searchList[__${itemStat.index}__].identifier}">
+							<label for="query1" class="col-sm-2 col-form-label"
+								th:text="'Unesite minimalan broj godina radnog iskustva: '"></label>
+							<div class="col-sm-2">
+
+								<input type="number" id="query1"
+									th:field="*{searchList[__${itemStat.index}__].query}">
+							</div>
+							<div class="col-sm-1">
+								<label for="query2" class="col-sm-2 col-form-label"
+									th:text="'Prioritet: '"></label>
+							</div>
+							<div class="col-sm-1">
+
+								<select class="form-control" id="query2"
+									th:field="*{searchList[__${itemStat.index}__].queryWeight}">
+									<option th:each="stat : ${weight}" th:value="${stat}"
+										th:text="${stat}" />
+								</select>
+							</div>
+						</div>
+					</div>
+					<!--<table>
 						<thead>
 							<tr>
+							
+							<div class="form-group row">
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+    </div>
+  </div>
 								<th>Opis</th>
 								<th>Upit</th>
 								<th>Težinski faktor</th>
@@ -36,25 +84,30 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="search, itemStat : *{searchList}"> <!-- OVO JE NAZIV U SearchWrapperu za listu dobro da su napisali... -->
-								<td><input th:field="*{searchList[__${itemStat.index}__].identifier}" /></td>
+							<!-- <tr th:each="search, itemStat : *{searchList}">
+								<!-- *{searchList} type="number" OVO JE NAZIV U SearchWrapperu za listu dobro da su napisali... 
+								<td><input
+									th:field="*{searchList[__${itemStat.index}__].identifier}" /></td>
 								<td th:switch="*{searchList[__${itemStat.index}__].identifier}">
-								<textarea th:case="UPIT" th:field="*{searchList[__${itemStat.index}__].query}"></textarea>			
-								<input th:case="*" th:field="*{searchList[__${itemStat.index}__].query}" />
+									<textarea th:case="UPIT"
+										th:field="*{searchList[__${itemStat.index}__].query}"></textarea>
+									<input th:case="*"
+									th:field="*{searchList[__${itemStat.index}__].query}" />
 								</td>
 								<td th:switch="*{searchList[__${itemStat.index}__].identifier}">
-									<span th:case="UPIT" th:text="lala"></span>								
-									<input th:case="*" th:field="*{searchList[__${itemStat.index}__].queryWeight}" />
-									</td>
+									<span th:case="UPIT" th:text="lala"></span> <input th:case="*"
+									th:field="*{searchList[__${itemStat.index}__].queryWeight}" />
+								</td>
 								<td th:switch="*{searchList[__${itemStat.index}__].identifier}">
-									<span th:case="UPIT" th:text="lala"></span>								
-									<input th:case="*" th:field="*{searchList[__${itemStat.index}__].queryValue}" />
-									</td>
+									<span th:case="UPIT" th:text="lala"></span> <input th:case="*"
+									th:field="*{searchList[__${itemStat.index}__].queryValue}" />
+								</td>
 							</tr>
 						</tbody>
-					</table>
+					</table> -->
 				</fieldset>
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				<input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}" />
 			</form>
 		</div>
 	</th:block>

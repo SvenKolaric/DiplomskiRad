@@ -7,7 +7,11 @@
 <title>Upload životopisa</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta charset="UTF-8">
+<script type="text/javascript" th:src="@{js/bootstrap-filestyle.js}"></script>
+<link href="../static/css/core.css" th:href="@{/css/core.css}" type="text/css" rel="stylesheet" />
 
+	
+	
 </head>
 <body>
 
@@ -15,17 +19,24 @@
 	<th:block layout:fragment="content">
 		<div class="hero-unit">
 			<!--  <div class="row">-->
-				<div class="col-md-2"></div>
-				<div class="col-md-10">
-					<h2>Pošaljite Vašu XML datoteku životopisa</h2>
+			<div class="col-md-2"></div>
+			<div class="col-md-10">
+				<h2>Pošaljite Vašu XML datoteku životopisa</h2>
+				<hr>
+			</div>
+			<div class="col-md-2"></div>
+			<div class="col-md-5">
+				<form method="POST" action="/upload" enctype="multipart/form-data">
+					<input type="file" class="filestyle"
+						data-buttonText="Pronađi datoteku" data-buttonBefore="true"
+						name="file" /><br />
+					<!-- ovdje name = "file" mora biti jednak (@RequestParam("file") -->
+					<input type="submit" value="Spremi u bazu" /> <input type="hidden"
+						name="${_csrf.parameterName}" value="${_csrf.token}" />
+				</form>
+			</div>
 
-					<form method="POST" action="/upload" enctype="multipart/form-data">
-						<input type="file" name="file" /><br />
-						<!-- ovdje name = "file" mora biti jednak (@RequestParam("file") -->
-						<input type="submit" value="Spremi u bazu" />
-					</form>
-				</div>
-				<!--  <div class="col-md-3"></div>
+			<!--  <div class="col-md-3"></div>
 			</div>-->
 
 		</div>

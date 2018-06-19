@@ -59,6 +59,7 @@ public class SearchService {
 		List<Search> searchList = new ArrayList<>();
 		try {
 			for (Search s : searchW.getSearchList()) {
+				if (!s.getQuery().isEmpty())
 				switch (s.getIdentifier()) {
 				case "BRGOD_RADA":
 					String[] partsRad = s.getQuery().split(","); // ignore other numbers
@@ -227,7 +228,7 @@ public class SearchService {
 			text.append(edu.getKvalifikacija()).append(edu.getPredmetiSteceneVjestine());
 
 		for (RadnoIskustvo rad : cv.getRadnoIskustvoList())
-			text.append(rad.getDjelatnostSektor()).append(rad.getOpisPosla());
+			text.append(rad.getDjelatnostSektor()).append(rad.getOpisPosla()).append(rad.getPozicija().getNaziv());
 
 		for (DodatneInfo info : cv.getDodatneInfoList())
 			text.append(info.getOpis());

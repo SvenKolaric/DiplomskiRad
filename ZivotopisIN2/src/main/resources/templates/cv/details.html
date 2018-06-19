@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<head>
+<title>Pretraga životopisa</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link href="../static/css/resume.css" th:href="@{/css/resume.css}"
+	rel="stylesheet" media="screen" />
+<link rel="stylesheet" type="text/css"
+	href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css"
+	media="all" />
+
+<script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+<meta charset="UTF-8">
+<style type="text/css" media="print">
+</style>
+</head>
+
+<body>
+	<p>
+		<a href="result.html" th:href="@{/cv/searchQueries}">Natrag na
+			rezultate</a>
+	</p>
+	<div id="doc2" class="yui-t7">
+		<div id="inner">
+
+			<div id="hd">
+				<div class="yui-gc">
+					<div class="yui-u first">
+						<h1 th:text="|${zivotopis.osoba.ime} ${zivotopis.osoba.prezime}|">Jonathan
+							Doe</h1>
+						<br>
+						<h3
+							th:text="|${zivotopis.osoba.adresa}, ${zivotopis.osoba.mjesto.toString()}|"></h3>
+						<br>
+						<h3 th:if="${zivotopis.osoba.spol != null}">
+							<b>Spol: </b> <span th:if="${zivotopis.osoba.spol == 'F '}"
+								th:text="'Žensko'"></span> <span
+								th:unless="${zivotopis.osoba.spol == 'F '}" th:text="'Muško'"></span>
+						</h3>
+						<br>
+						<h3
+							th:utext="|<b>Godina rođenja:</b> ${#calendars.format(zivotopis.osoba.godRodenja,'dd MMMM yyyy')}|">Godina
+							rođenja:</h3>
+						<br>
+						<h3>
+							<b>Državljanstvo: </b> <span
+								th:each="row, rowStat : ${zivotopis.osoba.osobaDrzavljanstvoList}"><span
+								th:text="|*{row.drzavljanstvo.naziv} |"></span></span>
+						</h3>
+					</div>
+					<div class="yui-u">
+
+						<h3>
+							<a id="pdf" href="#">Download PDF</a>
+						</h3>
+
+					</div>
+					<div class="yui-u">
+						<br>
+						<div class="contact-info"
+							th:each="row, rowStat : ${zivotopis.osoba.kontaktInfoList}">
+							<h3 th:text="|${row.tipKontakta.naziv}: *{row.kontakt}|"></h3>
+
+						</div>
+					</div>
+				</div>
+				<!--// .yui-gc -->
+			</div>
+			<!--// hd -->
+
+			<div id="bd">
+				<div id="yui-main">
+					<div class="yui-b">
+						<!-- Profile -->
+
+						<div class="yui-gf">
+							<div class="yui-u first">
+								<h2 th:text="${zivotopis.zaglavlje.vrstaPrijave.naziv}">Profile</h2>
+							</div>
+							<div class="yui-u">
+								<p class="enlarge" th:text="${zivotopis.zaglavlje.opis}"></p>
+							</div>
+						</div>
+						<!--// .yui-gf -->
+
+						<!-- WorkExp -->
+
+						<div class="yui-gf"
+							th:if="${!zivotopis.radnoIskustvoList.isEmpty()}">
+
+							<div class="yui-u first">
+								<h2>Radno iskustvo</h2>
+							</div>
+							<!--// .yui-u -->
+
+							<div class="yui-u"
+								th:each="row, rowStat : ${zivotopis.radnoIskustvoList}">
+
+								<div class="job"
+									th:classappend="${rowStat.index == rowStat.size-1} ? last : ''">
+									<h2 th:utext="'<b>' + ${row.institucija.naziv} + '</b>'"></h2>
+									<h3
+										th:text="|${row.institucija.adresa}, ${row.institucija.mjesto.toString()}"></h3>
+									<h3 th:text="${row.djelatnostSektor}"></h3>
+									<h4 th:if="${row.datumKraja == null}"
+										th:text="${#calendars.format(row.datumPocetka,'dd.MM.yyyy')}"></h4>
+									<h4 th:unless="${row.datumKraja == null}"
+										th:text="|${#calendars.format(row.datumPocetka,'dd.MM.yyyy')} - ${#calendars.format(row.datumKraja,'dd.MM.yyyy')}|"></h4>
+									<br>
+									<h3 th:text="${row.pozicija.naziv}"></h3>
+
+									<p th:text="${row.opisPosla}"></p>
+
+								</div>
+
+							</div>
+							<!--// .yui-u -->
+						</div>
+						<!--// .yui-gf -->
+						<!-- Education -->
+
+						<div class="yui-gf">
+							<div class="yui-u first">
+								<h2>Edukacija</h2>
+							</div>
+							<div class="yui-u"
+								th:each="row, rowStat : ${zivotopis.edukacijaITreningList}">
+
+								<div class="job"
+									th:classappend="${rowStat.index == rowStat.size-1} ? last : ''">
+									<h2 th:utext="'<b>' + ${row.institucija.naziv} + '</b>'"></h2>
+									<h3
+										th:text="|${row.institucija.adresa}, ${row.institucija.mjesto.toString()}"></h3>
+									<h3 th:text="${row.ekorazina}"></h3>
+									<h4 th:if="${row.datumKraja == null}"
+										th:text="${#calendars.format(row.datumPocetka,'dd.MM.yyyy')}"></h4>
+									<h4 th:unless="${row.datumKraja == null}"
+										th:text="|${#calendars.format(row.datumPocetka,'dd.MM.yyyy')} - ${#calendars.format(row.datumKraja,'dd.MM.yyyy')}|"></h4>
+									<br>
+									<h3 th:utext="|<u> ${row.kvalifikacija} </u>|"></h3>
+
+
+									<p th:if="${row.podrucjeObrazovanja != null}"
+										th:utext="${row.predmetiSteceneVjestine} + '<br />' + ${row.podrucjeObrazovanja}"></p>
+									<p th:unless="${row.podrucjeObrazovanja != null}"
+										th:utext="${row.predmetiSteceneVjestine}"></p>
+
+								</div>
+
+							</div>
+						</div>
+
+						<!-- tehnical -->
+
+						<div class="yui-gf"
+							th:each="row, rowStat : ${zivotopis.osobnaVJ.znaList}">
+							<div class="yui-u first">
+								<h2 th:text="|Jezik: ${row.jezik.naziv}"></h2>
+							</div>
+							<div class="yui-u">
+								<ul class="talent">
+									<li><b>Razumijevanje</b></li>
+									<li>Slušanje</li>
+									<li class="last" th:text="${row.razumijevanjeSlusanje}"></li>
+								</ul>
+
+								<ul class="talent">
+									<li><b>Razumijevanje</b></li>
+									<li>Čitanje</li>
+									<li class="last" th:text="${row.razumijevanjeCitanje}"></li>
+								</ul>
+
+								<ul class="talent">
+									<li><b>Govor</b></li>
+									<li>Produkcija</li>
+									<li class="last" th:text="${row.govornaProdukcija}"></li>
+								</ul>
+
+								<ul class="talent">
+									<li><b>Govor</b></li>
+									<li>Interakcija</li>
+									<li class="last" th:text="${row.govornaInterakcija}"></li>
+								</ul>
+								<ul class="talent">
+									<li><b>Pisanje</b></li>
+									<li class="last" th:text="${row.pisanje}"></li>
+								</ul>
+								<ul class="talent" th:if="${row.diplome != null}">
+									<li><b>Diplome</b></li>
+									<li class="last" th:text="${row.diplome}"></li>
+								</ul>
+							</div>
+						</div>
+						<!--// .yui-gf-->
+						<div class="yui-gf">
+							<div class="yui-u first">
+								<h2>Računalne vještine</h2>
+							</div>
+							<div class="yui-u">
+								<div class="job last">
+									<h2 th:utext="${zivotopis.osobnaVJ.racunalneVJ}"></h2>
+									<h3 th:if="${zivotopis.osobnaVJ.obradaInfo != null}"
+										th:utext="|Razina znanja obrade Informacija: <b>${zivotopis.osobnaVJ.obradaInfo}</b>|"></h3>
+									<h3 th:if="${zivotopis.osobnaVJ.komunikacija != null}"
+										th:utext="|Razina znanja komunikacija: <b>${zivotopis.osobnaVJ.komunikacija}</b>|"></h3>
+									<h3 th:if="${zivotopis.osobnaVJ.stvaranjeSadrzaja != null}"
+										th:utext="|Razina znanja stvaranja sadržaja: <b>${zivotopis.osobnaVJ.stvaranjeSadrzaja}</b>|"></h3>
+									<h3 th:if="${zivotopis.osobnaVJ.sigurnost != null}"
+										th:utext="|Razina znanja sigurnosti: <b>${zivotopis.osobnaVJ.sigurnost}</b>|"></h3>
+									<h3 th:if="${zivotopis.osobnaVJ.rjesavanjeProblema != null}"
+										th:utext="|Razina znanja rješavanja problema: <b>${zivotopis.osobnaVJ.rjesavanjeProblema}</b>|"></h3>
+
+
+								</div>
+							</div>
+						</div>
+						<!--// .yui-gf -->
+						<div class="yui-gf ">
+							<div class="yui-u first">
+
+								<h2>Osobne vještine</h2>
+							</div>
+							<div class="yui-u">
+								<div class="job">
+									<h2>
+										<b>Materinji jezik</b>
+									</h2>
+									<h2 th:utext="${zivotopis.osobnaVJ.materinjiJezik}"></h2>
+
+								</div>
+								<div class="job"
+									th:if="${zivotopis.osobnaVJ.komunikacijskeVj != null}">
+									<h2>
+										<b>Komunikacijske vještine</b>
+									</h2>
+									<h2 th:utext="${zivotopis.osobnaVJ.komunikacijskeVj}"></h2>
+
+								</div>
+								<div class="job"
+									th:if="${zivotopis.osobnaVJ.organizacijskeVj != null}">
+									<h2>
+										<b>Organizacijske vještine</b>
+									</h2>
+									<h2 th:utext="${zivotopis.osobnaVJ.organizacijskeVj}"></h2>
+
+								</div>
+								<div class="job"
+									th:if="${zivotopis.osobnaVJ.poslovneVj != null}">
+									<h2>
+										<b>Poslovne vještine</b>
+									</h2>
+
+									<h2 th:utext="${zivotopis.osobnaVJ.poslovneVj}"></h2>
+
+								</div>
+								<div class="job last"
+									th:if="${zivotopis.osobnaVJ.ostaleVj != null}">
+									<h2>
+										<b>Ostale vještine</b>
+									</h2>
+
+									<h2 th:utext="${zivotopis.osobnaVJ.ostaleVj}"></h2>
+
+								</div>
+							</div>
+						</div>
+						<!--// .yui-gf -->
+							<div class="yui-gf last" th:if="${!zivotopis.dodatneInfoList.isEmpty()}">
+							<div class="yui-u first">
+
+								<h2>Dodatne informacije</h2>
+							</div>
+							<div class="yui-u"
+								th:each="row, rowStat : ${zivotopis.dodatneInfoList}">
+
+								<div class="job"
+									th:classappend="${rowStat.index == rowStat.size-1} ? last : ''">
+									<h2>
+										<b th:if="${row.kategorija.naziv != 'Nepoznato'}" th:text="${row.kategorija.naziv}"></b>
+									</h2>
+									<h2 th:utext="${row.opis}"></h2>
+
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					<!--// .yui-b -->
+				</div>
+				<!--// yui-main -->
+			</div>
+			<!--// bd -->
+
+			<div id="ft">
+				<p>
+					<!--	Jonathan Doe &mdash; <a href="mailto:name@yourdomain.com">name@yourdomain.com</a>
+					&mdash; (313) - 867-5309 -->
+				</p>
+			</div>
+			<!--// footer -->
+
+		</div>
+		<!-- // inner -->
+
+
+	</div>
+	<!--// doc -->
+
+</body>
+</html>

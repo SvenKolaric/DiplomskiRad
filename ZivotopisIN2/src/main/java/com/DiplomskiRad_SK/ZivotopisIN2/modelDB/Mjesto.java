@@ -134,4 +134,9 @@ public class Mjesto {
 		this.setInstitucijaList(null);
 		this.setOsobaList(null);
 	}
+
+	@Override
+	public String toString() {
+		return pBR + " " + naziv;
+	}
 }

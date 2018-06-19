@@ -390,8 +390,13 @@ public class ZivotopisDBService {
 	}
 
 	@Transactional
-	public Optional<CV> getCVByID(Integer id) {
-		return cvRepo.findById(id);
+	public CV getCVByID(Integer id) {
+		Optional<CV> cv = cvRepo.findById(id);
+		if (cv != null) {
+			return cv.get();
+		}
+		
+		return null;
 
 	}
 

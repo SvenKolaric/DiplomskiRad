@@ -3,6 +3,7 @@ package com.DiplomskiRad_SK.ZivotopisIN2.controller;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,18 +20,35 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.CV;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Korisnik;
 import com.DiplomskiRad_SK.ZivotopisIN2.models.Search;
 import com.DiplomskiRad_SK.ZivotopisIN2.models.SearchWrapper;
+import com.DiplomskiRad_SK.ZivotopisIN2.repository.CVRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.services.KorisnikService;
+import com.DiplomskiRad_SK.ZivotopisIN2.services.SearchService;
+import com.DiplomskiRad_SK.ZivotopisIN2.services.ZivotopisDBService;
 
 @Controller
 public class LoginController {
 
 	@Autowired
 	private KorisnikService korisnikService;
+	@Autowired
+	private CVRepository cvrepo;
+	private ZivotopisDBService cvService;
+
+	private List<CV> results;
+
+	
+	@Autowired
+	public LoginController(@Qualifier("BLCV") ZivotopisDBService zivotopisDBService) {
+		this.cvService = zivotopisDBService;
+	}
+
 
 	@RequestMapping(value={"/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
@@ -90,11 +109,18 @@ public class LoginController {
 	@RequestMapping(value="/admin/home", method = RequestMethod.GET)
 	public ModelAndView home(){
 		ModelAndView modelAndView = new ModelAndView();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Korisnik korisnik = korisnikService.findKorisnikByEmail(auth.getName());
-		modelAndView.addObject("userName", "Welcome "  + korisnik.getEmail());
-		modelAndView.addObject("adminMessage","Admin eyes only");
+		results = cvrepo.findByOrderByDatumStvaranja();
+		modelAndView.addObject("results",results);
 		modelAndView.setViewName("admin/home");
 		return modelAndView;
 	}
+	
+	@RequestMapping(value="delete", method = RequestMethod.POST)
+    public ModelAndView showCVDetails(@RequestParam Integer zivotopisID) {
+        cvService.deleteCVByID(zivotopisID);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("admin/home");
+		modelAndView.addObject("results", results);
+        return modelAndView;
+    }
 }

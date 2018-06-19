@@ -155,4 +155,9 @@ public class Institucija {
 		//this.setMjesto(null);
 		this.radnoIskustvoList = null;		
 	}
+
+	@Override
+	public String toString() {
+		return  naziv + ", " + adresa;
+	}
 }
