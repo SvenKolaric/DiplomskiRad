@@ -25,9 +25,7 @@
 			<form class="form-horizontal" action="#" th:action="@{searchQueries}"
 				th:object="${form}" method="post">
 				<fieldset>
-					<input type="submit" id="submitButton" th:value="Pretraži">
-					<input type="reset" id="resetButton" name="reset"
-						th:value="Resetiraj" /> <br> <br>
+					<br>
 					<!--  <input th:field=""> -->
 					<div class="control-group">
 						<label for="Natjecaj" class="col-sm-6 control-label">Unesite
@@ -202,65 +200,27 @@
 							<label for="query1" class="col-sm-4 control-label"
 								th:text="'Upiti: '"></label>
 							<div class="control-group col-sm-2">
-							<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
-  Tooltip with HTML
-</button>
 								<textarea id="query1"  style="margin: 0px; width: 361px; height: 85px;"
 										th:field="*{searchList[__${itemStat.index}__].query}"></textarea>
-
 							</div>
 							
 						</div>
 						<br>
 						<!-- Kraj searcha -->
 					</div>
-
-					<!--<table>
-						<thead>
-							<tr>
-							
-							<div class="form-group row">
-    <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-    <div class="col-sm-10">
-      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-    </div>
-  </div>
-								<th>Opis</th>
-								<th>Upit</th>
-								<th>Težinski faktor</th>
-								<th>Vrijednost upita</th>
-							</tr>
-						</thead>
-						<tbody>
-							<!-- <tr th:each="search, itemStat : *{searchList}">
-								<!-- *{searchList} type="number" OVO JE NAZIV U SearchWrapperu za listu dobro da su napisali... 
-								<td><input
-									th:field="*{searchList[__${itemStat.index}__].identifier}" /></td>
-								<td th:switch="*{searchList[__${itemStat.index}__].identifier}">
-									<textarea th:case="UPIT"
-										th:field="*{searchList[__${itemStat.index}__].query}"></textarea>
-									<input th:case="*"
-									th:field="*{searchList[__${itemStat.index}__].query}" />
-								</td>
-								<td th:switch="*{searchList[__${itemStat.index}__].identifier}">
-									<span th:case="UPIT" th:text="lala"></span> <input th:case="*"
-									th:field="*{searchList[__${itemStat.index}__].queryWeight}" />
-								</td>
-								<td th:switch="*{searchList[__${itemStat.index}__].identifier}">
-									<span th:case="UPIT" th:text="lala"></span> <input th:case="*"
-									th:field="*{searchList[__${itemStat.index}__].queryValue}" />
-								</td>
-							</tr>
-						</tbody>
-					</table> -->
+					<br>
+					<br>
+					<div class = "control-group col-sm-offset-5">
+					<input type="submit" id="submitButton" th:value="'Pretraži bazu'">
+					<input type="reset" id="resetButton" name="reset"
+						th:value="'Resetiraj fromu'" /> <br> <br>
+					</div>
+					
 				</fieldset>
 				<input type="hidden" name="${_csrf.parameterName}"
 					value="${_csrf.token}" />
 			</form>
 		</div>
 	</th:block>
-	<script type="text/javascript">$(function () {
-		  $('[data-toggle="tooltip"]').tooltip()
-	})</script>
 </body>
 </html>
