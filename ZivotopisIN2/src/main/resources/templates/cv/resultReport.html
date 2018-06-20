@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" ></meta>
+
+	<style th:replace="inc/bootstrap :: inc"></style>
+
+	<style>
+body{font-family: "Arial Unicode MS";}
+
+		#header {
+			display: block;
+			position: running(header);
+		}
+		#footer {
+			display: block;
+			position: running(footer);
+		}
+		#content {
+			page-break-after: always;
+		}
+		.pagenumber:before {
+			content: counter(page);
+		}
+		.pagecount:before {
+			content: counter(pages);
+		}
+		@page {
+			@top-center { content: element(header) }
+		}
+		@page {
+			@bottom-center { content: element(footer) }
+		}
+		@page {
+			margin-bottom: 5cm;
+			margin-left: 3.5cm;
+			margin-right: 0.5cm;
+		}
+	</style>
+</head>
+<body>
+	<div id="header">
+		Put your header content here...
+	</div>
+	<div id="footer">
+		Put your footer content here... <br />
+		Page <span class="pagenumber"></span> of <span class="pagecount"></span>
+	</div>
+	<div id="content">
+		<div class="hero-unit">
+			<p>
+				Naziv natječaja: <span th:text="${natjecaj}">Natječaj nema
+					zadano ime.</span>
+			</p>
+			<table class="table" border="1">
+				<thead>
+					<tr>
+						<th th:text="IDZivotopis" />
+						<th th:text="'Ime Prezime'" />
+						<th th:text="Ocjena" />
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="cv, iStat : ${results}"
+						th:style="${iStat.odd}? 'background: #f5f5f1;'"
+						th:alt-title="${iStat.even}? 'even' : 'odd'">
+						<td th:text="${cv.zivotopisID}" />
+						<td th:text="|${cv.osoba.ime} ${cv.osoba.prezime}|" />
+						<td th:text="${cv.score}" />
+						<td>
+							<form th:action="@{details}" method="post">
+								<input type="hidden" th:value="${cv.zivotopisID}" name="zivotopisID" />
+								<button type="submit">Detalji</button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

@@ -12,7 +12,6 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
-import org.attoparser.config.ParseConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

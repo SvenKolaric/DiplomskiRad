@@ -20,40 +20,45 @@
 	<!-- Insert content into the layouts/layout.html -->
 	<th:block layout:fragment="content">
 		<div class="hero-unit">
-			<p>
-				Naziv natječaja: <span th:text="${natjecaj}">Natječaj nema
-					zadano ime.</span>
-			</p>
-			<table class="table" border="1">
-				<thead>
-					<tr>
-						<th th:text="IDZivotopis" />
-						<th th:text="'Ime Prezime'" />
-						<th th:text="Ocjena" />
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="cv, iStat : ${results}"
-						th:style="${iStat.odd}? 'background: #f5f5f1;'"
-						th:alt-title="${iStat.even}? 'even' : 'odd'">
-						<td th:text="${cv.zivotopisID}" />
-						<td th:text="|${cv.osoba.ime} ${cv.osoba.prezime}|" />
-						<td th:text="${cv.score}" />
-						<td>
-							<form th:action="@{details}" method="post">
-								<input type="hidden" th:value="${cv.zivotopisID}" name="zivotopisID" />
-								<button type="submit">Detalji</button>
-							</form>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<p>
-			<a href="search.html" th:href="@{/cv/search}">Natrag na
-				pretraživanje</a>
-		</p>
+			<div>
+
+				<a href="search.html" th:href="@{/cv/search}">Natrag na
+					pretraživanje</a>
+				</p>
+				<h2>
+					Naziv natječaja: <label th:text="${natjecaj}"></label>
+				</h2>
+
+
+
+				<table class="table" border="1">
+					<thead>
+						<tr>
+							<th style="text-align: center;" th:text="IDZivotopis" />
+							<th style="text-align: center;" th:text="'Ime Prezime'" />
+							<th style="text-align: center;" th:text="Ocjena" />
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="cv, iStat : ${results}"
+							th:style="${iStat.odd}? 'background: #f5f5f1;'"
+							th:alt-title="${iStat.even}? 'even' : 'odd'">
+							<td style="text-align: center;" th:text="${cv.zivotopisID}" />
+							<td style="text-align: center;"
+								th:text="|${cv.osoba.ime} ${cv.osoba.prezime}|" />
+							<td style="text-align: center;" th:text="${cv.score}" />
+							<td style="text-align: center;">
+								<form th:action="@{details}" method="post">
+									<input type="hidden" th:value="${cv.zivotopisID}"
+										name="zivotopisID" />
+									<button type="submit">Detalji</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 	</th:block>
 </body>
 </html>

@@ -1,7 +1,11 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.io.File;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,13 +28,14 @@ import com.DiplomskiRad_SK.ZivotopisIN2.services.ZivotopisDBService;
 @RequestMapping("/cv")
 public class SearchController {
 
-	private static final String OUTPUT_FILE = "test.pdf";
-    private static final String UTF_8 = "UTF-8";
+
     
 	private SearchService searchService;
 	private ZivotopisDBService cvService;
 	private List<CV> results;
 	private String natjecaj;
+	
+
 	
 	@Autowired
 	public SearchController(@Qualifier("BLCV") ZivotopisDBService zivotopisDBService,
@@ -90,7 +95,7 @@ public class SearchController {
 
 	@RequestMapping(value = "searchQueries", method = RequestMethod.POST) //mislim da viticaste zagrade ne trebaju (ali radi za search iz drugog kontrolera kada se poziva)
 	//@PostMapping("searchQueries")
-	public ModelAndView SearchGivenQueries(@ModelAttribute SearchWrapper form) {
+	public ModelAndView SearchGivenQueries(@ModelAttribute SearchWrapper form) throws Exception {
 
 		ModelAndView modelAndView = new ModelAndView();
 		List<Search> queries = searchService.prepareQueries(form);
@@ -104,6 +109,7 @@ public class SearchController {
 		modelAndView.setViewName("cv/result");
 		modelAndView.addObject("results", results);
 		modelAndView.addObject("natjecaj", form.getNazivNatjecaja());
+				
 		return modelAndView; //"redirect:/cv/results";
 	}
 	
@@ -113,6 +119,7 @@ public class SearchController {
 		modelAndView.setViewName("cv/result");
 		modelAndView.addObject("results", results);
 		modelAndView.addObject("natjecaj", natjecaj);
+
 		return modelAndView;
 	}
 	
