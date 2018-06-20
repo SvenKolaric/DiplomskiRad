@@ -937,8 +937,8 @@ vertical-align: middle;
         }
 
 textarea{
-width:auto;
-height:200px;
+width:100px;
+height:100px;
 margin:0;
 border:1px solid #ccc;
 padding:5px;

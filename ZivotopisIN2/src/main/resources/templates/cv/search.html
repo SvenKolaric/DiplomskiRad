@@ -9,8 +9,8 @@
 
 <link
 	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css"
-	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" type="text/css"
-	rel="stylesheet" media="screen" />
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
+	type="text/css" rel="stylesheet" media="screen" />
 <script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
 	th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
 <meta charset="UTF-8">
@@ -22,42 +22,43 @@
 	<!-- Insert content into the layouts/layout.html -->
 	<th:block layout:fragment="content">
 		<div class="hero-unit">
-			<form class="form-horizontal" action="#" th:action="@{searchQueries}" th:object="${form}"
-				method="post">
+			<form class="form-horizontal" action="#" th:action="@{searchQueries}"
+				th:object="${form}" method="post">
 				<fieldset>
 					<input type="submit" id="submitButton" th:value="Pretraži">
 					<input type="reset" id="resetButton" name="reset"
-						th:value="Resetiraj" />
-					<hr>
+						th:value="Resetiraj" /> <br> <br>
 					<!--  <input th:field=""> -->
 					<div class="control-group">
-						<label for="Natjecaj" class="col-sm-2 control-label"
-							>Unesite ime natječaja: </label>
+						<label for="Natjecaj" class="col-sm-6 control-label">Unesite
+							ime natječaja: </label>
 						<div class="control-group col-sm-2">
 							<input type="text" id="Natjecaj" th:field="*{nazivNatjecaja}" />
 						</div>
 					</div>
 					<br>
 					<hr>
+					<hr>
 					<div th:each="search, itemStat : ${form.searchList}"
 						th:switch="*{searchList[__${itemStat.index}__].identifier}">
 						<!-- row, rowStat : ${zivotopis.dodatneInfoList}" -->
-						<div class="form-group row" th:case="BRGOD_RADA">
+						
+						<div class="control-group row" th:case="BRGOD_RADA">
 							<input type="hidden"
 								th:field="*{searchList[__${itemStat.index}__].identifier}"
 								th:value="*{searchList[__${itemStat.index}__].identifier}">
-							<label for="query1" class="col-sm-2 col-form-label"
-								th:text="'Unesite minimalan broj godina radnog iskustva: '"></label>
-							<div class="col-sm-2">
+							<label for="query1" class="col-sm-4 control-label"
+								th:text="'Minimalan broj godina radnog iskustva:'"></label>
+							<div class="control-group col-sm-2">
 
 								<input type="number" id="query1"
 									th:field="*{searchList[__${itemStat.index}__].query}">
 							</div>
 							<div class="col-sm-1">
-								<label for="query2" class="col-sm-2 col-form-label"
-									th:text="'Prioritet: '"></label>
+								<label class="col-sm-2 control-label">Prioritet:
+								</label>
 							</div>
-							<div class="col-sm-1">
+							<div class="control-group col-sm-1">
 
 								<select class="form-control" id="query2"
 									th:field="*{searchList[__${itemStat.index}__].queryWeight}">
@@ -65,8 +66,155 @@
 										th:text="${stat}" />
 								</select>
 							</div>
+
+							<div class="col-sm-1">
+								<label for="query3" class="col-sm-2 control-label">Vrijednost:
+								</label>
+							</div>
+							<div class="control-group col-sm-1">
+								<select class="form-control" id="query3"
+									th:field="*{searchList[__${itemStat.index}__].queryValue}">
+									<option th:each="stat : ${value}" th:value="${stat}"
+										th:text="${stat}" />
+								</select>
+							</div>
 						</div>
+						<!-- Kraj searcha -->
+							
+						<div class="control-group row" th:case="BRGOD_EDU">
+							<input type="hidden"
+								th:field="*{searchList[__${itemStat.index}__].identifier}"
+								th:value="*{searchList[__${itemStat.index}__].identifier}">
+							<label for="query1" class="col-sm-4 control-label"
+								th:text="'Minimalan broj godina edukacije: '"></label>
+							<div class="control-group col-sm-2">
+
+								<input type="number" id="query1"
+									th:field="*{searchList[__${itemStat.index}__].query}">
+							</div>
+							<div class="col-sm-1">
+								<label class="col-sm-2 control-label">Prioritet:
+								</label>
+							</div>
+							<div class="control-group col-sm-1">
+
+								<select class="form-control" id="query2"
+									th:field="*{searchList[__${itemStat.index}__].queryWeight}">
+									<option th:each="stat : ${weight}" th:value="${stat}"
+										th:text="${stat}" />
+								</select>
+							</div>
+
+							<div class="col-sm-1">
+								<label for="query3" class="col-sm-2 control-label">Vrijednost:
+								</label>
+							</div>
+							<div class="control-group col-sm-1">
+								<select class="form-control" id="query3"
+									th:field="*{searchList[__${itemStat.index}__].queryValue}">
+									<option th:each="stat : ${value}" th:value="${stat}"
+										th:text="${stat}" />
+								</select>
+							</div>
+						</div>
+						<!-- Kraj searcha -->
+						
+						<div class="control-group row" th:case="MJESTO">
+							<input type="hidden"
+								th:field="*{searchList[__${itemStat.index}__].identifier}"
+								th:value="*{searchList[__${itemStat.index}__].identifier}">
+							<label for="query1" class="col-sm-4 control-label"
+								th:text="'Mjesto prebivališta osobe: '"></label>
+							<div class="control-group col-sm-2">
+
+								<input type="text" id="query1"
+									th:field="*{searchList[__${itemStat.index}__].query}">
+							</div>
+							<div class="col-sm-1">
+								<label class="col-sm-2 control-label">Prioritet:
+								</label>
+							</div>
+							<div class="control-group col-sm-1">
+
+								<select class="form-control" id="query2"
+									th:field="*{searchList[__${itemStat.index}__].queryWeight}">
+									<option th:each="stat : ${weight}" th:value="${stat}"
+										th:text="${stat}" />
+								</select>
+							</div>
+
+							<div class="col-sm-1">
+								<label for="query3" class="col-sm-2 control-label">Vrijednost:
+								</label>
+							</div>
+							<div class="control-group col-sm-1">
+								<select class="form-control" id="query3"
+									th:field="*{searchList[__${itemStat.index}__].queryValue}">
+									<option th:each="stat : ${value}" th:value="${stat}"
+										th:text="${stat}" />
+								</select>
+							</div>
+						</div>
+						<!-- Kraj searcha -->
+						
+						<div class="control-group row" th:case="INSTITUCIJA">
+							<input type="hidden"
+								th:field="*{searchList[__${itemStat.index}__].identifier}"
+								th:value="*{searchList[__${itemStat.index}__].identifier}">
+							<label for="query1" class="col-sm-4 control-label"
+								th:text="'Institucija: '"></label>
+							<div class="control-group col-sm-2">
+
+								<input type="text" id="query1"
+									th:field="*{searchList[__${itemStat.index}__].query}">
+							</div>
+							<div class="col-sm-1">
+								<label class="col-sm-2 control-label">Prioritet:
+								</label>
+							</div>
+							<div class="control-group col-sm-1">
+
+								<select class="form-control" id="query2"
+									th:field="*{searchList[__${itemStat.index}__].queryWeight}">
+									<option th:each="stat : ${weight}" th:value="${stat}"
+										th:text="${stat}" />
+								</select>
+							</div>
+
+							<div class="col-sm-1">
+								<label for="query3" class="col-sm-2 control-label">Vrijednost:
+								</label>
+							</div>
+							<div class="control-group col-sm-1">
+								<select class="form-control" id="query3"
+									th:field="*{searchList[__${itemStat.index}__].queryValue}">
+									<option th:each="stat : ${value}" th:value="${stat}"
+										th:text="${stat}" />
+								</select>
+							</div>
+						</div>
+						<!-- Kraj searcha -->
+						
+						<div class="control-group row" th:case="UPIT">
+							<input type="hidden"
+								th:field="*{searchList[__${itemStat.index}__].identifier}"
+								th:value="*{searchList[__${itemStat.index}__].identifier}">
+							<label for="query1" class="col-sm-4 control-label"
+								th:text="'Upiti: '"></label>
+							<div class="control-group col-sm-2">
+							<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
+  Tooltip with HTML
+</button>
+								<textarea id="query1"  style="margin: 0px; width: 361px; height: 85px;"
+										th:field="*{searchList[__${itemStat.index}__].query}"></textarea>
+
+							</div>
+							
+						</div>
+						<br>
+						<!-- Kraj searcha -->
 					</div>
+
 					<!--<table>
 						<thead>
 							<tr>
@@ -111,5 +259,8 @@
 			</form>
 		</div>
 	</th:block>
+	<script type="text/javascript">$(function () {
+		  $('[data-toggle="tooltip"]').tooltip()
+	})</script>
 </body>
 </html>
