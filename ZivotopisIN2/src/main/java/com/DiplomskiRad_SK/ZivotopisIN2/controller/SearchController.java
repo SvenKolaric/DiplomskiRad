@@ -93,7 +93,6 @@ public class SearchController {
 	public ModelAndView SearchGivenQueries(@ModelAttribute SearchWrapper form) {
 
 		ModelAndView modelAndView = new ModelAndView();
-		form.getSearchList().get(0).setQueryValue(5);
 		List<Search> queries = searchService.prepareQueries(form);
 		if (queries == null) {
 			//javi grešku i vrati natrag na search
