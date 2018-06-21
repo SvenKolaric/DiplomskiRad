@@ -15,7 +15,7 @@ public class Zaglavlje {
 	@Column(name = "OPIS")
 	private String opis;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDPRIJAVE")
 	private VrstaPrijave vrstaPrijave;
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

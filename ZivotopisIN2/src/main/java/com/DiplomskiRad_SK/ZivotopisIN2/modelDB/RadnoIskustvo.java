@@ -25,10 +25,10 @@ public class RadnoIskustvo {
 	@Column(name = "BR_GOD_RADA")
 	private Double brGodRada;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDPOZICIJA")
 	private Pozicija pozicija;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDINSTITUCIJA")
 	private Institucija institucija;
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

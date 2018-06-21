@@ -46,7 +46,7 @@ public class CV implements Comparable<CV>{
             mappedBy = "zivotopis")
 	private OsobnaVjestina osobnaVJ;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "IDOSOBA")
 	private Osoba osoba;
 

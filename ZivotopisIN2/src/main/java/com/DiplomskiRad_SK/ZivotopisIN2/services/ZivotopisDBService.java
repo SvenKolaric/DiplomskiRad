@@ -399,6 +399,11 @@ public class ZivotopisDBService {
 		return null;
 
 	}
+	
+	@Transactional
+	public List<CV> getCVOrderByDatumAsc(){
+		return cvRepo.findByOrderByDatumStvaranja();
+	}
 
 	@Transactional
 	public List<CV> getCVByOsobaID(Integer idOsoba) {
@@ -410,16 +415,19 @@ public class ZivotopisDBService {
 		try {
 			Optional<CV> cvOpt = cvRepo.findById(id);
 			if (cvOpt.get() == null) {
-
+				return false;
 			} else {
 				CV cv = cvOpt.get();
-				Osoba osoba = osobaRepo.findById(cv.getOsoba().getOsobaID()).get();
-				if (osoba.getZivotopisiList().size() != 1) {
-					cvRepo.deleteById(id);
-				} else if (osoba.getZivotopisiList().size() == 1) {
-					cvRepo.deleteById(id);
-					osobaRepo.deleteById(osoba.getOsobaID());
-				}
+				cv.getOsoba().removeCV(cv);
+				cvRepo.delete(cv);
+				/*/Osoba osoba = osobaRepo.findById(cv.getOsoba().getOsobaID()).get();
+				//osoba.removeCV(cv);
+				if (cv.getOsoba().getZivotopisiList().size() != 1) {
+					cvRepo.delete(cv);
+				} else if (cv.getOsoba().getZivotopisiList().size() == 1) {
+					cvRepo.delete(cv);
+					//osobaRepo.deleteById(osoba.getOsobaID());
+				}*/
 
 			}
 			return true;

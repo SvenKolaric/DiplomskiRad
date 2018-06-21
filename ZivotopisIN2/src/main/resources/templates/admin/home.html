@@ -23,9 +23,9 @@
 		<table class="table" border="1">
 				<thead>
 					<tr>
-						<th th:text="IDZivotopis" />
-						<th th:text="'Ime Prezime'" />
-						<th th:text="'Datum Stvaranja'" />
+						<th style="text-align: center;" th:text="IDZivotopis" />
+						<th style="text-align: center;" th:text="'Ime Prezime'" />
+						<th style="text-align: center;" th:text="'Datum Stvaranja'" />
 						<th></th>
 					</tr>
 				</thead>
@@ -33,10 +33,10 @@
 					<tr th:each="cv, iStat : ${results}"
 						th:style="${iStat.odd}? 'background: #f5f5f1;'"
 						th:alt-title="${iStat.even}? 'even' : 'odd'">
-						<td th:text="${cv.zivotopisID}" />
-						<td th:text="|${cv.osoba.ime} ${cv.osoba.prezime}|" />
-						<td th:text="${cv.datumStvaranja}" />
-						<td>
+						<td style="text-align: center;" th:text="${cv.zivotopisID}" />
+						<td style="text-align: center;" th:text="|${cv.osoba.ime} ${cv.osoba.prezime}|" />
+						<td style="text-align: center;" th:text="${cv.datumStvaranja}" />
+						<td style="text-align: center;">
 							<form th:action="@{delete}" method="post">
 								<input type="hidden" th:value="${cv.zivotopisID}" name="zivotopisID" />
 								<button type="submit">Obriši</button>

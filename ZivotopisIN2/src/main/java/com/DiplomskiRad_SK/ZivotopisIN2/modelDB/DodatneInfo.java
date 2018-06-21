@@ -18,10 +18,10 @@ public class DodatneInfo {
 	private Integer idKategorija;*/
 	@Column(name = "OPIS")
 	private String opis;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDKATEGORIJE")
 	private Kategorija kategorija;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDCV")
 	private CV zivotopis;
 

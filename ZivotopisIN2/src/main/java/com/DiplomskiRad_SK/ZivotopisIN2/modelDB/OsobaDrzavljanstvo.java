@@ -10,10 +10,10 @@ public class OsobaDrzavljanstvo {
 	@SequenceGenerator(name = "ODSeq", sequenceName = "OSOBA_DRZAVLJANSTVO_SEQ", allocationSize = 1)
 	private Integer ID;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDDRZAVLJANSTVO")
 	private Drzavljanstvo drzavljanstvo;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDOSOBA")
 	private Osoba osoba;
 

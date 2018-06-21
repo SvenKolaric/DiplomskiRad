@@ -33,7 +33,7 @@ public class Korisnik {
 	@NotEmpty(message = "*Polje email je prazno")
 	private String email;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDULOGA")
 	private KorisnickaUloga uloga;
 	

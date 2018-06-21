@@ -29,10 +29,10 @@ public class EdukacijaITrening {
 	@Column(name = "BR_GOD_EDUKACIJE")
 	private Double brGodEdukacija;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDINSTITUCIJA")
 	private Institucija institucija;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDCV")
 	private CV zivotopis;
 	

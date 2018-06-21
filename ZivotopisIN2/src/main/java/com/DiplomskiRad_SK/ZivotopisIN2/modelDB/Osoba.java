@@ -36,7 +36,7 @@ public class Osoba {
 	private List<KontaktniInfo> kontaktInfoList = new ArrayList<>();
 	@OneToMany(mappedBy = "osoba", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<OsobaDrzavljanstvo> osobaDrzavljanstvoList = new ArrayList<>();
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDMJESTO")
 	private Mjesto mjesto;
 	

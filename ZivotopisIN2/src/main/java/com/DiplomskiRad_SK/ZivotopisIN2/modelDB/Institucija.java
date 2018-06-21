@@ -22,7 +22,7 @@ public class Institucija {
 	@Column(name = "NAZIV")
 	private String naziv;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDMJESTO")
 	private Mjesto mjesto;
 	@OneToMany(mappedBy = "institucija", cascade = CascadeType.ALL, orphanRemoval = true)

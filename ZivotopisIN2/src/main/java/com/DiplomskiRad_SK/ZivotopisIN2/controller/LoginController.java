@@ -106,21 +106,7 @@ public class LoginController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value="/admin/home", method = RequestMethod.GET)
-	public ModelAndView home(){
-		ModelAndView modelAndView = new ModelAndView();
-		results = cvrepo.findByOrderByDatumStvaranja();
-		modelAndView.addObject("results",results);
-		modelAndView.setViewName("admin/home");
-		return modelAndView;
-	}
+
 	
-	@RequestMapping(value="delete", method = RequestMethod.POST)
-    public ModelAndView showCVDetails(@RequestParam Integer zivotopisID) {
-        cvService.deleteCVByID(zivotopisID);
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("admin/home");
-		modelAndView.addObject("results", results);
-        return modelAndView;
-    }
+
 }

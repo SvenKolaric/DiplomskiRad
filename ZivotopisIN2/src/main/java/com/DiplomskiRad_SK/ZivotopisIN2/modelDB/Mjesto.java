@@ -24,7 +24,7 @@ public class Mjesto {
 	private List<Osoba> osobaList = new ArrayList<>();
 	@OneToMany(mappedBy = "mjesto", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Institucija> institucijaList = new ArrayList<>();
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDDRZAVA")
 	private Drzava drzava;
 
