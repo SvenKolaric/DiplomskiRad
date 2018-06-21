@@ -43,10 +43,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
-		http.
+		http.csrf().disable().
 			authorizeRequests()
 				.antMatchers("/").permitAll()
 				.antMatchers("/login").permitAll()
+				.antMatchers("/pdf/**").permitAll()
+				.antMatchers("/generate/**").permitAll()
 				.antMatchers("/registration").permitAll()//ovo bi isto moglo biti admin
 				.antMatchers("/upload").permitAll()
 				.antMatchers("/uploadStatus").permitAll()
@@ -54,7 +56,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/test").permitAll()
 				.antMatchers("/fragments/**").permitAll()
 				.antMatchers("/layouts/**").permitAll()
-				.antMatchers("/cv/**").hasAuthority("KORISNIK").anyRequest().authenticated()
+				.antMatchers("/cv/**").permitAll() //hasAuthority("KORISNIK").anyRequest().authenticated()
 				.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
 				.authenticated().and().formLogin()
 				.loginPage("/login").defaultSuccessUrl("/loginSuccess", true).failureUrl("/login?error=true")
