@@ -38,7 +38,7 @@ public class AdminController {
     public ModelAndView showCVDetails(@RequestParam Integer zivotopisID) {
         cvService.deleteCVByID(zivotopisID);
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("admin/home");
+		modelAndView.setViewName("redirect:/admin/home");
 		modelAndView.addObject("results", results);
         return modelAndView;
     }

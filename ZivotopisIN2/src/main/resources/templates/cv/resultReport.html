@@ -50,7 +50,7 @@ body{font-family: "Arial Unicode MS";}
 	<div id="content">
 		<div class="hero-unit">
 			<p>
-				Naziv natječaja: <span th:text="${natjecaj}">Natječaj nema
+				Naziv natječaja: <span th:text="${results.natjecaj}">Natječaj nema
 					zadano ime.</span>
 			</p>
 			<table class="table" border="1">
@@ -63,8 +63,8 @@ body{font-family: "Arial Unicode MS";}
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="cv, iStat : ${results}"
-						th:style="${iStat.odd}? 'background: #f5f5f1;'"
+					<tr th:each="cv, iStat : ${results.getResults()}"
+						th:style="${iStat.odd}? 'background: #e1e8f4;'"
 						th:alt-title="${iStat.even}? 'even' : 'odd'">
 						<td th:text="${cv.zivotopisID}" />
 						<td th:text="|${cv.osoba.ime} ${cv.osoba.prezime}|" />

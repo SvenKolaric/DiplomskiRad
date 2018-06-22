@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 
+import com.DiplomskiRad_SK.ZivotopisIN2.helpers.PDFGenerator;
 import com.DiplomskiRad_SK.ZivotopisIN2.models.PdfFileRequest;
+import com.lowagie.text.DocumentException;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -28,6 +31,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 class GooglePdfController {
@@ -100,14 +105,16 @@ class GooglePdfController {
 		 * e.printStackTrace(); }
 		 */
 	}
+	
+
 
 	@RequestMapping(value = "/pdf/google", method = RequestMethod.GET)
-	void createPdfFromGoogle(HttpServletResponse response) throws IOException {
+	void createPdfFromGoogle(HttpServletResponse response) throws IOException, DocumentException {
 		saveWebPage();
-
+		
 		PdfFileRequest fileRequest = new PdfFileRequest();
 		fileRequest.setFileName("google.pdf");
-		fileRequest.setSourceHtmlUrl("C:/Users/Sven/Downloads/Pretraga životopisa.html"); // http://localhost:8090/cv/searchQueries
+		fileRequest.setSourceHtmlUrl("D:/test1.html"); // http://localhost:8090/cv/searchQueries
 
 		byte[] pdfFile = restTemplate.postForObject("http://localhost:8090/generate/pdf", fileRequest, byte[].class);
 		OutputStream out = new FileOutputStream("D:/out.pdf");

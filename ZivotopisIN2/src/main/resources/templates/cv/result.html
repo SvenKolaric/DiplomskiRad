@@ -24,8 +24,11 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
 				<a href="search.html" th:href="@{/cv/search}">Natrag na
 					pretraživanje</a>
 				</p>
+				<p>
+				<a href="detailedResults.html" th:href="@{/cv/detailedResults}">Detaljniji pregled rezultata</a>
+				</p>
 				<h2>
-					Naziv natječaja: <label th:text="${natjecaj}"></label>
+					Naziv natječaja: <label th:text="${results.natjecaj}"></label>
 				</h2>
 
 
@@ -40,8 +43,8 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="cv, iStat : ${results}"
-							th:style="${iStat.odd}? 'background: #f5f5f1;'"
+						<tr th:each="cv, iStat : ${results.getResults()}"
+							th:style="${iStat.odd}? 'background: #e1e8f4;'"
 							th:alt-title="${iStat.even}? 'even' : 'odd'">
 							<td style="text-align: center;" th:text="${cv.zivotopisID}" />
 							<td style="text-align: center;"

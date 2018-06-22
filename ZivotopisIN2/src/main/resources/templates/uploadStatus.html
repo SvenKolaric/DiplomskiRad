@@ -18,10 +18,12 @@
 </head>
 <body>
 	<th:block layout:fragment="content">
-		<div class="hero-unit">
-			<h1>Status poslane datoteke:</h1>
-	<div th:if="${message}">
-		<h2 th:text="${message}" ></h2>
+		<div class="hero-unit ">
+		<div >
+			<h2>Status poslane datoteke:</h2>
+			</div>
+	<div class="col-sm-offset-1 col-sm-9" th:if="${message}">
+		<h4 th:text="${message}" ></h4>
 	</div>
 		</div>
 	</th:block>

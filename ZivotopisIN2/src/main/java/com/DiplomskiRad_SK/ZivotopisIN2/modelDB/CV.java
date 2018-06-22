@@ -9,6 +9,8 @@ import javax.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import com.DiplomskiRad_SK.ZivotopisIN2.models.Search;
+
 
 @Entity
 @Table(name = "CV")
@@ -26,6 +28,8 @@ public class CV implements Comparable<CV>{
 	
 	@Transient
 	private Integer score;
+	@Transient
+	private List<Search> searchList = new ArrayList<>();
 
 	@OneToMany(mappedBy = "zivotopis", cascade = CascadeType.ALL, orphanRemoval = true) //IME ATRIBUTA U DODATNEINFO KOJI TI REFERENCIRAM
 	private List<DodatneInfo> dodatneInfoList= new ArrayList<>();
@@ -260,4 +264,12 @@ public class CV implements Comparable<CV>{
 	public int compareTo(CV cv) {
         return score.compareTo(cv.score);
     }
+
+	public List<Search> getSearchList() {
+		return searchList;
+	}
+
+	public void setSearchList(List<Search> searchList) {
+		this.searchList = searchList;
+	}
 }

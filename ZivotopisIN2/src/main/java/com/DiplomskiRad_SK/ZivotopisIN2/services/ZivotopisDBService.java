@@ -418,16 +418,16 @@ public class ZivotopisDBService {
 				return false;
 			} else {
 				CV cv = cvOpt.get();
+				Osoba osoba = osobaRepo.findById(cv.getOsoba().getOsobaID()).get();
 				cv.getOsoba().removeCV(cv);
-				cvRepo.delete(cv);
-				/*/Osoba osoba = osobaRepo.findById(cv.getOsoba().getOsobaID()).get();
+				osoba.removeCV(cv);
 				//osoba.removeCV(cv);
-				if (cv.getOsoba().getZivotopisiList().size() != 1) {
+				if (osoba.getZivotopisiList().size() != 0) {
 					cvRepo.delete(cv);
-				} else if (cv.getOsoba().getZivotopisiList().size() == 1) {
-					cvRepo.delete(cv);
+				} else if (osoba.getZivotopisiList().size() == 0) {
+					osobaRepo.delete(osoba);
 					//osobaRepo.deleteById(osoba.getOsobaID());
-				}*/
+				}
 
 			}
 			return true;

@@ -135,37 +135,17 @@ public class SearchService {
 				List<Object[]> cvGodRad = radRepo.findByGodRada(Integer.parseInt(query.getQuery()));
 				for (Object[] row : cvGodRad) {
 					CV cv = cvRepo.findById(Integer.parseInt(row[0].toString())).get();
-					// cvSet.add(calculateScoreByCV(cvRepo.findById(Integer.parseInt(row[0].toString())).get(),
-					// query.getQueryWeight(), query.getQueryValue()));
+					cvSet.add(calculateScoreByCV(cvRepo.findById(Integer.parseInt(row[0].toString())).get(),
+					query.getQueryWeight(), query.getQueryValue()));
 
-					// addOrUpdateMap(cv, cvMap, query.getQueryWeight(), query.getQueryValue());
-					if (cvMap.containsKey(cv.getZivotopisID())) {
-						CV tempCV = cvMap.get(cv.getZivotopisID());
-						cvMap.get(cv.getZivotopisID()).setScore(
-								calculateScore(tempCV.getScore(), query.getQueryWeight(), query.getQueryValue()));
-					} else {
-						cv.setScore(calculateScore(null, query.getQueryWeight(), query.getQueryValue()));
-						cvMap.put(cv.getZivotopisID(), cv);
-					}
 				}
 				break;
 
 			case "BRGOD_EDU":
 				List<Object[]> cvGodEdu = eduRepo.findByGodEdu(Integer.parseInt(query.getQuery()));
 				for (Object[] row : cvGodEdu) {
-					// cvSet.add(calculateScoreByCV(cvRepo.findById(Integer.parseInt(row[0].toString())).get(),
-					// query.getQueryWeight(), query.getQueryValue()));
-
-					CV cv = cvRepo.findById(Integer.parseInt(row[0].toString())).get();
-
-					if (cvMap.containsKey(cv.getZivotopisID())) {
-						CV tempCV = cvMap.get(cv.getZivotopisID());
-						cvMap.get(cv.getZivotopisID()).setScore(
-								calculateScore(tempCV.getScore(), query.getQueryWeight(), query.getQueryValue()));
-					} else {
-						cv.setScore(calculateScore(null, query.getQueryWeight(), query.getQueryValue()));
-						cvMap.put(cv.getZivotopisID(), cv);
-					}
+					cvSet.add(calculateScoreByCV(cvRepo.findById(Integer.parseInt(row[0].toString())).get(),
+					query.getQueryWeight(), query.getQueryValue()));
 				}
 				break;
 
@@ -175,16 +155,8 @@ public class SearchService {
 				for (Osoba osoba : osobaList) {
 					List<CV> cvList = osoba.getZivotopisiList();
 					for (CV cv : cvList) {
-						// cvSet.add(calculateScoreByCV(cv, query.getQueryWeight(),
-						// query.getQueryValue()));
-						if (cvMap.containsKey(cv.getZivotopisID())) {
-							CV tempCV = cvMap.get(cv.getZivotopisID());
-							cvMap.get(cv.getZivotopisID()).setScore(
-									calculateScore(tempCV.getScore(), query.getQueryWeight(), query.getQueryValue()));
-						} else {
-							cv.setScore(calculateScore(null, query.getQueryWeight(), query.getQueryValue()));
-							cvMap.put(cv.getZivotopisID(), cv);
-						}
+						cvSet.add(calculateScoreByCV(cv, query.getQueryWeight(),
+						query.getQueryValue()));
 					}
 				}
 
@@ -196,31 +168,14 @@ public class SearchService {
 					List<EdukacijaITrening> eduList = inst.getEdukacijaTreningList();
 
 					for (RadnoIskustvo ri : radIskList) {
-						// cvSet.add(calculateScoreByCV(ri.getZivotopis(), query.getQueryWeight(),
-						// query.getQueryValue()));
-						CV cv = ri.getZivotopis();
-						if (cvMap.containsKey(cv.getZivotopisID())) {
-							CV tempCV = cvMap.get(cv.getZivotopisID());
-							cvMap.get(cv.getZivotopisID()).setScore(
-									calculateScore(tempCV.getScore(), query.getQueryWeight(), query.getQueryValue()));
-						} else {
-							cv.setScore(calculateScore(null, query.getQueryWeight(), query.getQueryValue()));
-							cvMap.put(cv.getZivotopisID(), cv);
-						}
+						cvSet.add(calculateScoreByCV(ri.getZivotopis(), query.getQueryWeight(),
+						query.getQueryValue()));
 					}
 
 					for (EdukacijaITrening edu : eduList) {
-						// cvSet.add(calculateScoreByCV(edu.getZivotopis(), query.getQueryWeight(),
-						// query.getQueryValue()));
-						CV cv = edu.getZivotopis();
-						if (cvMap.containsKey(cv.getZivotopisID())) {
-							CV tempCV = cvMap.get(cv.getZivotopisID());
-							cvMap.get(cv.getZivotopisID()).setScore(
-									calculateScore(tempCV.getScore(), query.getQueryWeight(), query.getQueryValue()));
-						} else {
-							cv.setScore(calculateScore(null, query.getQueryWeight(), query.getQueryValue()));
-							cvMap.put(cv.getZivotopisID(), cv);
-						}
+						cvSet.add(calculateScoreByCV(edu.getZivotopis(), query.getQueryWeight(),
+						query.getQueryValue()));
+						
 					}
 				}
 				break;
@@ -241,36 +196,29 @@ public class SearchService {
 
 			for (Upit rez : results)
 				for (Upit u : upitList)
-					if (u.equals(rez))
-						// cv = calculateScoreByCV(cv, u.getTezina(), u.getVrijednost());
-						if (cvMap.containsKey(cv.getZivotopisID())) {
-							CV tempCV = cvMap.get(cv.getZivotopisID());
-							cvMap.get(cv.getZivotopisID())
-									.setScore(calculateScore(tempCV.getScore(), u.getTezina(), u.getVrijednost()));
-						} else {
-							cv.setScore(calculateScore(null, u.getTezina(), u.getVrijednost()));
-							cvMap.put(cv.getZivotopisID(), cv);
-						}
+					if (u.equals(rez)) {
+						cvSet.add(calculateScoreByCV(cv, u.getTezina(), u.getVrijednost()));
+					}
 		}
-
+		
 		if (!DeleteAllQueries())
 			return null;
 
-		List<CV> cvSortedResult = SortSetToList(cvMap);
+		List<CV> cvSortedResult = SortSetToList(cvSet);
 
 		return cvSortedResult;
 	}
 
-	private List<CV> SortSetToList(Map<Integer,CV> cvMap) {
+	private List<CV> SortSetToList(Set<CV> cvSet) {
 		List<CV> cvList = new LinkedList<CV>();
-		cvList.addAll(cvMap.values());
+		cvList.addAll(cvSet);
 		Collections.<CV>sort(cvList);
 		Collections.reverse(cvList);
 
 		return cvList;
 
 	}
-
+	
 	private Map<Integer, CV> addOrUpdateMap(CV cv, Map<Integer, CV> cvMap, Integer weight, Integer value) {
 		if (cvMap.containsKey(cv.getZivotopisID())) {
 			CV tempCV = cvMap.get(cv.getZivotopisID());
@@ -279,7 +227,7 @@ public class SearchService {
 			cv.setScore(calculateScore(null, weight, value));
 			cvMap.put(cv.getZivotopisID(), cv);
 		}
-
+		
 		return cvMap;
 	}
 

@@ -49,16 +49,6 @@ public class UploadController {
 	
 	@GetMapping("/")
 	public String index() {
-		ArrayList<Search> sList = new ArrayList<>();
-		sList.add(new Search("BRGOD_RADA", "2", 3, 10));
-		sList.add(new Search("BRGOD_EDU", "2", 3, 10));
-		sList.add(new Search("MJESTO", "Zagreb", 1, 2));
-		sList.add(new Search("UPIT", "Java", 3, 10));
-		sList.add(new Search("UPIT", "Vrtlar", 1, 3));
-		sList.add(new Search("UPIT", "Pravo AND Ustavno", 2, 5));
-		sList.add(new Search("UPIT", "MS Office OR Office", 2, 5));
-		//searchService.QueryCVs(sList);
-
 		return "upload";
 	}
 	
