@@ -135,7 +135,8 @@ public class SearchService {
 				List<Object[]> cvGodRad = radRepo.findByGodRada(Integer.parseInt(query.getQuery()));
 				for (Object[] row : cvGodRad) {
 					CV cv = cvRepo.findById(Integer.parseInt(row[0].toString())).get();
-					cvSet.add(calculateScoreByCV(cvRepo.findById(Integer.parseInt(row[0].toString())).get(),
+					cv.getSearchList().add(query);
+					cvSet.add(calculateScoreByCV(cv,
 					query.getQueryWeight(), query.getQueryValue()));
 
 				}
@@ -144,7 +145,9 @@ public class SearchService {
 			case "BRGOD_EDU":
 				List<Object[]> cvGodEdu = eduRepo.findByGodEdu(Integer.parseInt(query.getQuery()));
 				for (Object[] row : cvGodEdu) {
-					cvSet.add(calculateScoreByCV(cvRepo.findById(Integer.parseInt(row[0].toString())).get(),
+					CV cv = cvRepo.findById(Integer.parseInt(row[0].toString())).get();
+					cv.getSearchList().add(query);
+					cvSet.add(calculateScoreByCV(cv,
 					query.getQueryWeight(), query.getQueryValue()));
 				}
 				break;
@@ -155,6 +158,7 @@ public class SearchService {
 				for (Osoba osoba : osobaList) {
 					List<CV> cvList = osoba.getZivotopisiList();
 					for (CV cv : cvList) {
+						cv.getSearchList().add(query);
 						cvSet.add(calculateScoreByCV(cv, query.getQueryWeight(),
 						query.getQueryValue()));
 					}
@@ -162,17 +166,19 @@ public class SearchService {
 
 				break;
 			case "INSTITUCIJA":
-				List<Institucija> instList = institucijaRepo.findAllByNaziv(query.getQuery());
+				List<Institucija> instList = institucijaRepo.findAllByNazivQuery(query.getQuery());
 				for (Institucija inst : instList) {
 					List<RadnoIskustvo> radIskList = inst.getRadnoIskustvoList();
 					List<EdukacijaITrening> eduList = inst.getEdukacijaTreningList();
 
 					for (RadnoIskustvo ri : radIskList) {
+						ri.getZivotopis().getSearchList().add(query);
 						cvSet.add(calculateScoreByCV(ri.getZivotopis(), query.getQueryWeight(),
 						query.getQueryValue()));
 					}
 
 					for (EdukacijaITrening edu : eduList) {
+						edu.getZivotopis().getSearchList().add(query);
 						cvSet.add(calculateScoreByCV(edu.getZivotopis(), query.getQueryWeight(),
 						query.getQueryValue()));
 						
@@ -197,6 +203,7 @@ public class SearchService {
 			for (Upit rez : results)
 				for (Upit u : upitList)
 					if (u.equals(rez)) {
+						cv.getSearchList().add(new Search("UPIT",u.getUpit(),u.getTezina(),u.getVrijednost()));
 						cvSet.add(calculateScoreByCV(cv, u.getTezina(), u.getVrijednost()));
 					}
 		}

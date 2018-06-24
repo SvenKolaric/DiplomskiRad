@@ -22,17 +22,22 @@
 			<div class="col-md-2"></div>
 			<div class="col-md-10">
 				<h2>Pošaljite Vašu XML datoteku životopisa</h2>
-				<hr>
 			</div>
+							<hr>
+			
 			<div class="col-sm-2"></div>
-			<div class="col-sm-offset-2 col-sm-5">
+			<div class="col-sm-offset-2 col-sm-4">
 				<form method="POST" action="/upload" enctype="multipart/form-data">
+				<br>
 					<input type="file" class="filestyle"
 						data-buttonText="Pronađi datoteku" data-buttonBefore="true"
 						name="file" /><br />
 					<!-- ovdje name = "file" mora biti jednak (@RequestParam("file") -->
+					<br>
+					<div class="col-sm-offset-4">
 					<input type="submit" value="Spremi u bazu" /> <input type="hidden"
 						name="${_csrf.parameterName}" value="${_csrf.token}" />
+						</div>
 				</form>
 			</div>
 

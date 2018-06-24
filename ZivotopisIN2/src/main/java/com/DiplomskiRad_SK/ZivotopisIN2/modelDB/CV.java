@@ -17,7 +17,9 @@ import com.DiplomskiRad_SK.ZivotopisIN2.models.Search;
 public class CV implements Comparable<CV>{
 	@Id
 	@GeneratedValue(generator = "CVSeq")
-	@SequenceGenerator(name = "CVSeq", sequenceName = "CV_SEQ", allocationSize = 1)
+	@SequenceGenerator(name = "CVSeq", 
+					sequenceName = "CV_SEQ", 
+					allocationSize = 1)
 	private Integer zivotopisID;
 	@Column(name = "TIPDOKUMENTA")
 	private String tipDokumenta;
@@ -31,13 +33,21 @@ public class CV implements Comparable<CV>{
 	@Transient
 	private List<Search> searchList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "zivotopis", cascade = CascadeType.ALL, orphanRemoval = true) //IME ATRIBUTA U DODATNEINFO KOJI TI REFERENCIRAM
+	@OneToMany(mappedBy = "zivotopis", 
+			cascade = CascadeType.ALL, 
+			orphanRemoval = true)
 	private List<DodatneInfo> dodatneInfoList= new ArrayList<>();
-	@OneToMany(mappedBy = "zivotopis", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "zivotopis", 
+			cascade = CascadeType.ALL, 
+			orphanRemoval = true)
 	private List<Dodatak> dodatakList= new ArrayList<>();
-	@OneToMany(mappedBy = "zivotopis", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "zivotopis", 
+			cascade = CascadeType.ALL, 
+			orphanRemoval = true)
 	private List<RadnoIskustvo> radnoIskustvoList= new ArrayList<>();
-	@OneToMany(mappedBy = "zivotopis", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "zivotopis", 
+			cascade = CascadeType.ALL, 
+			orphanRemoval = true)
 	private List<EdukacijaITrening> edukacijaITreningList= new ArrayList<>();
 	
 	@OneToOne(fetch = FetchType.LAZY,
@@ -50,7 +60,8 @@ public class CV implements Comparable<CV>{
             mappedBy = "zivotopis")
 	private OsobnaVjestina osobnaVJ;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.LAZY, 
+			cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "IDOSOBA")
 	private Osoba osoba;
 
