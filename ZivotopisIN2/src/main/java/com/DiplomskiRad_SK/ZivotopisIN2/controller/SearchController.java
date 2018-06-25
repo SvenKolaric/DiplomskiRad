@@ -62,7 +62,7 @@ public class SearchController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "search", method = RequestMethod.GET) // izgleda da ni tu ne treba j... viticaste
+	@RequestMapping(value = "search", method = RequestMethod.GET) // izgleda da ni tu ne treba viticaste
 	public ModelAndView Search() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("cv/search");

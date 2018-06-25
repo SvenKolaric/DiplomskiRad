@@ -87,16 +87,16 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
 			<div id="hd">
 				<div class="yui-gc">
 					<div class="yui-u first">
-						<h1 th:text="|${zivotopis.osoba.ime} ${zivotopis.osoba.prezime}|">Jonathan
+						<h1 th:utext="|${zivotopis.osoba.ime} ${zivotopis.osoba.prezime}|">Jonathan
 							Doe</h1>
 						<br>
 						<h3
-							th:text="|${zivotopis.osoba.adresa}, ${zivotopis.osoba.mjesto.toString()}|"></h3>
+							th:utext="|${zivotopis.osoba.adresa}, ${zivotopis.osoba.mjesto.toString()}|"></h3>
 						<br>
 						<h3 th:if="${zivotopis.osoba.spol != null}">
 							<b>Spol: </b> <span th:if="${zivotopis.osoba.spol == 'F '}"
-								th:text="'Žensko'"></span> <span
-								th:unless="${zivotopis.osoba.spol == 'F '}" th:text="'Muško'"></span>
+								th:utext="'Žensko'"></span> <span
+								th:unless="${zivotopis.osoba.spol == 'F '}" th:utext="'Muško'"></span>
 						</h3>
 						<br>
 						<h3
@@ -106,7 +106,7 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
 						<h3>
 							<b>Državljanstvo: </b> <span
 								th:each="row, rowStat : ${zivotopis.osoba.osobaDrzavljanstvoList}"><span
-								th:text="|*{row.drzavljanstvo.naziv} |"></span></span>
+								th:utext="|*{row.drzavljanstvo.naziv} |"></span></span>
 						</h3>
 					</div>
 					<div class="yui-u">
@@ -120,7 +120,7 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
 						<br>
 						<div class="contact-info"
 							th:each="row, rowStat : ${zivotopis.osoba.kontaktInfoList}">
-							<h3 th:text="|${row.tipKontakta.naziv}: *{row.kontakt}|"></h3>
+							<h3 th:utext="|${row.tipKontakta.naziv}: *{row.kontakt}|"></h3>
 
 						</div>
 					</div>
@@ -136,10 +136,10 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
 
 						<div class="yui-gf">
 							<div class="yui-u first">
-								<h2 th:text="${zivotopis.zaglavlje.vrstaPrijave.naziv}">Profile</h2>
+								<h2 th:utext="${zivotopis.zaglavlje.vrstaPrijave.naziv}">Profile</h2>
 							</div>
 							<div class="yui-u">
-								<p class="enlarge" th:text="${zivotopis.zaglavlje.opis}"></p>
+								<p class="enlarge" th:utext="${zivotopis.zaglavlje.opis}"></p>
 							</div>
 						</div>
 						<!--// .yui-gf -->
@@ -161,16 +161,16 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
 									th:classappend="${rowStat.index == rowStat.size-1} ? last : ''">
 									<h2 th:utext="'<b>' + ${row.institucija.naziv} + '</b>'"></h2>
 									<h3
-										th:text="|${row.institucija.adresa}, ${row.institucija.mjesto.toString()}"></h3>
-									<h3 th:text="${row.djelatnostSektor}"></h3>
+										th:utext="|${row.institucija.adresa}, ${row.institucija.mjesto.toString()}"></h3>
+									<h3 th:utext="${row.djelatnostSektor}"></h3>
 									<h4 th:if="${row.datumKraja == null}"
-										th:text="${#calendars.format(row.datumPocetka,'dd.MM.yyyy')}"></h4>
+										th:utext="${#calendars.format(row.datumPocetka,'dd.MM.yyyy')}"></h4>
 									<h4 th:unless="${row.datumKraja == null}"
-										th:text="|${#calendars.format(row.datumPocetka,'dd.MM.yyyy')} - ${#calendars.format(row.datumKraja,'dd.MM.yyyy')}|"></h4>
+										th:utext="|${#calendars.format(row.datumPocetka,'dd.MM.yyyy')} - ${#calendars.format(row.datumKraja,'dd.MM.yyyy')}|"></h4>
 									<br>
-									<h3 th:text="${row.pozicija.naziv}"></h3>
+									<h3 th:utext="${row.pozicija.naziv}"></h3>
 
-									<p th:text="${row.opisPosla}"></p>
+									<p th:utext="${row.opisPosla}"></p>
 
 								</div>
 
@@ -191,12 +191,12 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
 									th:classappend="${rowStat.index == rowStat.size-1} ? last : ''">
 									<h2 th:utext="'<b>' + ${row.institucija.naziv} + '</b>'"></h2>
 									<h3
-										th:text="|${row.institucija.adresa}, ${row.institucija.mjesto.toString()}"></h3>
-									<h3 th:text="${row.ekorazina}"></h3>
+										th:utext="|${row.institucija.adresa}, ${row.institucija.mjesto.toString()}"></h3>
+									<h3 th:utext="${row.ekorazina}"></h3>
 									<h4 th:if="${row.datumKraja == null}"
-										th:text="${#calendars.format(row.datumPocetka,'dd.MM.yyyy')}"></h4>
+										th:utext="${#calendars.format(row.datumPocetka,'dd.MM.yyyy')}"></h4>
 									<h4 th:unless="${row.datumKraja == null}"
-										th:text="|${#calendars.format(row.datumPocetka,'dd.MM.yyyy')} - ${#calendars.format(row.datumKraja,'dd.MM.yyyy')}|"></h4>
+										th:utext="|${#calendars.format(row.datumPocetka,'dd.MM.yyyy')} - ${#calendars.format(row.datumKraja,'dd.MM.yyyy')}|"></h4>
 									<br>
 									<h3 th:utext="|<u> ${row.kvalifikacija} </u>|"></h3>
 
@@ -216,39 +216,39 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
 						<div class="yui-gf"
 							th:each="row, rowStat : ${zivotopis.osobnaVJ.znaList}">
 							<div class="yui-u first">
-								<h2 th:text="|Jezik: ${row.jezik.naziv}"></h2>
+								<h2 th:utext="|Jezik: ${row.jezik.naziv}"></h2>
 							</div>
 							<div class="yui-u">
 								<ul class="talent">
 									<li><b>Razumijevanje</b></li>
 									<li>Slušanje</li>
-									<li class="last" th:text="${row.razumijevanjeSlusanje}"></li>
+									<li class="last" th:utext="${row.razumijevanjeSlusanje}"></li>
 								</ul>
 
 								<ul class="talent">
 									<li><b>Razumijevanje</b></li>
 									<li>Čitanje</li>
-									<li class="last" th:text="${row.razumijevanjeCitanje}"></li>
+									<li class="last" th:utext="${row.razumijevanjeCitanje}"></li>
 								</ul>
 
 								<ul class="talent">
 									<li><b>Govor</b></li>
 									<li>Produkcija</li>
-									<li class="last" th:text="${row.govornaProdukcija}"></li>
+									<li class="last" th:utext="${row.govornaProdukcija}"></li>
 								</ul>
 
 								<ul class="talent">
 									<li><b>Govor</b></li>
 									<li>Interakcija</li>
-									<li class="last" th:text="${row.govornaInterakcija}"></li>
+									<li class="last" th:utext="${row.govornaInterakcija}"></li>
 								</ul>
 								<ul class="talent">
 									<li><b>Pisanje</b></li>
-									<li class="last" th:text="${row.pisanje}"></li>
+									<li class="last" th:utext="${row.pisanje}"></li>
 								</ul>
 								<ul class="talent" th:if="${row.diplome != null}">
 									<li><b>Diplome</b></li>
-									<li class="last" th:text="${row.diplome}"></li>
+									<li class="last" th:utext="${row.diplome}"></li>
 								</ul>
 							</div>
 						</div>
@@ -337,7 +337,7 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
 								<div class="job"
 									th:classappend="${rowStat.index == rowStat.size-1} ? last : ''">
 									<h2>
-										<b th:if="${row.kategorija.naziv != 'Nepoznato'}" th:text="${row.kategorija.naziv}"></b>
+										<b th:if="${row.kategorija.naziv != 'Nepoznato'}" th:utext="${row.kategorija.naziv}"></b>
 									</h2>
 									<h2 th:utext="${row.opis}"></h2>
 

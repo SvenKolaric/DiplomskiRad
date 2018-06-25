@@ -73,38 +73,7 @@ public class LoginController {
 	    }
 
 
-	@RequestMapping(value="/registration", method = RequestMethod.GET)
-	public ModelAndView registration(){
-		ModelAndView modelAndView = new ModelAndView();
-		Korisnik korisnik = new Korisnik();
-		modelAndView.addObject("korisnik", korisnik);
-		modelAndView.setViewName("registration");
-		return modelAndView;
-	}
 	
-	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ModelAndView createNewUser(@Valid Korisnik korisnik, BindingResult bindingResult) {
-		
-		ModelAndView modelAndView = new ModelAndView();
-		Korisnik korisnikExists = korisnikService.findKorisnikByEmail(korisnik.getEmail());
-		
-		if (korisnikExists != null) {
-			bindingResult
-					.rejectValue("email", "error.korisnik",
-							"Već postoji korisnik s danim emailom!");
-		}
-		if (bindingResult.hasErrors()) {
-			modelAndView.setViewName("registration");
-			
-		} else {
-			korisnikService.saveKorisnik(korisnik, "KORISNIK");
-			modelAndView.addObject("successMessage", "Korisnik je uspješno spremljen u bazu!");
-			modelAndView.addObject("korisnik", new Korisnik());
-			modelAndView.setViewName("registration");
-			
-		}
-		return modelAndView;
-	}
 	
 
 	

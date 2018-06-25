@@ -33,6 +33,9 @@ public class Korisnik {
 	@NotEmpty(message = "*Polje email je prazno")
 	private String email;
 	
+	@Transient
+	private Boolean isAdmin;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDULOGA")
 	private KorisnickaUloga uloga;
@@ -77,6 +80,14 @@ public class Korisnik {
 
 	public void setUloga(KorisnickaUloga uloga) {
 		this.uloga = uloga;
+	}
+
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
 

@@ -108,22 +108,24 @@ public class XMLMapParserService {
 
 			// Osoba datum rodenja
 			nodeList = doc.getElementsByTagName("Demographics");
-			node = nodeList.item(0).getChildNodes().item(0);
-			if (node.getNodeType() == Node.ELEMENT_NODE) {
-				Element element = (Element) node;
-				String date = new StringBuilder().append(element.getAttribute("day"))
-						.append(element.getAttribute("month")).append(element.getAttribute("year")).toString();
-				date = date.replace("-", "");
-				osoba.setGodRodenja(new SimpleDateFormat("ddMMyyyy").parse(date));
-			}
-
-			// Osoba gender
-			nodeList = doc.getElementsByTagName("Gender");
 			if (nodeList.getLength() != 0) {
-				node = nodeList.item(0);
-				if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
+				node = nodeList.item(0).getChildNodes().item(0);
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
 					Element element = (Element) node;
-					osoba.setSpol(element.getElementsByTagName("Code").item(0).getTextContent());
+					String date = new StringBuilder().append(element.getAttribute("day"))
+							.append(element.getAttribute("month")).append(element.getAttribute("year")).toString();
+					date = date.replace("-", "");
+					osoba.setGodRodenja(new SimpleDateFormat("ddMMyyyy").parse(date));
+				}
+
+				// Osoba gender
+				nodeList = doc.getElementsByTagName("Gender");
+				if (nodeList.getLength() != 0) {
+					node = nodeList.item(0);
+					if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
+						Element element = (Element) node;
+						osoba.setSpol(element.getElementsByTagName("Code").item(0).getTextContent());
+					}
 				}
 			}
 
@@ -330,12 +332,12 @@ public class XMLMapParserService {
 				}
 				// sektor - Sector
 				node = nodeList.item(count).getChildNodes().item(position + 3).getChildNodes().item(2);
-				if (node.getNodeType() == Node.ELEMENT_NODE) {
+				if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
 					Element element = (Element) node;
 					radnoIsk.setDjelatnostSektor(element.getElementsByTagName("Label").item(0).getTextContent());
 				}
 
-				// adressa institucije, mjesto i država
+				// adressa institucije, mjesto i država !!!!!!!!!!!tu moraš javiti da mora se to napuniti
 				node = nodeList.item(count).getChildNodes().item(position + 3).getChildNodes().item(1).getChildNodes()
 						.item(0).getChildNodes().item(0);
 				if (node.getNodeType() == Node.ELEMENT_NODE) {

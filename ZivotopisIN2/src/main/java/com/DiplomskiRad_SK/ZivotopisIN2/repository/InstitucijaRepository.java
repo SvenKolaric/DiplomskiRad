@@ -14,4 +14,6 @@ public interface InstitucijaRepository extends CrudRepository<Institucija, Integ
 
 	@Query("SELECT U FROM Institucija U WHERE LOWER(U.naziv) LIKE LOWER(concat('%', ?1, '%'))")
 	List<Institucija> findAllByNazivQuery(String naziv);
+	
+	
 }

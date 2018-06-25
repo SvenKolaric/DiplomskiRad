@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<title>Registration Form</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/registration.css}" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<th:block layout:fragment="content">
+	<div class="navbar navbar-inverse navbar-fixed-top"
+		th:fragment="header">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".nav-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#" th:href="@{/}">Diplomski Rad</a>
+				<ul class="nav navbar-nav">
+						<li><a href="#" th:href="@{/admin/korisnik}">Prikaz korisnika</a></li>
+					</ul>
+			</div>
+				
+			<div class="navbar-collapse collapse">
+				<div sec:authorize="isAuthenticated()">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#" th:href="@{/logout}">Odjavi se</a></li>
+					</ul>
+				</div>
+				<div sec:authorize="isAnonymous()">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#" th:href="@{/login}">Prijavi se</a></li>
+					</ul>
+				</div>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+		<div class="hero-unit">
+
+			<!--  <form th:action="@{/login}" method="get">
+		<button class="btn btn-md btn-warning btn-block" type="Submit">Go To Login Page</button>
+	</form>	-->
+
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 col-md-offset-4" >
+						<form autocomplete="off" action="#"
+							th:action="@{/admin/registration}" th:object="${korisnik}"
+							method="post" class="form-horizontal" role="form">
+							<h2>Dodaj novog korisnika</h2>
+							<br>
+							<!--  <div class="form-group">
+						<div class="col-sm-9">
+						<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+								class="validation-message"></label>
+						<input type="text" th:field="*{name}" placeholder="Name"
+								class="form-control" /> 
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-9">
+						<label	th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+								class="validation-message"></label>
+							<input type="text" th:field="*{lastName}"
+								placeholder="Last Name" class="form-control" /> 
+						</div>
+					</div>-->
+							<div class="form-group">
+								<div class="col-sm-9">
+									<input type="text" th:field="*{email}" placeholder="Email"
+										class="form-control" /> <label
+										th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+										class="validation-message"></label>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-9">
+									<input type="password" th:field="*{password}"
+										placeholder="Password" class="form-control" /> <label
+										th:if="${#fields.hasErrors('password')}"
+										th:errors="*{password}" class="validation-message"></label>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-9">
+									<input type="checkbox" th:field="*{isAdmin}"
+										th:checked="*{isAdmin}" class="control-group" /> <label class="control-label"
+										th:text="'Korisnik ima admin privilegije'"></label>
+								</div>
+							</div>
+<br>
+							<div class="form-group">
+								<div class="col-sm-9">
+									<button type="submit" class="btn btn-primary btn-block">Registriraj
+										korisnika</button>
+
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-9" style="text-align: center;">
+								<br>
+								<hr>
+									<h3 th:if="${successMessage} != null"
+										th:utext="|<b>${successMessage}</b>|"></h3>
+								</div>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</th:block>
+</body>
+</html>

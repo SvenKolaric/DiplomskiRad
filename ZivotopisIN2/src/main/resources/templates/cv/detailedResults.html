@@ -8145,7 +8145,7 @@ td {
 
 
 
-			<table class="table" border="1">
+			<table class="table table-hover" border="1">
 				<thead>
 					<tr>
 						<th style="text-align: center;" th:text="IDZivotopis" />
@@ -8168,26 +8168,40 @@ td {
 							th:text="|${cv.osoba.ime} ${cv.osoba.prezime}|" />
 						<td style="text-align: center; vertical-align: middle;"
 							th:text="${cv.score}" />
-						<td style="text-align: center; vertical-align: middle;">
-
-							<p th:if="${cv.searchDict.get(BRGOD_RADA) != null}"
-								th:utext="|Upit: <b>${search.query}</b> - Rezultat: <b>${search.queryWeight * search.queryValue}</b> |">
+						<td style="text-align: center; vertical-align: middle; white-space: nowrap">
+<!-- th:value="${persons.xrayFieldRadiology != null ? persons.xrayFieldRadiology.remarks : ''}" -->
+							<th:block th:each="search : ${cv.getSearchList()}"
+							th:object = "${search}"
+							th:if="${search.identifier} == 'BRGOD_RADA'" >
+							<p th:utext="|<b>*{query}</b> - Rezultat: <b>${search.queryWeight * search.queryValue}</b> |">
+							-</p>
+								</th:block>
 						</td>
-						<td style="text-align: center; vertical-align: middle;">
-							<p th:if="${cv.searchDict.get(BRGOD_EDU) != null}"
-								th:utext="|Upit: <b>${search.query}</b> - Rezultat: <b>${search.queryWeight * search.queryValue}</b> |">
+						<td style="text-align: center; vertical-align: middle; white-space: nowrap">
+						<th:block th:each="search : ${cv.getSearchList()}"
+							th:object = "${search}"
+							th:if="${search.identifier} == 'BRGOD_EDU'"
+							<p th:utext="|<b>*{query}</b> - Rezultat: <b>${search.queryWeight * search.queryValue}</b> |">
+							-</p>
+							</th:block>
 						</td>
-						<td style="text-align: center; vertical-align: middle;">
-							<p th:if="${cv.searchDict.get(MJESTO) != null}"
-								th:utext="|Upit: <b>${search.query}</b> - Rezultat: <b>${search.queryWeight * search.queryValue}</b> |">
+						<td style="text-align: center; vertical-align: middle; white-space: nowrap">
+						<th:block th:each="search : ${cv.getSearchList()}"
+							th:object = "${search}"
+							th:if="${search.identifier} == 'MJESTO'" >
+							<p th:utext="|<b>*{query}</b> - Rezultat: <b>${search.queryWeight * search.queryValue}</b> |">
 						</td>
-						<td style="text-align: center; vertical-align: middle;">
-							<p th:if="${cv.searchDict.get(INSTITUCIJA) != null}"
-								th:utext="|Upit: <b>${search.query}</b> - Rezultat: <b>${search.queryWeight * search.queryValue}</b> |">
+						<td style="text-align: center; vertical-align: middle; white-space: nowrap">
+						<th:block th:each="search : ${cv.getSearchList()}"
+							th:object = "${search}"
+							th:if="${search.identifier} == 'INSTITUCIJA'" >
+							<p th:utext="|<b>*{query}</b> - Rezultat: <b>${search.queryWeight * search.queryValue}</b> |">
 						</td>
-						<td style="text-align: center; vertical-align: middle;">
-						<p th:if="${cv.searchDict.get(UPIT) != null}"
-								th:utext="|Upit: <b>${search.query}</b> - Rezultat: <b>${search.queryWeight * search.queryValue}</b> |">
+						<td style="text-align: center; vertical-align: middle; white-space: nowrap">
+						<th:block th:each="search : ${cv.getSearchList()}"
+							th:object = "${search}"
+							th:if="${search.identifier} == 'UPIT'" >
+						<p th:utext="|<b>*{query}</b> - Rezultat: <b>${search.queryWeight * search.queryValue}</b> |">
 						</td>
 					</tr>
 				</tbody>
