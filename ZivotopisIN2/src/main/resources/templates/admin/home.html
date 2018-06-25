@@ -13,46 +13,61 @@
 <script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
 	th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
 <meta charset="UTF-8">
+<style>
+.pagination-centered {
+	text-align: center;
+}
 
+.disabled {
+	pointer-events: none;
+	opacity: 0.5;
+}
+
+.pointer-disabled {
+	pointer-events: none;
+}
+</style>
 </head>
 
 <body>
 	<th:block layout:fragment="content">
 		<div class="navbar navbar-inverse navbar-fixed-top"
-		th:fragment="header">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".nav-collapse">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#" th:href="@{/}">Diplomski Rad</a>
-				<ul class="nav navbar-nav">
-						<li><a href="#" th:href="@{/admin/korisnik}">Prikaz korisnika</a></li>
-					</ul>
-			</div>
-				
-			<div class="navbar-collapse collapse">
-				<div sec:authorize="isAuthenticated()">
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#" th:href="@{/logout}">Odjavi se</a></li>
+			th:fragment="header">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target=".nav-collapse">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#" th:href="@{/}">Diplomski Rad</a>
+					<ul class="nav navbar-nav">
+						<li><a href="#" th:href="@{/admin/korisnik}">Prikaz
+								korisnika</a></li>
 					</ul>
 				</div>
-				<div sec:authorize="isAnonymous()">
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#" th:href="@{/login}">Prijavi se</a></li>
-					</ul>
+
+				<div class="navbar-collapse collapse">
+					<div sec:authorize="isAuthenticated()">
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="#" th:href="@{/logout}">Odjavi se</a></li>
+						</ul>
+					</div>
+					<div sec:authorize="isAnonymous()">
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="#" th:href="@{/login}">Prijavi se</a></li>
+						</ul>
+					</div>
 				</div>
+				<!--/.nav-collapse -->
 			</div>
-			<!--/.nav-collapse -->
 		</div>
-	</div>
 		<div class="hero-unit">
-	
-		<table class="table" border="1">
+<br>
+			<table class="table" >
 				<thead>
-					<tr>
+					<tr style="background: #1A8BAE;
+								color: white;">
 						<th style="text-align: center;" th:text="IDZivotopis" />
 						<th style="text-align: center;" th:text="'Ime Prezime'" />
 						<th style="text-align: center;" th:text="'Datum Stvaranja'" />
@@ -61,22 +76,87 @@
 				</thead>
 				<tbody>
 					<tr th:each="cv, iStat : ${results}"
-						th:style="${iStat.odd}? 'background: #f5f5f1;'"
+						th:style="${iStat.odd}? 'background: #f5f5f5;'"
 						th:alt-title="${iStat.even}? 'even' : 'odd'">
 						<td style="text-align: center;" th:text="${cv.zivotopisID}" />
-						<td style="text-align: center;" th:text="|${cv.osoba.ime} ${cv.osoba.prezime}|" />
+						<td style="text-align: center;"
+							th:text="|${cv.osoba.ime} ${cv.osoba.prezime}|" />
 						<td style="text-align: center;" th:text="${cv.datumStvaranja}" />
 						<td style="text-align: center;">
 							<form th:action="@{delete}" method="post">
-								<input type="hidden" th:value="${cv.zivotopisID}" name="zivotopisID" />
+								<input type="hidden" th:value="${cv.zivotopisID}"
+									name="zivotopisID" />
 								<button type="submit">Obriši</button>
 							</form>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-		
-	</div>
+			<div class="row">
+				<div class="form-group col-md-1">
+					<select class="form-control pagination" id="pageSizeSelect">
+						<option th:each="pageSize : ${pageSizes}" th:text="${pageSize}"
+							th:value="${pageSize}"
+							th:selected="${pageSize} == ${selectedPageSize}"></option>
+					</select>
+				</div>
+				<!-- ako staviš == 1 ili !=0 (default !=1) ispisuje se i za jednu stranicu no nisam siguran za ostalo -->
+				<div th:if="${results.totalPages != 0}" 
+					class="form-group col-md-11 pagination-centered">
+					<ul class="pagination">
+						<li th:class="${results.number == 0} ? disabled"><a
+							class="pageLink"
+							th:href="@{/(pageSize=${selectedPageSize}, page=1)}">&laquo;</a>
+						</li>
+						<li th:class="${results.number == 0} ? disabled"><a
+							class="pageLink"
+							th:href="@{/(pageSize=${selectedPageSize}, page=${results.number})}">&larr;</a>
+						</li>
+						<li
+							th:class="${results.number == (page - 1)} ? 'active pointer-disabled'"
+							th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+							<a class="pageLink"
+							th:href="@{/(pageSize=${selectedPageSize}, page=${page})}"
+							th:text="${page}"></a>
+						</li>
+						<li
+							th:class="${results.number + 1 == results.totalPages} ? disabled">
+							<a class="pageLink"
+							th:href="@{/(pageSize=${selectedPageSize}, page=${results.number + 2})}">&rarr;</a>
+						</li>
+						<li
+							th:class="${results.number + 1 == results.totalPages} ? disabled">
+							<a class="pageLink"
+							th:href="@{/(pageSize=${selectedPageSize}, page=${results.totalPages})}">&raquo;</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</th:block>
+	<script src="https://code.jquery.com/jquery-1.11.1.min.js"
+		integrity="sha256-VAvG3sHdS5LqTT+5A/aeq/bZGa/Uj04xKxY8KM/w9EE="
+		crossorigin="anonymous"></script>
+
+
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+		crossorigin="anonymous"></script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		$(document).ready(function() {
+			changePageAndSize();
+		});
+
+		function changePageAndSize() {
+			$('#pageSizeSelect').change(
+					function(evt) {
+						window.location.replace("/?pageSize=" + this.value
+								+ "&page=1");
+					});
+		}
+		/*]]>*/
+	</script>
 </body>
 </html>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -40,10 +41,16 @@ public class SearchController {
 	private ZivotopisDBService cvService;
 	private List<CV> results1;
 	private String natjecaj;
+	private static final int[] PAGE_SIZES = { 5, 10, 20};
 	
 	@ModelAttribute("resultsCV")
 	   public ResultsCV setUpResultCV() {
 	      return new ResultsCV();
+	   }
+	
+	@ModelAttribute("IDCV")
+	   public Integer getID() {
+	      return 0;
 	   }
 	
 	@Autowired
@@ -117,6 +124,7 @@ public class SearchController {
 		//modelAndView.addObject(results);
 		modelAndView.setViewName("cv/result");
 		modelAndView.addObject("results", results);
+		modelAndView.addObject("pageSizes", PAGE_SIZES);
 		//modelAndView.addObject("natjecaj", form.getNazivNatjecaja());
 				
 		return modelAndView; //"redirect:/cv/results";
@@ -133,8 +141,8 @@ public class SearchController {
 
 		Map<String, Object> model = new HashMap<>();
 		model.put("results", results);
-
-		gen.generate(new File("D:/testNovi.pdf"), "cv/resultReport", model);
+		modelAndView.addObject("pageSizes", PAGE_SIZES);
+		//gen.generate(new File("D:/testNovi.pdf"), "cv/resultReport", model);
 		return modelAndView;
 	}
 	
@@ -151,14 +159,47 @@ public class SearchController {
 	@RequestMapping(value="details", method = RequestMethod.POST)
     public ModelAndView showCVDetails(@RequestParam Integer zivotopisID) {
         CV cv = cvService.getCVByID(zivotopisID);
+
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("cv/details");
 		modelAndView.addObject("zivotopis", cv);
         return modelAndView;
     }
 
-	public void pdfGenerateGithubRainu() throws FileNotFoundException, DocumentException {
-		
+	@RequestMapping(value = "resultReport", method = RequestMethod.GET)
+	public ModelAndView DisplayResultReport(@ModelAttribute("resultsCV") ResultsCV results, @RequestParam("pageSize") Optional<Integer> pageSize) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("cv/resultReport");
+		modelAndView.addObject("results", results);
+        
+
+		//modelAndView.addObject("natjecaj", natjecaj);
+
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "detailedResultReport", method = RequestMethod.GET)
+	public ModelAndView DisplayDetailedResultReport(@ModelAttribute("resultsCV") ResultsCV results, @RequestParam("pageSize") Optional<Integer> pageSize) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("cv/detailedResultReport");
+		modelAndView.addObject("results", results);
+        
+
+		//modelAndView.addObject("natjecaj", natjecaj);
+
+		return modelAndView;
 	}
 
+	@RequestMapping(value = "detailsReport", method = RequestMethod.POST)
+	public ModelAndView DisplayDetailedReport(@RequestParam Integer zivotopisID) {
+		CV cv = cvService.getCVByID(zivotopisID);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("cv/detailsReport");
+		modelAndView.addObject("zivotopis", cv);
+        
+
+		//modelAndView.addObject("natjecaj", natjecaj);
+
+		return modelAndView;
+	}
 }

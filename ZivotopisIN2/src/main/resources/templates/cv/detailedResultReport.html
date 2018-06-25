@@ -18,7 +18,7 @@ a {
 
 body {
 	position: relative;
-	width: 21cm;
+	width: 25cm;
 	height: 29.7cm;
 	margin: 0 auto;
 	color: #001028;
@@ -171,7 +171,12 @@ footer {
 				<th class="service" style="text-align: center;"
 					th:text="IDZivotopis" />
 				<th class="desc" style="text-align: center;" th:text="'Ime Prezime'" />
-				<th style="text-align: center;" th:text="'Bodovi'" />
+				<th style="text-align: center;" th:text="'Ukupna Ocjena'" />
+				<th style="text-align: center;" th:text="'Br. godina rada'" />
+				<th style="text-align: center;" th:text="'Br. godina edukacije'" />
+				<th style="text-align: center;" th:text="'Mjesto'" />
+				<th style="text-align: center;" th:text="'Institucija'" />
+				<th style="text-align: center;" th:text="'Upiti'" />
 			</tr>
 		</thead>
 		<tbody>
@@ -181,9 +186,50 @@ footer {
 				<td class="desc" style="text-align: center;"
 					th:text="|${cv.osoba.ime} ${cv.osoba.prezime}|" />
 				<td class="qty" style="text-align: center;" th:text="${cv.score}" />
+				<td
+					style="text-align: center; vertical-align: middle; white-space: nowrap">
+					<!-- th:value="${persons.xrayFieldRadiology != null ? persons.xrayFieldRadiology.remarks : ''}" -->
+					<th:block th:each="search : ${cv.getSearchList()}"
+						th:object="${search}" th:if="${search.identifier} == 'BRGOD_RADA'">
+						<p
+							th:utext="|<b>*{query}</b> - Rezultat: <b>${search.queryWeight * search.queryValue}</b> |">
+							-</p>
+					</th:block>
+				</td>
+				<td
+					style="text-align: center; vertical-align: middle; white-space: nowrap">
+					<th:block th:each="search : ${cv.getSearchList()}"
+						th:object="${search}" th:if="${search.identifier} == 'BRGOD_EDU'"
+						<p
+							th:utext="|<b>*{query}</b> - Rezultat: <b>${search.queryWeight * search.queryValue}</b> |">
+							-</p>
+					</th:block>
+				</td>
+				<td
+					style="text-align: center; vertical-align: middle; white-space: nowrap">
+					<th:block th:each="search : ${cv.getSearchList()}"
+						th:object="${search}" th:if="${search.identifier} == 'MJESTO'">
+						<p
+							th:utext="|<b>*{query}</b> - Rezultat: <b>${search.queryWeight * search.queryValue}</b> |">
+				</td>
+				<td
+					style="text-align: center; vertical-align: middle; white-space: nowrap">
+					<th:block th:each="search : ${cv.getSearchList()}"
+						th:object="${search}"
+						th:if="${search.identifier} == 'INSTITUCIJA'">
+						<p
+							th:utext="|<b>*{query}</b> - Rezultat: <b>${search.queryWeight * search.queryValue}</b> |">
+				</td>
+				<td
+					style="text-align: center; vertical-align: middle; white-space: nowrap">
+					<th:block th:each="search : ${cv.getSearchList()}"
+						th:object="${search}" th:if="${search.identifier} == 'UPIT'">
+						<p
+							th:utext="|<b>*{query}</b> - Rezultat: <b>${search.queryWeight * search.queryValue}</b> |">
+				</td>
 			</tr>
 			<tr>
-			<td colspan="3" class="grand total"></td>
+				<td colspan="8" class="grand total"></td>
 			</tr>
 
 		</tbody>
@@ -192,10 +238,11 @@ footer {
 		<div>NOTICE:</div>
 		<div class="notice">A finance charge of 1.5% will be made on
 			unpaid balances after 30 days.</div>
-	</div>-->
-	</main>
-	<footer> Sven Kolarić, Aplikacija za spremanje i pretraživanje životopisa - <a
-				href="https://github.com/SvenKolaric/DiplomskiRad">Diplomski rad
-				2018</a> </footer>
+	</div>--> </main>
+	<footer>
+		Sven Kolarić, Aplikacija za spremanje i pretraživanje životopisa - <a
+			href="https://github.com/SvenKolaric/DiplomskiRad">Diplomski rad
+			2018</a>
+	</footer>
 </body>
 </html>

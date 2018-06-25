@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
+
 <head>
 <title>Pretraga životopisa</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -78,8 +78,7 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
 
 <body>
 <br>
-		<a href="result.html" th:href="@{/cv/searchQueries}">Natrag na
-			rezultate</a>
+
 
 	<div id="doc2" class="yui-t7">
 		<div id="inner">
@@ -109,18 +108,13 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
 								th:utext="|*{row.drzavljanstvo.naziv} |"></span></span>
 						</h3>
 					</div>
-					<div class="yui-u">
+					<!-- <div class="yui-u">
 
-						<h3>		
-						<form th:action="@{/cv/detailsReport/}" th:object="${zivotopis}" method="post">
-            			<input type="hidden" th:field="${zivotopis.zivotopisID}" />
-            			<!--<button type="submit">Generiraj izvještaj</button>    izaberi kaj tu oces !!!!!!!! -->
-        				</form>						
-						<a id="pdf" href="detailsReport.html" th:href="@{'/cv/detailsReport/'${zivotopis.zivotopisID}}">Generiraj izvještaj</a>
+						<h3>
+							<a id="pdf" href="#">Download PDF</a>
 						</h3>
-						
 
-					</div>
+					</div> -->
 					<div class="yui-u">
 						<br>
 						<div class="contact-info"

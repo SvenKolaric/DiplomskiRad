@@ -8139,15 +8139,29 @@ td {
 				<a href="result.html" th:href="@{/cv/searchQueries}">Natrag na
 					jednostavan prikaz rezultata</a>
 			</p>
+			<form th:action="@{detailedResultReport}" method="get" class="control-group " style="float: right; display: flex;">
+				<div class="col-sm-4">
+				
+				<select class="form-control pagination " id="pageSizeSelect" style="width:60px;">
+					<option th:each="pageSize : ${pageSizes}" th:text="${pageSize}" th:name="pageSize"
+						th:value="${pageSize}"
+						th:selected="${pageSize} == ${selectedPageSize}"><input type="hidden" th:value="${pageSize}"
+									name="pageSize" /></option>
+				</select>
+				</div>
+				<button style="width: 150px; height: 50px; margin-top: 12px;" type="submit">Generiraj izvještaj</button>
+
+			</form>
 			<h2>
 				Naziv natječaja: <label th:text="${results.natjecaj}"></label>
 			</h2>
 
 
 
-			<table class="table table-hover" border="1">
+			<table class="table table-hover">
 				<thead>
-					<tr>
+					<tr style="background: #1A8BAE;
+								color: white;">
 						<th style="text-align: center;" th:text="IDZivotopis" />
 						<th style="text-align: center;" th:text="'Ime Prezime'" />
 						<th style="text-align: center;" th:text="'Ukupna Ocjena'" />
@@ -8160,7 +8174,7 @@ td {
 				</thead>
 				<tbody>
 					<tr th:each="cv, iStat : ${results.getResults()}"
-						th:style="${iStat.odd}? 'background: #e1e8f4;'"
+						th:style="${iStat.odd}? 'background: #f5f5f5;'"
 						th:alt-title="${iStat.even}? 'even' : 'odd'">
 						<td style="text-align: center; vertical-align: middle;"
 							th:text="${cv.zivotopisID}" />
