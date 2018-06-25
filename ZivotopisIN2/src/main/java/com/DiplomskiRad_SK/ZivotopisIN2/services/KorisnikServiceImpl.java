@@ -12,10 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.DiplomskiRad_SK.ZivotopisIN2.controller.UploadController;
-import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.CV;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.KorisnickaUloga;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Korisnik;
-import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Osoba;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.KorisnickaUlogaRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.KorisnikRepository;
 

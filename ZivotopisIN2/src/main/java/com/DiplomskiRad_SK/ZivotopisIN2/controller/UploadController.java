@@ -1,35 +1,18 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.ParseException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import com.DiplomskiRad_SK.ZivotopisIN2.models.Search;
-import com.DiplomskiRad_SK.ZivotopisIN2.repository.UpitRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.services.SearchService;
 import com.DiplomskiRad_SK.ZivotopisIN2.services.XMLMapParserService;
 

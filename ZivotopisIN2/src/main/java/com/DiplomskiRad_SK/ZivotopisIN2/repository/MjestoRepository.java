@@ -1,7 +1,6 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.repository;
 
 
-import java.util.ArrayList;
 
 import org.springframework.data.repository.CrudRepository;
 

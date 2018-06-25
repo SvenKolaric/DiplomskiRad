@@ -1,7 +1,6 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.repository;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;

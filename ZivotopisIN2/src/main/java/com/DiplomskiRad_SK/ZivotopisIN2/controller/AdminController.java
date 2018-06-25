@@ -1,6 +1,5 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.controller;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.CV;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Korisnik;
-import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Osoba;
 import com.DiplomskiRad_SK.ZivotopisIN2.models.PagerModel;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.CVRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.services.KorisnikService;

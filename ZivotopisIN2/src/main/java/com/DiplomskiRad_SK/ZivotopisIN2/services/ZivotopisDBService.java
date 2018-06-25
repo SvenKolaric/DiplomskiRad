@@ -2,18 +2,14 @@ package com.DiplomskiRad_SK.ZivotopisIN2.services;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.domain.PageRequest;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,18 +18,15 @@ import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.CV;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.DodatneInfo;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Drzava;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Drzavljanstvo;
-import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.EdukacijaITrening;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Institucija;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Jezik;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Kategorija;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Mjesto;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Osoba;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Pozicija;
-import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.RadnoIskustvo;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.TipKontakta;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.VozackaDozvola;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.VrstaPrijave;
-import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.Zaglavlje;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.CVRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.CertifikatiDiplomaRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.DodatakRepository;
@@ -59,7 +52,7 @@ import com.DiplomskiRad_SK.ZivotopisIN2.repository.ZaglavljeRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.ZnaRepository;
 import com.google.common.collect.Lists;
 
-import oracle.net.aso.o;
+
 
 @Service("BLCV")
 public class ZivotopisDBService {

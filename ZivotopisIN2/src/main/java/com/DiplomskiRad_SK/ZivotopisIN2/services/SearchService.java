@@ -4,10 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -29,13 +27,11 @@ import com.DiplomskiRad_SK.ZivotopisIN2.models.SearchWrapper;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.CVRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.EdukacijaITreningRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.InstitucijaRepository;
-import com.DiplomskiRad_SK.ZivotopisIN2.repository.JezikRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.MjestoRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.OsobaRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.RadnoIskustvoRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.repository.UpitRepository;
 
-import oracle.jdbc.proxy.WeakIdentityHashMap;
 
 @Service("SearchService")
 public class SearchService {
@@ -125,7 +121,6 @@ public class SearchService {
 
 	public List<CV> QueryCVs(List<Search> queries) {
 		Set<CV> cvSet = new HashSet<>();
-		Map<Integer, CV> cvMap = new HashMap<>();
 		List<Upit> upitList = new ArrayList<Upit>();
 
 		Integer counterUpiti = 1;

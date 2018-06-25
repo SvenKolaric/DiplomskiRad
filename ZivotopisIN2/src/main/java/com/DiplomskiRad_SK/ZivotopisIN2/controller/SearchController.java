@@ -1,31 +1,24 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.io.File;
 import java.io.FileNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.DiplomskiRad_SK.ZivotopisIN2.helpers.PDFGenerator;
 import com.DiplomskiRad_SK.ZivotopisIN2.modelDB.CV;
 import com.DiplomskiRad_SK.ZivotopisIN2.models.ResultsCV;
 import com.DiplomskiRad_SK.ZivotopisIN2.models.Search;
 import com.DiplomskiRad_SK.ZivotopisIN2.models.SearchWrapper;
-import com.DiplomskiRad_SK.ZivotopisIN2.repository.CVRepository;
 import com.DiplomskiRad_SK.ZivotopisIN2.services.SearchService;
 import com.DiplomskiRad_SK.ZivotopisIN2.services.ZivotopisDBService;
 import com.lowagie.text.DocumentException;
@@ -39,8 +32,7 @@ public class SearchController {
     
 	private SearchService searchService;
 	private ZivotopisDBService cvService;
-	private List<CV> results1;
-	private String natjecaj;
+
 	private static final int[] PAGE_SIZES = { 5, 10, 20};
 	
 	@ModelAttribute("resultsCV")
@@ -137,10 +129,6 @@ public class SearchController {
 		modelAndView.addObject("results", results);
 		//modelAndView.addObject("natjecaj", natjecaj);
 
-		PDFGenerator gen = new PDFGenerator("templates/", ".html");
-
-		Map<String, Object> model = new HashMap<>();
-		model.put("results", results);
 		modelAndView.addObject("pageSizes", PAGE_SIZES);
 		//gen.generate(new File("D:/testNovi.pdf"), "cv/resultReport", model);
 		return modelAndView;
