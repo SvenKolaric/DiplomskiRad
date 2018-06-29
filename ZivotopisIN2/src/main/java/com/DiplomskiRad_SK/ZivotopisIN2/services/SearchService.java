@@ -149,7 +149,7 @@ public class SearchService {
 				break;
 
 			case "MJESTO":
-				Mjesto mjesto = mjestoRepo.findByNaziv(query.getQuery());
+				Mjesto mjesto = mjestoRepo.findByNaziv(query.getQuery()).get(0);
 				List<Osoba> osobaList = mjesto.getOsobaList();
 				for (Osoba osoba : osobaList) {
 					List<CV> cvList = osoba.getZivotopisiList();

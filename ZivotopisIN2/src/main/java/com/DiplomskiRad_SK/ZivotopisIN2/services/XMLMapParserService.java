@@ -576,7 +576,7 @@ public class XMLMapParserService {
 				osobnaVJ.setOstaleVj(element.getElementsByTagName("Description").item(0).getTextContent());
 			}
 
-			// Računalne vještine
+			// Računalne vještine //može biti samo description null
 			nodeList = doc.getElementsByTagName("Computer");
 			node = nodeList.item(0);
 			if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {

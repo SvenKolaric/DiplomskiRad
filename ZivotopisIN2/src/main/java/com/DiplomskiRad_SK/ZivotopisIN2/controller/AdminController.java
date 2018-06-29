@@ -1,5 +1,6 @@
 package com.DiplomskiRad_SK.ZivotopisIN2.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,7 +68,7 @@ public class AdminController {
         	cv.setOsoba(new Osoba(1,"testko","testic", null, null, null, null));
         	results.add(cv);
         }*/
-       
+        
         System.out.println("here is client repo " + results);
         Page<CV> resultss = new PageImpl<>(results, PageRequest.of(evalPage, evalPageSize), results.size());
         //Page<CV> clientlist = cvRepo.findByOrderByDatumStvaranja(PageRequest.of(evalPage, evalPageSize)); //cvService.getCVOrderByDatumAsc(PageRequest.of(evalPage, evalPageSize));
@@ -83,7 +84,12 @@ public class AdminController {
         modelAndView.addObject("pager", pager);
 		//results = cvService.getCVOrderByDatumAsc();
         // add model
-		modelAndView.addObject("results",resultss);
+        
+        List<CV> results1 = new ArrayList<>();
+        for(int i = 0; i< results.size() - 1; i++) {
+        	results1.add(results.get(i));
+        }
+		modelAndView.addObject("results",results1);
 		modelAndView.setViewName("admin/home");
 		return modelAndView;
 	}

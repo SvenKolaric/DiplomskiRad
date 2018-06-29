@@ -138,6 +138,8 @@ public class SearchController {
 	public ModelAndView DisplayDetailedResults(@ModelAttribute("resultsCV") ResultsCV results) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("cv/detailedResults");
+		modelAndView.addObject("pageSizes", PAGE_SIZES);
+
 		modelAndView.addObject("results", results);
 		//modelAndView.addObject("natjecaj", natjecaj);
 

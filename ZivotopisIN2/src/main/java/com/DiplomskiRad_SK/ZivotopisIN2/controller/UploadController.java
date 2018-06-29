@@ -41,18 +41,26 @@ public class UploadController {
 		log.info("Controller post method started.");
 		
 		if (file.isEmpty()) {
-			redirectAttributes.addFlashAttribute("message", "Molimo odaberite datoteku za slanje.");
+			redirectAttributes.addFlashAttribute("message", "Došlo je do greške u spremanju datoteke." +
+					"<br>Provjerite da li su svi podaci u životopisu upisani u odgovarajuća polja i sva " +
+					"obavezna polja popunjena.");
 			log.warn("User sent an empty post request.");
 			return "redirect:uploadStatus";
 		}
-		
+		String fileName = file.getOriginalFilename();
+		String[] fileExtension = fileName.split("[.]");
+		if (!fileExtension[fileExtension.length-1].equals("xml")) {
+			redirectAttributes.addFlashAttribute("message", "Molimo odaberite XML datoteku za slanje.");
+			log.warn("User sent an non XML file.");
+			return "redirect:uploadStatus";
+		}
 		log.debug("File sent to BLXMLparser.");
 		Boolean isSaved = xmlParser.parseMapXMLFile(file);
 	    log.debug("File parsed and saved status:", isSaved);
 	    
 		if (!isSaved) {
-			redirectAttributes.addFlashAttribute("message", "Došlo je do greške u spremanju datoteke" +
-												"Provjerite da li su svi podaci u životopisu upisani u odgovarajuća polja i " +
+			redirectAttributes.addFlashAttribute("message", "Došlo je do greške u spremanju datoteke." +
+												"<br>Provjerite da li su svi podaci u životopisu upisani u odgovarajuća polja i sva " +
 												"obavezna polja popunjena.");
 			return "redirect:uploadStatus";
 		}
